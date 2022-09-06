@@ -72,7 +72,7 @@ function App() {
                                     For more details, feel free to check out my <a href={"https://www.linkedin.com/in/knewby/"} target={"_blank"} className={"bg-clip-text text-transparent bg-gradient-to-r from-theme-light-1 to-theme-light-2 dark:from-theme-dark-1 dark:to-theme-dark-2"}>Linkedin</a>!
                                 </span>
                             </div>
-                            <div className={"flex shadow-2xl rounded-lg bg-gradient-to-r from-theme-light-1 to-theme-light-2 dark:from-theme-dark-1 dark:to-theme-dark-2 w-[37.5%] h-4/6 transition-all p-[8px] hover:p-[5px] mr-3"}>
+                            <div className={"flex shadow-2xl hover:shadow-lg rounded-lg bg-gradient-to-r from-theme-light-1 to-theme-light-2 dark:from-theme-dark-1 dark:to-theme-dark-2 w-[37.5%] h-4/6 transition-all p-[8px] hover:p-[5px] mr-3"}>
                                 <div className={"flex items-end justify-evenly space-y-10 p-8 rounded-lg bg-bg-light dark:bg-bg-dark w-full"}>
                                     {
                                         skills.sort((a, b) => {

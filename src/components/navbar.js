@@ -20,8 +20,8 @@ export default function Navbar() {
     const router = useRouter();
 
     const navbarItems: INavbarItems[] = [
-        {id: "about", title: "XP"},
-        {id: "/contact", title: "Contact"},
+        {id: "about", title: "About"},
+        {id: "xp", title: "Contact"},
     ];
 
     const mediaLinks: IMediaLinks[] = [
@@ -46,35 +46,22 @@ export default function Navbar() {
         router.push(path).catch(error => console.error(error));
     };
 
+    function scrollTo(key: string) {
+        let el = document.getElementById(key);
+        el.scrollIntoView();
+    }
+
     return (
-        <div className="group absolute transition-colors bg-transparent hover:bg-gray-200/50 top-0 inset-x-0 flex justify-between h-24 z-20">
-            <div className={"flex flex-row justify-center w-full items-center space-x-20"}>
-                    <span className={"flex"}>
-                      <a key={"home"} onClick={(e) => handleLinkClick(e, "/")}
-                         className={"flex text-2xl transition-all cursor-pointer z-10"}>
-                        <span className={"flex"}>About</span>
-                      </a>
-                    </span>
-                {navbarItems.map(({path, title}) => (
-                    <span key={"navLink-" + path} className={"flex"}>
-                          <a
-                              className="flex text-2xl transition-all cursor-pointer z-10"
-                              onClick={(e) => handleLinkClick(e, path)}
-                          >
-                            {title}
-                          </a>
-                        </span>
-                ))}
-            </div>
-            <span className={"flex flex-row space-x-4 items-center justify-center mr-8"}>{
-                mediaLinks.map(({link, icon, name, title, size}) => (
-                    <div key={"social-link-" + name} className={"flex relative cursor-pointer"}>
-                        <a href={link} target={"_blank"} rel={"noreferrer"} className={"flex"} title={title}>
-                            <FontAwesomeIcon icon={icon} className={"z-10"} size={size}/>
+        <div className=" z-20 flex w-40 h-screen flex-col transition-colors bg-gradient-to-b from-theme-light-1 to-theme-light-2 dark:bg-bg-dark">
+            <div className={"flex flex-col divide-y-2 divide-bg-dark dark:divide-bg-light items-center h-full justify-center"}>
+                {
+                    navbarItems.map((item) => (
+                        <a key={item.id + "-link"} onClick={() => scrollTo(item.id)} className={"flex cursor-pointer text-lg justify-center items-center py-10 hover:py-12 hover:text-xl transition-all duration-300"}>
+                            {item.title}
                         </a>
-                    </div>
-                ))
-            }</span>
+                    ))
+                }
+            </div>
         </div>
     );
 }

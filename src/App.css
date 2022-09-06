@@ -1,4 +1,4 @@
-@import url("https://fonts.googleapis.com/css2?family=EB+Garamond&display=swap");@import url("https://fonts.googleapis.com/css2?family=EB+Garamond&display=swap");
+@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;900&display=swap');
 
 @tailwind base;
 @tailwind components;
@@ -19,7 +19,7 @@ a {
 
 * {
   box-sizing: border-box;
-  font-family: "EB Garamond", serif;
+  font-family: 'Nunito', sans-serif;
 }
 
 .shadow-light {

@@ -54,7 +54,7 @@ export default function Navbar({darkMode, setDarkMode}) {
 
     return (
         <div className="z-20 flex w-40 h-screen flex-col justify-between transition-colors bg-gradient-to-b from-theme-light-1/70 to-theme-light-2/70 dark:bg-bg-dark">
-            <a className={"flex flex-col items-center h-max justify-center py-16 bg-white/80"} href={"home"}>
+            <a className={"flex flex-col items-center h-max justify-center py-16 bg-black/70 dark:bg-white/70"} href={"home"}>
                 <span className={"text-8xl font-extrabold bg-clip-text text-transparent bg-gradient-to-r from-theme-light-1 to-theme-light-2"}>K</span>
             </a>
             <div className={"flex flex-col items-center h-max justify-center"}>

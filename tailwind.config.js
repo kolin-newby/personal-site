@@ -7,6 +7,9 @@ module.exports = {
   ],
   theme: {
     extend: {
+      screens: {
+        'largest': '1750px'
+      },
       animation: {
         'pulse-slow': 'pulse 5s linear infinite',
       },

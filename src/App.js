@@ -73,7 +73,7 @@ function App() {
                                     For more details, feel free to check out my <a href={"https://www.linkedin.com/in/knewby/"} target={"_blank"} className={"bg-clip-text text-transparent bg-gradient-to-r from-theme-light-1 to-theme-light-2 dark:from-theme-dark-1 dark:to-theme-dark-2"}>Linkedin</a>!
                                 </span>
                             </div>
-                            <div className={"hidden largest:flex shrink shadow-2xl hover:shadow-lg rounded-lg bg-gradient-to-r from-theme-light-1 to-theme-light-2 dark:from-theme-dark-1 dark:to-theme-dark-2 w-[37.5%] h-4/6 transition-all p-[8px] hover:p-[5px] mr-3"}>
+                            <div className={"hidden largest:flex shrink shadow-2xl dark:shadow-blue-900 hover:shadow-lg rounded-lg bg-gradient-to-r from-theme-light-1 to-theme-light-2 dark:from-theme-dark-1 dark:to-theme-dark-2 w-[37.5%] h-4/6 transition-all p-[8px] hover:p-[5px] mr-3"}>
                                 <div className={"flex items-end justify-evenly space-y-10 p-8 rounded-lg bg-bg-light dark:bg-bg-dark w-full"}>
                                     {
                                         skills.sort((a, b) => {
@@ -93,7 +93,7 @@ function App() {
                             </div>
                             <div className={"flex flex-col h-1/2 largest:w-1/4 px-6 space-y-8"}>
                                 <div className={"flex items-center justify-center"}>
-                                    <div className={"flex w-96 h-96 items-center justify-center largest:hidden box-content shadow-2xl largest:hover:shadow-lg rounded-lg bg-gradient-to-r from-theme-light-1 to-theme-light-2 dark:from-theme-dark-1 dark:to-theme-dark-2 transition-all p-[5px] largest:p-[8px] largest:hover:p-[5px] mr-3"}>
+                                    <div className={"flex w-96 h-96 items-center justify-center largest:hidden box-content shadow-2xl dark:shadow-blue-900 largest:hover:shadow-lg rounded-lg bg-gradient-to-r from-theme-light-1 to-theme-light-2 dark:from-theme-dark-1 dark:to-theme-dark-2 transition-all p-[5px] largest:p-[8px] largest:hover:p-[5px] mr-3"}>
                                         <div className={"flex largest:hidden relative items-center justify-center rounded-lg bg-bg-light dark:bg-bg-dark h-full w-full"}>
                                             <ResponsiveContainer
                                                 width={390}
@@ -109,13 +109,13 @@ function App() {
                                         </div>
                                     </div>
                                     <div className={"flex flex-col space-y-8 largest:px-0 pl-6"}>
-                                        <a href={"https://www.colorado.edu/cs/academics/undergraduate-programs/bachelor-science#software_engineering-755"} target={"_blank"} className={"flex flex-col largest:h-1/3 p-5 justify-center items-center rounded-lg transition-all transform hover:-translate-y-1 shadow-lg hover:shadow-2xl bg-gradient-to-r from-theme-light-1/50 to-theme-light-2/70 dark:from-theme-dark-1/50 dark:to-theme-dark-2/70"}>
+                                        <a href={"https://www.colorado.edu/cs/academics/undergraduate-programs/bachelor-science#software_engineering-755"} target={"_blank"} className={"flex flex-col largest:h-1/3 p-5 justify-center items-center rounded-lg transition-all transform hover:-translate-y-1 shadow-lg dark:shadow-blue-900 hover:shadow-2xl bg-gradient-to-r from-theme-light-1/50 to-theme-light-2/70 dark:from-theme-dark-1/50 dark:to-theme-dark-2/70"}>
                                             <span className={"flex text-center largest:text-2xl font-bold pb-4"}>B.S. Computer Science</span>
                                             <span className={"flex text-center largest:text-xl"}>CU Boulder</span>
                                             <span className={"flex text-center largest:text-lg pb-4"}>2017-2021</span>
                                             <span className={"flex text-center largest:text-base"}>A degree in Computer Science with a focus on Software Development and a minor in Business</span>
                                         </a>
-                                        <a href={"https://resurface.io"} target={"_blank"} className={"flex flex-col largest:h-1/3 p-5 justify-center items-center rounded-lg transition-all transform hover:-translate-y-1 shadow-lg hover:shadow-2xl bg-gradient-to-r from-theme-light-1/50 to-theme-light-2/70 dark:from-theme-dark-1/50 dark:to-theme-dark-2/70"}>
+                                        <a href={"https://resurface.io"} target={"_blank"} className={"flex flex-col largest:h-1/3 p-5 justify-center items-center rounded-lg transition-all transform hover:-translate-y-1 shadow-lg dark:shadow-blue-900 hover:shadow-2xl bg-gradient-to-r from-theme-light-1/50 to-theme-light-2/70 dark:from-theme-dark-1/50 dark:to-theme-dark-2/70"}>
                                             <span className={"flex text-center largest:text-2xl font-bold pb-4"}>Software Engineer</span>
                                             <span className={"flex text-center largest:text-xl"}>Resurface Labs</span>
                                             <span className={"flex text-center largest:text-lg pb-4"}>2021-Present</span>
@@ -123,7 +123,7 @@ function App() {
                                         </a>
                                     </div>
                                 </div>
-                                <div className={"flex flex-col largest:h-1/3 p-5 justify-center items-center rounded-lg transition-all transform hover:-translate-y-1 shadow-lg hover:shadow-2xl bg-gradient-to-r from-theme-light-1/50 to-theme-light-2/70 dark:from-theme-dark-1/50 dark:to-theme-dark-2/70"}>
+                                <div className={"flex flex-col largest:h-1/3 p-5 justify-center items-center rounded-lg transition-all transform hover:-translate-y-1 shadow-lg dark:shadow-blue-900 hover:shadow-2xl bg-gradient-to-r from-theme-light-1/50 to-theme-light-2/70 dark:from-theme-dark-1/50 dark:to-theme-dark-2/70"}>
                                     <span className={"flex text-center largest:text-2xl font-bold"}>Interested in learning more?</span>
                                     <span className={"flex text-center largest:text-xl"}>
                                         Download my resume

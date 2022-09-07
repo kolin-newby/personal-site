@@ -8,6 +8,7 @@ module.exports = {
   theme: {
     extend: {
       screens: {
+        'smallest': '860px',
         'largest': '1750px'
       },
       animation: {

@@ -10,6 +10,8 @@ import {
     faMoon,
     faSun,
     faDownload,
+    faTimesCircle,
+    faBars
 } from "@fortawesome/free-solid-svg-icons";
 
 // Branded icon imports
@@ -31,5 +33,7 @@ export const loadIcons = () => {
         faMoon,
         faSun,
         faDownload,
+        faTimesCircle,
+        faBars
     );
 };

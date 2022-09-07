@@ -20,7 +20,7 @@ function App() {
 
     return (
         <div className={`${darkMode ? "dark" : ""}`}>
-            <div className={"flex overflow-hidden h-screen dark:text-white bg-bg-light dark:bg-bg-dark"}>
+            <div className={"flex smallest:flex-row flex-col overflow-hidden h-screen dark:text-white bg-bg-light dark:bg-bg-dark"}>
                 <Navbar darkMode={darkMode} setDarkMode={setDarkMode}/>
                 <div className={"w-full overflow-y-auto"}>
                     <div id={"home"} className={"relative w-full h-screen"}>
@@ -123,7 +123,7 @@ function App() {
                                         </div>
                                     </div>
                                     <div className={"flex flex-col space-y-8 largest:px-0 pl-6"}>
-                                        <a href={"https://www.fillado.edu/cs/academics/undergraduate-programs/bachelor-science#software_engineering-755"} target={"_blank"} className={"flex flex-col largest:h-1/3 p-5 justify-center items-center rounded-lg transition-all transform hover:-translate-y-1 shadow-lg hover:shadow-2xl bg-gradient-to-r from-theme-light-1/50 to-theme-light-2/70 dark:from-theme-dark-1/50 dark:to-theme-dark-2/70"}>
+                                        <a href={"https://www.colorado.edu/cs/academics/undergraduate-programs/bachelor-science#software_engineering-755"} target={"_blank"} className={"flex flex-col largest:h-1/3 p-5 justify-center items-center rounded-lg transition-all transform hover:-translate-y-1 shadow-lg hover:shadow-2xl bg-gradient-to-r from-theme-light-1/50 to-theme-light-2/70 dark:from-theme-dark-1/50 dark:to-theme-dark-2/70"}>
                                             <span className={"flex text-center largest:text-2xl font-bold pb-4"}>B.S. Computer Science</span>
                                             <span className={"flex text-center largest:text-xl"}>CU Boulder</span>
                                             <span className={"flex text-center largest:text-lg pb-4"}>2017-2021</span>

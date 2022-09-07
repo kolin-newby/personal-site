@@ -18,7 +18,7 @@ module.exports = {
         'theme-light-1': '#dc2626',
         'theme-light-2': '#f59e0b',
         'theme-dark-1': '#1f66ff',
-        'theme-dark-2': '#5affd8',
+        'theme-dark-2': '#3daf94',
         'bg-dark': 'rgb(4,4,30)',
         'bg-light': '#ffffff',
       }

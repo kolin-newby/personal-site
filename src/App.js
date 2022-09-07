@@ -3,7 +3,7 @@ import React, {useState} from "react";
 import Navbar from "./components/navbar";
 import {loadIcons} from "./config/iconLoader";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {RadialBarChart, RadialBar, ResponsiveContainer, Legend} from "recharts";
+import {RadarChart, PolarGrid, PolarAngleAxis, PolarRadiusAxis, Radar, ResponsiveContainer, Legend} from "recharts";
 
 loadIcons();
 function App() {
@@ -93,33 +93,19 @@ function App() {
                             </div>
                             <div className={"flex flex-col h-1/2 largest:w-1/4 px-6 space-y-8"}>
                                 <div className={"flex items-center justify-center"}>
-                                    <div className={"flex w-80 h-80 items-center justify-center largest:hidden box-content shadow-2xl largest:hover:shadow-lg rounded-lg bg-gradient-to-r from-theme-light-1 to-theme-light-2 dark:from-theme-dark-1 dark:to-theme-dark-2 transition-all p-[5px] largest:p-[8px] largest:hover:p-[5px] mr-3"}>
-                                        <div className={"flex flex-col largest:hidden relative items-center justify-start rounded-lg bg-bg-light dark:bg-bg-dark h-full w-full"}>
+                                    <div className={"flex w-96 h-96 items-center justify-center largest:hidden box-content shadow-2xl largest:hover:shadow-lg rounded-lg bg-gradient-to-r from-theme-light-1 to-theme-light-2 dark:from-theme-dark-1 dark:to-theme-dark-2 transition-all p-[5px] largest:p-[8px] largest:hover:p-[5px] mr-3"}>
+                                        <div className={"flex largest:hidden relative items-center justify-center rounded-lg bg-bg-light dark:bg-bg-dark h-full w-full"}>
                                             <ResponsiveContainer
-                                                width={250}
+                                                width={390}
                                                 aspect={1}
                                                 className={"flex"}
                                             >
-                                                <RadialBarChart
-                                                    innerRadius="20%"
-                                                    outerRadius="100%"
-                                                    data={skills}
-                                                    startAngle={450}
-                                                    endAngle={90}
-                                                >
-                                                    <RadialBar alignmentBaseline={"baseline"} dataKey={'levelNum'}/>
-                                                </RadialBarChart>
+                                                <RadarChart outerRadius={90} width={730} height={250} data={skills}>
+                                                    <PolarGrid />
+                                                    <PolarAngleAxis dataKey="name"/>
+                                                    <Radar name="skills" dataKey="levelNum" fill={darkMode ? "#3daf94" : "#f59e0b"} fillOpacity={0.65} />
+                                                </RadarChart>
                                             </ResponsiveContainer>
-                                            <span className={"flex flex-wrap w-60 justify-center space-x-2 h-20"}>
-                                    {
-                                        skills.map((skill) => (
-                                            <div className={" text-sm w-max items-center"} style={{color: skill.fill}}>
-                                                <FontAwesomeIcon className={"mr-1"} icon={"circle"}/>
-                                                {skill.name}
-                                            </div>
-                                        ))
-                                    }
-                                </span>
                                         </div>
                                     </div>
                                     <div className={"flex flex-col space-y-8 largest:px-0 pl-6"}>

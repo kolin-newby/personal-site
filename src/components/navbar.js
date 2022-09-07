@@ -55,9 +55,9 @@ export default function Navbar({darkMode, setDarkMode}) {
     }
     return (
         <>
-            <div className=" hidden smallest:flex z-20 w-40 h-screen flex-col justify-between transition-colors bg-gradient-to-b from-theme-light-1/70 to-theme-light-2/70 dark:bg-bg-dark">
+            <div className=" hidden smallest:flex z-20 w-40 h-screen flex-col justify-between transition-colors bg-gradient-to-b from-theme-light-1/70 to-theme-light-2/70 dark:from-theme-dark-1 dark:to-theme-dark-2">
                 <a className={"flex flex-col items-center h-max justify-center py-16 bg-black/70 dark:bg-white/70"} href={"home"}>
-                    <span className={"text-8xl font-extrabold bg-clip-text text-transparent bg-gradient-to-r from-theme-light-1 to-theme-light-2"}>K</span>
+                    <span className={"text-8xl font-extrabold bg-clip-text text-transparent bg-gradient-to-r from-theme-light-1 to-theme-light-2 dark:from-theme-dark-1 dark:to-theme-dark-2"}>K</span>
                 </a>
                 <div className={"flex flex-col items-center h-max justify-center"}>
                     {
@@ -82,12 +82,12 @@ export default function Navbar({darkMode, setDarkMode}) {
                     <ThemeSlider darkMode={darkMode} setDarkMode={setDarkMode}/>
                 </div>
             </div>
-            <div className="z-10 flex w-full relative smallest:hidden flex-col justify-between transition-colors bg-gradient-to-r from-theme-light-1/70 to-theme-light-2/70 dark:bg-bg-dark">
-                <button onClick={() => setOpen(!open)} className={"z-20 h-20 w-20 absolute top-0 left-0 bg-gradient-to-t from-theme-light-1 to-theme-light-2 dark:from-theme-dark-1 dark:to-theme-dark-2"}>
+            <div className="z-50 flex w-full relative smallest:hidden flex-col justify-between transition-colors bg-gradient-to-r from-theme-light-1/70 to-theme-light-2/70 dark:bg-bg-dark">
+                <button onClick={() => setOpen(!open)} className={"z-50 h-20 w-20 absolute top-0 left-0 bg-gradient-to-t from-theme-light-1 to-theme-light-2 dark:from-theme-dark-1 dark:to-theme-dark-2"}>
                     <FontAwesomeIcon size={"2xl"} className={"bg-clip-text text-bg-dark dark:text-bg-light"} icon={"bars"}/>
                 </button>
                 <a className={"flex z-10 relative flex-col items-center h-20 justify-center bg-black dark:bg-white"} href={"home"}>
-                    <span className={"text-6xl font-extrabold bg-clip-text text-transparent bg-gradient-to-r from-theme-light-1 to-theme-light-2"}>K</span>
+                    <span className={"text-6xl font-extrabold bg-clip-text text-transparent bg-gradient-to-r from-theme-light-1 to-theme-light-2 dark:from-theme-dark-1 dark:to-theme-dark-2"}>K</span>
                 </a>
                 <Transition
                     show={open}
@@ -97,7 +97,7 @@ export default function Navbar({darkMode, setDarkMode}) {
                     leave={"transform transition-all duration-300 ease-linear"}
                     leaveFrom={"translate-y-0"}
                     leaveTo={"-translate-y-60"}
-                    className={"fixed flex flex-col w-full top-20 bg-gradient-to-r from-theme-light-1 to-theme-light-2"}
+                    className={"absolute flex flex-col w-full top-20 bg-gradient-to-r from-theme-light-1 to-theme-light-2 dark:from-theme-dark-1 dark:to-theme-dark-2"}
                 >
                     <div className={"flex flex-col items-center h-max justify-center"}>
                         {

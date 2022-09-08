@@ -81,8 +81,8 @@ function App() {
                                             if (b.level > a.level) return -1;
                                             return 0;
                                         }).map((skill) => (
-                                            <div className={"flex flex-col w-full items-center"}>
-                                                <div className={"flex bg-gray-200 dark:bg-gray-800/70 rounded-full items-end w-2 h-[43rem]"}>
+                                            <div className={"flex flex-col h-full w-full items-center"}>
+                                                <div className={"flex bg-gray-200 dark:bg-gray-800/70 rounded-full items-end w-2 h-full"}>
                                                     <div className={`flex rounded-full w-2`} style={{height: skill.level,backgroundColor:skill.fill}}/>
                                                 </div>
                                                 <span className={"flex h-5 text-center mt-8 items-center justify-center font-bold"}>{skill.name}</span>
@@ -91,7 +91,7 @@ function App() {
                                     }
                                 </div>
                             </div>
-                            <div className={"flex flex-col h-1/2 largest:w-1/4 px-6 space-y-8"}>
+                            <div className={"flex flex-col largest:w-1/4 px-6 space-y-8"}>
                                 <div className={"flex items-center justify-center"}>
                                     <div className={"flex w-96 h-96 items-center justify-center largest:hidden box-content shadow-2xl dark:shadow-blue-900 largest:hover:shadow-lg rounded-lg bg-gradient-to-r from-theme-light-1 to-theme-light-2 dark:from-theme-dark-1 dark:to-theme-dark-2 transition-all p-[5px] largest:p-[8px] largest:hover:p-[5px] mr-3"}>
                                         <div className={"flex largest:hidden relative items-center justify-center rounded-lg bg-bg-light dark:bg-bg-dark h-full w-full"}>
@@ -123,7 +123,7 @@ function App() {
                                         </a>
                                     </div>
                                 </div>
-                                <div className={"flex flex-col largest:h-1/3 p-5 justify-center items-center rounded-lg transition-all transform hover:-translate-y-1 shadow-lg dark:shadow-blue-900 hover:shadow-2xl bg-gradient-to-r from-theme-light-1/50 to-theme-light-2/70 dark:from-theme-dark-1/50 dark:to-theme-dark-2/70"}>
+                                <div className={"flex flex-col largest:h-1/3 p-5 justify-center items-center rounded-lg mb-none largest:mb-10 transition-all transform hover:-translate-y-1 shadow-lg dark:shadow-blue-900 hover:shadow-2xl bg-gradient-to-r from-theme-light-1/50 to-theme-light-2/70 dark:from-theme-dark-1/50 dark:to-theme-dark-2/70"}>
                                     <span className={"flex text-center largest:text-2xl font-bold"}>Interested in learning more?</span>
                                     <span className={"flex text-center largest:text-xl"}>
                                         Download my resume

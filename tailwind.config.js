@@ -8,8 +8,8 @@ module.exports = {
   theme: {
     extend: {
       screens: {
-        'smallest': '860px',
-        'largest': '1750px'
+        'smallest': '930px',
+        'largest': '1600px'
       },
       animation: {
         'pulse-slow': 'pulse 5s linear infinite',

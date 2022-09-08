@@ -20,7 +20,7 @@ interface IMediaLinks {
 
 export default function Navbar({darkMode, setDarkMode}) {
     const router = useRouter();
-    const [open, setOpen] = useState(true);
+    const [open, setOpen] = useState(false);
 
     const navbarItems: INavbarItems[] = [
         {id: "about", title: "About"},

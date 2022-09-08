@@ -22,7 +22,7 @@ function App() {
         <div className={`${darkMode ? "dark" : ""}`}>
             <div className={"flex small:flex-row flex-col overflow-hidden h-screen dark:text-white bg-bg-light dark:bg-bg-dark"}>
                 <Navbar darkMode={darkMode} setDarkMode={setDarkMode}/>
-                <div className={"w-full overflow-y-auto"}>
+                <div className={"w-full overflow-y-auto overflow-x-hidden"}>
                     <div id={"home"} className={"relative w-full h-screen"}>
                         <div
                             className={"w-full absolute relative inset-x-0 top-0 bottom-1/2 h-1/2 border-b border-black dark:border-white bg-gradient-to-r from-theme-light-1/40 to-theme-light-2/40 dark:from-theme-dark-1 dark:to-theme-dark-2/70"}>

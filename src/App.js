@@ -1,91 +1,124 @@
 import './App.css';
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import Navbar from "./components/navbar";
 import {loadIcons} from "./config/iconLoader";
+import useScript from "./components/script-loader";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {RadarChart, PolarGrid, PolarAngleAxis, PolarRadiusAxis, Radar, ResponsiveContainer, Legend} from "recharts";
+import {RadarChart, PolarGrid, PolarAngleAxis, Radar, ResponsiveContainer} from "recharts";
 
 loadIcons();
-function App() {
+export default function App() {
+    useScript("cursor-effect.js");
 
     const [darkMode, setDarkMode] = useState(false);
 
     const skills = [
-        {name: "ReactJS", level: "75%", levelNum: 75, fill: darkMode ? "#3C5CD9" : "#DC2681"},
-        {name: "Front-End", level: "85%", levelNum: 85, fill: darkMode ? "#B3E9F8" : "#E65B39"},
-        {name: "TypeScript", level: "80%", levelNum: 80, fill: darkMode ? "#749CC4" : "#8c0f0f"},
-        {name: "Node.js", level: "75%", levelNum: 75, fill: darkMode ? "#A773FF" : "#F09866"},
-        {name: "Back-End", level: "55%", levelNum: 55, fill: darkMode ? "#40FFD2" : "#BA5A58"},
+        {name: "ReactJS", level: "75%", levelNum: 75},
+        {name: "Front-End", level: "85%", levelNum: 85},
+        {name: "TypeScript", level: "80%", levelNum: 80},
+        {name: "Node.js", level: "75%", levelNum: 75},
+        {name: "Back-End", level: "55%", levelNum: 55},
     ]
 
     return (
         <div className={`${darkMode ? "dark" : ""}`}>
-            <div className={"flex small:flex-row flex-col overflow-hidden h-screen dark:text-white bg-bg-light dark:bg-bg-dark"}>
-                <Navbar darkMode={darkMode} setDarkMode={setDarkMode}/>
+            <div id={"topDiv"} className={"flex small:flex-row flex-col overflow-hidden h-screen dark:text-white bg-bg-light dark:bg-bg-dark"}>
+                <Navbar id={"nav"} darkMode={darkMode} setDarkMode={setDarkMode}/>
                 <div className={"w-full overflow-y-auto overflow-x-hidden"}>
                     <div id={"home"} className={"relative w-full h-screen"}>
-                        <div
-                            className={"w-full absolute relative inset-x-0 top-0 bottom-1/2 h-1/2 border-b border-black dark:border-white bg-gradient-to-r from-theme-light-1/40 to-theme-light-2/40 dark:from-theme-dark-1 dark:to-theme-dark-2/70"}>
-                            <div
-                                className={"absolute inset-0 bg-gradient-to-b from-transparent to-bg-light dark:from-bg-dark dark:to-transparent"}/>
-                            <div
-                                className={"absolute dark:hidden z-10 left-1/2 -translate-x-1/2 -translate-y-1/2 top-full w-96 h-96 opacity-80 bg-gradient-to-r from-theme-light-1 to-theme-light-2 dark:to-theme-dark-1 dark:from-theme-dark-2 rounded-full shadow-2xl animate-pulse-slow"}/>
-                            <div
-                                className={"group dark:hidden absolute relative z-10 left-1/2 -translate-x-1/2 -translate-y-1/2 top-full w-80 h-80 bg-gradient-to-r from-theme-light-1 to-theme-light-2 dark:to-theme-dark-1 dark:from-theme-dark-2 rounded-full shadow-2xl"}/>
-                            <div className={"group flex"}>
-                                <div id={"moon"}
-                                     className={"hidden dark:block absolute flex -bottom-40 left-1/2 translate-x-10 translate-y-10"}/>
+                        <div id={"wrapper relative h-full"}>
+                            <canvas id={"canvas"} className={"absolute inset-0 z-10"}></canvas>
+                            <div className={"absolute inset-0 z-20 flex flex-col text-7xl font-bold bg-clip-text bg-transparent pointer-events-none " +
+                                "items-center justify-center"}>
+                                <span className={"flex"}>Hey, I'm Kolin.</span>
+                                <span className={"flex"}>Software Developer</span>
                             </div>
                         </div>
-                        <div
-                            className={"absolute top-1/2 inset-x-0 bottom-0 z-10 border-b border-black dark:border-white bg-opacity-40 bg-cyan-200 dark:bg-cyan-300 dark:bg-opacity-50 pointer-events-none"}/>
                     </div>
-                    <div id={"xp"} className={"flex h-screen"}>
-                        <div className={"flex flex-col largest:flex-row shrink items-center w-full"}>
-                            <div className={"flex shrink flex-col largest:w-[37.5%] px-10 largest:mb-0 mb-10"}>
-                                <span className={"flex largest:text-6xl text-5xl mt-5 largest:mt-0 justify-center font-extrabold pb-20"}>
-                                    <span className={"cursor-default hover:text-transparent transition-all duration-75 hover:transform hover:-translate-y-3 bg-clip-text bg-gradient-to-r from-theme-light-1 to-theme-light-2 dark:from-theme-dark-1 dark:to-theme-dark-2"}>M</span>
-                                    <span className={"cursor-default hover:text-transparent transition-all duration-75 hover:transform hover:-translate-y-3 bg-clip-text bg-gradient-to-r from-theme-light-1 to-theme-light-2 dark:from-theme-dark-1 dark:to-theme-dark-2"}>y</span>
+                    <div id={"xp"} className={"flex h-screen items-center"}>
+                        <div className={"flex flex-col largest:flex-row items-center h-full w-full"}>
+                            <div className={"flex shrink flex-col largest:w-[37.5%] justify-center px-10 largest:mb-0 mb-10"}>
+                                <span
+                                    className={"flex largest:text-6xl text-5xl mt-5 largest:mt-0 justify-center font-extrabold pb-20"}
+                                >
+                                    <span className={"cursor-default hover:text-transparent transition-all duration-75 " +
+                                        "hover:transform hover:-translate-y-3 bg-clip-text bg-gradient-to-r " +
+                                        "from-theme-light-1 to-theme-light-2 dark:from-theme-dark-1 dark:to-theme-dark-2"}>M</span>
+                                    <span className={"cursor-default hover:text-transparent transition-all duration-75 " +
+                                        "hover:transform hover:-translate-y-3 bg-clip-text bg-gradient-to-r " +
+                                        "from-theme-light-1 to-theme-light-2 dark:from-theme-dark-1 dark:to-theme-dark-2"}>y</span>
                                     &nbsp;
-                                    <span className={"cursor-default hover:text-transparent transition-all duration-75 hover:transform hover:-translate-y-3 bg-clip-text bg-gradient-to-r from-theme-light-1 to-theme-light-2 dark:from-theme-dark-1 dark:to-theme-dark-2"}>E</span>
-                                    <span className={"cursor-default hover:text-transparent transition-all duration-75 hover:transform hover:-translate-y-3 bg-clip-text bg-gradient-to-r from-theme-light-1 to-theme-light-2 dark:from-theme-dark-1 dark:to-theme-dark-2"}>x</span>
-                                    <span className={"cursor-default hover:text-transparent transition-all duration-75 hover:transform hover:-translate-y-3 bg-clip-text bg-gradient-to-r from-theme-light-1 to-theme-light-2 dark:from-theme-dark-1 dark:to-theme-dark-2"}>p</span>
-                                    <span className={"cursor-default hover:text-transparent transition-all duration-75 hover:transform hover:-translate-y-3 bg-clip-text bg-gradient-to-r from-theme-light-1 to-theme-light-2 dark:from-theme-dark-1 dark:to-theme-dark-2"}>e</span>
-                                    <span className={"cursor-default hover:text-transparent transition-all duration-75 hover:transform hover:-translate-y-3 bg-clip-text bg-gradient-to-r from-theme-light-1 to-theme-light-2 dark:from-theme-dark-1 dark:to-theme-dark-2"}>r</span>
-                                    <span className={"cursor-default hover:text-transparent transition-all duration-75 hover:transform hover:-translate-y-3 bg-clip-text bg-gradient-to-r from-theme-light-1 to-theme-light-2 dark:from-theme-dark-1 dark:to-theme-dark-2"}>i</span>
-                                    <span className={"cursor-default hover:text-transparent transition-all duration-75 hover:transform hover:-translate-y-3 bg-clip-text bg-gradient-to-r from-theme-light-1 to-theme-light-2 dark:from-theme-dark-1 dark:to-theme-dark-2"}>e</span>
-                                    <span className={"cursor-default hover:text-transparent transition-all duration-75 hover:transform hover:-translate-y-3 bg-clip-text bg-gradient-to-r from-theme-light-1 to-theme-light-2 dark:from-theme-dark-1 dark:to-theme-dark-2"}>n</span>
-                                    <span className={"cursor-default hover:text-transparent transition-all duration-75 hover:transform hover:-translate-y-3 bg-clip-text bg-gradient-to-r from-theme-light-1 to-theme-light-2 dark:from-theme-dark-1 dark:to-theme-dark-2"}>c</span>
-                                    <span className={"cursor-default hover:text-transparent transition-all duration-75 hover:transform hover:-translate-y-3 bg-clip-text bg-gradient-to-r from-theme-light-1 to-theme-light-2 dark:from-theme-dark-1 dark:to-theme-dark-2"}>e</span>
-                                    <span className={"cursor-default hover:text-transparent transition-all duration-75 hover:transform hover:-translate-y-3 bg-clip-text bg-gradient-to-r from-theme-light-1 to-theme-light-2 dark:from-theme-dark-1 dark:to-theme-dark-2"}>.</span>
-                                    <span className={"cursor-default hover:text-transparent transition-all duration-75 hover:transform hover:-translate-y-3 bg-clip-text bg-gradient-to-r from-theme-light-1 to-theme-light-2 dark:from-theme-dark-1 dark:to-theme-dark-2"}>.</span>
-                                    <span className={"cursor-default hover:text-transparent transition-all duration-75 hover:transform hover:-translate-y-3 bg-clip-text bg-gradient-to-r from-theme-light-1 to-theme-light-2 dark:from-theme-dark-1 dark:to-theme-dark-2"}>.</span>
+                                    <span className={"cursor-default hover:text-transparent transition-all duration-75 " +
+                                        "hover:transform hover:-translate-y-3 bg-clip-text bg-gradient-to-r " +
+                                        "from-theme-light-1 to-theme-light-2 dark:from-theme-dark-1 dark:to-theme-dark-2"}>E</span>
+                                    <span className={"cursor-default hover:text-transparent transition-all duration-75 " +
+                                        "hover:transform hover:-translate-y-3 bg-clip-text bg-gradient-to-r " +
+                                        "from-theme-light-1 to-theme-light-2 dark:from-theme-dark-1 dark:to-theme-dark-2"}>x</span>
+                                    <span className={"cursor-default hover:text-transparent transition-all duration-75 " +
+                                        "hover:transform hover:-translate-y-3 bg-clip-text bg-gradient-to-r " +
+                                        "from-theme-light-1 to-theme-light-2 dark:from-theme-dark-1 dark:to-theme-dark-2"}>p</span>
+                                    <span className={"cursor-default hover:text-transparent transition-all duration-75 " +
+                                        "hover:transform hover:-translate-y-3 bg-clip-text bg-gradient-to-r " +
+                                        "from-theme-light-1 to-theme-light-2 dark:from-theme-dark-1 dark:to-theme-dark-2"}>e</span>
+                                    <span className={"cursor-default hover:text-transparent transition-all duration-75 " +
+                                        "hover:transform hover:-translate-y-3 bg-clip-text bg-gradient-to-r " +
+                                        "from-theme-light-1 to-theme-light-2 dark:from-theme-dark-1 dark:to-theme-dark-2"}>r</span>
+                                    <span className={"cursor-default hover:text-transparent transition-all duration-75 " +
+                                        "hover:transform hover:-translate-y-3 bg-clip-text bg-gradient-to-r " +
+                                        "from-theme-light-1 to-theme-light-2 dark:from-theme-dark-1 dark:to-theme-dark-2"}>i</span>
+                                    <span className={"cursor-default hover:text-transparent transition-all duration-75 " +
+                                        "hover:transform hover:-translate-y-3 bg-clip-text bg-gradient-to-r " +
+                                        "from-theme-light-1 to-theme-light-2 dark:from-theme-dark-1 dark:to-theme-dark-2"}>e</span>
+                                    <span className={"cursor-default hover:text-transparent transition-all duration-75 " +
+                                        "hover:transform hover:-translate-y-3 bg-clip-text bg-gradient-to-r " +
+                                        "from-theme-light-1 to-theme-light-2 dark:from-theme-dark-1 dark:to-theme-dark-2"}>n</span>
+                                    <span className={"cursor-default hover:text-transparent transition-all duration-75 " +
+                                        "hover:transform hover:-translate-y-3 bg-clip-text bg-gradient-to-r " +
+                                        "from-theme-light-1 to-theme-light-2 dark:from-theme-dark-1 dark:to-theme-dark-2"}>c</span>
+                                    <span className={"cursor-default hover:text-transparent transition-all duration-75 " +
+                                        "hover:transform hover:-translate-y-3 bg-clip-text bg-gradient-to-r " +
+                                        "from-theme-light-1 to-theme-light-2 dark:from-theme-dark-1 dark:to-theme-dark-2"}>e</span>
+                                    <span className={"cursor-default hover:text-transparent transition-all duration-75 " +
+                                        "hover:transform hover:-translate-y-3 bg-clip-text bg-gradient-to-r " +
+                                        "from-theme-light-1 to-theme-light-2 dark:from-theme-dark-1 dark:to-theme-dark-2"}>.</span>
+                                    <span className={"cursor-default hover:text-transparent transition-all duration-75 " +
+                                        "hover:transform hover:-translate-y-3 bg-clip-text bg-gradient-to-r " +
+                                        "from-theme-light-1 to-theme-light-2 dark:from-theme-dark-1 dark:to-theme-dark-2"}>.</span>
+                                    <span className={"cursor-default hover:text-transparent transition-all duration-75 " +
+                                        "hover:transform hover:-translate-y-3 bg-clip-text bg-gradient-to-r " +
+                                        "from-theme-light-1 to-theme-light-2 dark:from-theme-dark-1 dark:to-theme-dark-2"}>.</span>
                                 </span>
-                                <span className={"text-2xl pb-4"}>
+                                <span className={"text-2xl pb-8"}>
                                     Since starting my career, I've done contract work and worked remotely with startups.
                                     I have collaborated with brilliant folks from across the world to create robust software systems.
                                 </span>
-                                <span className={"text-2xl pb-4"}>
-                                    I have established skills in both front-end and back-end development, though currently I primarily work in front-end.
-                                    I have developed a intuitive, powerful UI and built and supported open source, low-latency web loggers.
+                                <span className={"text-2xl pb-8"}>
+                                    I have established skills in both front-end and back-end development,
+                                    though currently I primarily work in front-end.
+                                    I have developed a intuitive, powerful UI and built and supported open source,
+                                    low-latency web loggers.
                                 </span>
                                 <span className={"text-2xl"}>
                                     For more details, feel free to check out my <a href={"https://www.linkedin.com/in/knewby/"} target={"_blank"} className={"bg-clip-text text-transparent bg-gradient-to-r from-theme-light-1 to-theme-light-2 dark:from-theme-dark-1 dark:to-theme-dark-2"}>Linkedin</a>!
                                 </span>
                             </div>
-                            <div className={"hidden largest:flex shadow-2xl dark:shadow-blue-900 hover:shadow-lg rounded-lg bg-gradient-to-r from-theme-light-1 to-theme-light-2 dark:from-theme-dark-1 dark:to-theme-dark-2 w-[37.5%] h-4/6 transition-all p-[8px] hover:p-[5px] mr-3"}>
-                                <div className={"flex items-end justify-evenly space-y-10 p-8 rounded-lg bg-bg-light dark:bg-bg-dark w-full"}>
+                            <div className={"hidden largest:flex shadow-2xl dark:shadow-blue-900 hover:shadow-lg rounded-lg " +
+                                "bg-gradient-to-r from-theme-light-1 to-theme-light-2 dark:from-theme-dark-1 dark:to-theme-dark-2 " +
+                                "w-[37.5%] h-4/6 transition-all p-[8px] hover:p-[5px] mr-3"}>
+                                <div className={"flex items-end justify-evenly space-y-10 p-8 rounded-lg bg-bg-light " +
+                                    "dark:bg-bg-dark w-full"}>
                                     {
                                         skills.sort((a, b) => {
                                             if (a.level > b.level) return 1;
                                             if (b.level > a.level) return -1;
                                             return 0;
                                         }).map((skill) => (
-                                            <div className={"flex flex-col h-full w-full items-center"}>
-                                                <div className={"flex bg-gray-200 dark:bg-gray-800/70 rounded-full items-end w-2 h-full"}>
-                                                    <div className={`flex rounded-full w-2`} style={{height: skill.level,backgroundColor:skill.fill}}/>
+                                            <div key={"skill-"+skill.name} className={"flex flex-col h-full w-full items-center"}>
+                                                <div className={"flex bg-gray-200 dark:bg-gray-800/70 rounded-full items-end " +
+                                                    "w-5 h-full"}>
+                                                    <div className={`flex rounded-full w-5 bg-theme-light-2/90 dark:bg-theme-light-1/80`} style={{height: skill.level}}/>
                                                 </div>
-                                                <span className={"flex h-5 text-center mt-8 items-center justify-center font-bold"}>{skill.name}</span>
+                                                <span className={"flex h-5 text-center text-xl mt-8 items-center justify-center font-bold"}>{skill.name}</span>
                                             </div>
                                         ))
                                     }
@@ -93,8 +126,13 @@ function App() {
                             </div>
                             <div className={"flex flex-col largest:w-1/4 px-6 space-y-8"}>
                                 <div className={"flex flex-col smallest:flex-row items-center justify-center"}>
-                                    <div className={"flex w-96 h-96 items-center justify-center largest:hidden box-content smallest:shadow-2xl dark:shadow-blue-900 largest:hover:shadow-lg rounded-lg bg-gradient-to-r from-theme-light-1 to-theme-light-2 dark:from-theme-dark-1 dark:to-theme-dark-2 transition-all smallest:p-[5px] largest:p-[8px] largest:hover:p-[5px] mr-3"}>
-                                        <div className={"flex largest:hidden relative items-center justify-center rounded-lg bg-bg-light dark:bg-bg-dark h-full w-full"}>
+                                    <div className={"flex w-96 h-96 items-center justify-center largest:hidden box-content " +
+                                        "smallest:shadow-2xl dark:shadow-blue-900 largest:hover:shadow-lg rounded-lg " +
+                                        "bg-gradient-to-r from-theme-light-1 to-theme-light-2 dark:from-theme-dark-1 " +
+                                        "dark:to-theme-dark-2 transition-all smallest:p-[5px] largest:p-[8px] " +
+                                        "largest:hover:p-[5px] mr-3"}>
+                                        <div className={"flex largest:hidden relative items-center justify-center rounded-lg " +
+                                            "bg-bg-light dark:bg-bg-dark h-full w-full"}>
                                             <ResponsiveContainer
                                                 width={390}
                                                 aspect={1}
@@ -103,7 +141,7 @@ function App() {
                                                 <RadarChart outerRadius={90} width={730} height={250} data={skills}>
                                                     <PolarGrid />
                                                     <PolarAngleAxis dataKey="name" stroke={darkMode ? "white" : "black"} tickLine={false} axisLine={false} tickSize={8}/>
-                                                    <Radar name="skills" dataKey="levelNum" stroke={darkMode ? "#3daf94" : "#f59e0b"} fill={darkMode ? "#3daf94" : "#f59e0b"} fillOpacity={0.65} />
+                                                    <Radar name="skills" dataKey="levelNum" stroke={"#f5154e"} fill={"#f5154e"} fillOpacity={0.65} />
                                                 </RadarChart>
                                             </ResponsiveContainer>
                                         </div>
@@ -156,5 +194,3 @@ function App() {
         </div>
     );
 }
-
-export default App;

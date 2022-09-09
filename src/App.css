@@ -80,3 +80,8 @@ a {
   rotation-point: center;
   rotate: 135deg;
 }
+
+#home-canvas{
+  width: 50%;
+  height: 100%;
+}

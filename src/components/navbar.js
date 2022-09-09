@@ -23,7 +23,7 @@ export default function Navbar({darkMode, setDarkMode}) {
     const [open, setOpen] = useState(false);
 
     const navbarItems: INavbarItems[] = [
-        {id: "about", title: "About"},
+        // {id: "about", title: "About"},
         {id: "xp", title: "Experience"},
     ];
 
@@ -52,11 +52,12 @@ export default function Navbar({darkMode, setDarkMode}) {
     function scrollTo(key: string) {
         let el = document.getElementById(key);
         el.scrollIntoView();
+        setOpen(false);
     }
     return (
         <>
             <div className=" hidden small:flex z-20 w-40 h-screen flex-col justify-between transition-colors bg-gradient-to-b from-theme-light-1/70 to-theme-light-2/70 dark:from-theme-dark-1 dark:to-theme-dark-2">
-                <a className={"flex flex-col items-center h-max justify-center py-16 bg-black/70 dark:bg-white/70"} href={"home"}>
+                <a className={"flex flex-col items-center cursor-pointer h-max justify-center py-16 bg-black/70 dark:bg-white/70"} onClick={() => scrollTo("home")}>
                     <span className={"text-8xl font-extrabold bg-clip-text text-transparent bg-gradient-to-r from-theme-light-1 to-theme-light-2 dark:from-theme-dark-1 dark:to-theme-dark-2"}>K</span>
                 </a>
                 <div className={"flex flex-col items-center h-max justify-center"}>
@@ -64,7 +65,6 @@ export default function Navbar({darkMode, setDarkMode}) {
                         navbarItems.map((item) => (
                             <a key={item.id + "-link"} onClick={() => scrollTo(item.id)} className={"group relative flex cursor-pointer w-32 text-lg justify-center items-center py-6"}>
                                 {item.title}
-                                <div className={"absolute -z-10 inset-y-0 -inset-x-3 transform transition-transform duration-300 -translate-x-40 group-hover:-translate-x-0 bg-gray-200"}/>
                             </a>
                         ))
                     }
@@ -86,15 +86,15 @@ export default function Navbar({darkMode, setDarkMode}) {
                 <button onClick={() => setOpen(!open)} className={"z-50 h-20 w-20 absolute top-0 left-0 bg-gradient-to-t from-theme-light-1 to-theme-light-2 dark:from-theme-dark-1 dark:to-theme-dark-2"}>
                     <FontAwesomeIcon size={"2xl"} className={"bg-clip-text text-bg-dark dark:text-bg-light"} icon={"bars"}/>
                 </button>
-                <a className={"flex z-10 relative flex-col items-center h-20 justify-center bg-black dark:bg-white"} href={"home"}>
+                <a className={"flex z-10 relative flex-col items-center cursor-pointer h-20 justify-center bg-black dark:bg-white"} onClick={() => scrollTo("home")}>
                     <span className={"text-6xl font-extrabold bg-clip-text text-transparent bg-gradient-to-r from-theme-light-1 to-theme-light-2 dark:from-theme-dark-1 dark:to-theme-dark-2"}>K</span>
                 </a>
                 <Transition
                     show={open}
-                    enter={"transform transition-all duration-300 ease-linear"}
+                    enter={"transform transition-all duration-200 ease-linear"}
                     enterFrom={"-translate-y-60"}
                     enterTo={"translate-y-0"}
-                    leave={"transform transition-all duration-300 ease-linear"}
+                    leave={"transform transition-all duration-200 ease-linear"}
                     leaveFrom={"translate-y-0"}
                     leaveTo={"-translate-y-60"}
                     className={"absolute flex flex-col w-full top-20 bg-gradient-to-r from-theme-light-1 to-theme-light-2 dark:from-theme-dark-1 dark:to-theme-dark-2"}

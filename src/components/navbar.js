@@ -51,7 +51,7 @@ export default function Navbar({darkMode, setDarkMode}) {
 
     function scrollTo(key: string) {
         let el = document.getElementById(key);
-        el.scrollIntoView();
+        el.scrollIntoView({behavior: "smooth"});
         setOpen(false);
     }
     return (
@@ -63,7 +63,7 @@ export default function Navbar({darkMode, setDarkMode}) {
                 <div className={"flex flex-col items-center h-max justify-center"}>
                     {
                         navbarItems.map((item) => (
-                            <a key={item.id + "-link"} onClick={() => scrollTo(item.id)} className={"group relative flex cursor-pointer w-32 text-lg justify-center items-center py-6"}>
+                            <a key={item.id + "-link"} onClick={() => scrollTo(item.id)} className={"group relative flex cursor-pointer w-32 text-xl font-bold justify-center items-center py-6"}>
                                 {item.title}
                             </a>
                         ))
@@ -102,7 +102,7 @@ export default function Navbar({darkMode, setDarkMode}) {
                     <div className={"flex flex-col items-center h-max justify-center"}>
                         {
                             navbarItems.map((item) => (
-                                <a key={item.id + "-link"} onClick={() => scrollTo(item.id)} className={"group relative flex cursor-pointer w-32 text-lg justify-center items-center py-6"}>
+                                <a key={item.id + "-link"} onClick={() => scrollTo(item.id)} className={"group relative flex cursor-pointer w-32 text-xl font-bold justify-center items-center py-6"}>
                                     {item.title}
                                 </a>
                             ))

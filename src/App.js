@@ -28,9 +28,9 @@ export default function App() {
                     <div id={"home"} className={"relative w-full h-screen"}>
                         <div id={"wrapper relative h-full"}>
                             <canvas id={"canvas"} className={"absolute inset-0 z-10"}></canvas>
-                            <div className={"absolute inset-0 z-20 flex flex-col text-7xl font-bold bg-clip-text bg-transparent pointer-events-none " +
+                            <div className={"absolute inset-0 z-20 flex flex-col text-5xl small:text-6xl largest:text-7xl font-bold bg-clip-text bg-transparent pointer-events-none " +
                                 "items-center justify-center"}>
-                                <span className={"flex"}>Hey, I'm Kolin.</span>
+                                <span className={"flex"}>Hi, I'm Kolin.</span>
                                 <span className={"flex"}>Software Developer</span>
                             </div>
                         </div>
@@ -194,3 +194,13 @@ export default function App() {
         </div>
     );
 }
+
+/*
+TODO:
+    - make side-bar select/hover animation
+    - Make SVG icon for title
+    - Add more to home page???
+    - Add About section
+    - Add contact section maybe???
+*/
+

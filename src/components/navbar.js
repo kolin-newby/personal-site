@@ -23,7 +23,7 @@ export default function Navbar({darkMode, setDarkMode}) {
     const [open, setOpen] = useState(false);
 
     const navbarItems: INavbarItems[] = [
-        // {id: "about", title: "About"},
+        {id: "about", title: "About"},
         {id: "xp", title: "Experience"},
     ];
 

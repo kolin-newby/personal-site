@@ -35,6 +35,18 @@ export default function App() {
                             </div>
                         </div>
                     </div>
+                    <div id={"about"} className={"flex h-screen items-center px-20"}>
+                        <div className={"flex flex-col text-2xl space-y-6 w-1/2"}>
+                            <span className={"flex font-bold largest:text-6xl text-5xl justify-center mb-4"}>About Me...</span>
+                            <span className={"flex"}>I'm a developer early in his career, living in Colorado, USA. I have a passion for the hiking, backpacking, and photography; feel free to check out some of my favorite photos!
+                                I love the outdoors and I aspire to make a positive impact on our planets current climate crisis the only way I know how, with code.</span>
+                            <span className={"flex"}>I got my undergraduate degree in Computer Science at CU Boulder and I went form there to working on a web logger written in the Go programming language, this project was open-source so
+                            check out my github if you're interested! I moved on to a front-end environment that uses React and Node.js to display massive amounts of, searchable, detailed
+                                API request and response data, collected by loggers like the Go logger I mentioned earlier. </span>
+                            <span className={"flex"}>On a different note, I greatly enjoy doing personal projects like Python web bots and computer vision scanners for scanning board game pieces.
+                                Recently, I have been trying my hand in the vast world of game development using C++ and SFML to recreate some classics.</span>
+                        </div>
+                    </div>
                     <div id={"xp"} className={"flex h-screen items-center"}>
                         <div className={"flex flex-col largest:flex-row items-center h-full w-full"}>
                             <div className={"flex shrink flex-col largest:w-[37.5%] justify-center px-10 largest:mb-0 mb-10"}>

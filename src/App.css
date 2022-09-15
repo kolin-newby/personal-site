@@ -71,17 +71,36 @@ a {
   padding-right: 2.00rem; /* 4px */
 }
 
-#moon {
-  width: 20rem;
-  height: 20rem;
-  border-radius: 70%;
-  box-shadow: 75px 75px 0 0 #d6e9ff;
-  background-color: transparent;
-  rotation-point: center;
-  rotate: 135deg;
-}
-
 #home-canvas{
   width: 50%;
   height: 100%;
+}
+
+.carousel > div.left{
+  transform: scale(75%);
+  opacity: 50%;
+}
+.carousel > div.right{
+  transform: scale(75%);
+  opacity: 50%;
+}
+
+.carousel > div.active{
+  animation-name: carousel-active;
+  animation-direction: normal;
+  animation-duration: 0.5s;
+  animation-fill-mode: none;
+  animation-play-state: running;
+  animation-timing-function: linear;
+  animation-iteration-count: 1;
+}
+
+@keyframes carousel-active {
+  0%{
+    transform: rotateY(40deg) translateX(40%) scale(70%);
+  }
+
+  100%{
+    transform: rotateY(0deg) translateX(0%);
+  }
 }

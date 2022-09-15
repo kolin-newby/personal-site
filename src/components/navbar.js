@@ -57,23 +57,38 @@ export default function Navbar({darkMode, setDarkMode}) {
     return (
         <>
             <div className=" hidden small:flex z-20 w-40 h-screen flex-col justify-between transition-colors bg-gradient-to-b from-theme-light-1/70 to-theme-light-2/70 dark:from-theme-dark-1 dark:to-theme-dark-2">
-                <a className={"flex flex-col items-center cursor-pointer h-max justify-center py-16 bg-black/70 dark:bg-white/70"} onClick={() => scrollTo("home")}>
-                    <span className={"text-8xl font-extrabold bg-clip-text text-transparent bg-gradient-to-r from-theme-light-1 to-theme-light-2 dark:from-theme-dark-1 dark:to-theme-dark-2"}>K</span>
+                <a className={"group flex flex-col items-center cursor-pointer h-max justify-center py-16 bg-black/70 dark:bg-white/70"} onClick={() => scrollTo("home")}>
+                    <span className={"text-8xl font-extrabold bg-clip-text text-transparent " +
+                        "bg-gradient-to-r from-theme-light-1 to-theme-light-2 " +
+                        "dark:from-theme-dark-1 dark:to-theme-dark-2 group-hover:animate-wiggle"}>K</span>
                 </a>
                 <div className={"flex flex-col items-center h-max justify-center"}>
                     {
                         navbarItems.map((item) => (
-                            <a key={item.id + "-link"} onClick={() => scrollTo(item.id)} className={"group relative flex cursor-pointer w-32 text-xl font-bold justify-center items-center py-6"}>
+                            <a
+                                key={item.id + "-link"}
+                                onClick={() => scrollTo(item.id)}
+                                className={"group relative flex cursor-pointer w-32 " +
+                                    "text-xl font-bold justify-center items-center py-6 " +
+                                    "transition-colors duration-300 hover:bg-gray-200 hover:bg-opacity-20 " +
+                                    "rounded"}
+                            >
                                 {item.title}
                             </a>
                         ))
                     }
                 </div>
                 <div className={"flex flex-col justify-center items-center pb-10"}>
-                    <div className={"flex justify-center items-center w-full space-x-3 mb-6 text-bg-dark dark:text-bg-light"}>
+                    <div className={"flex justify-center items-center w-full space-x-5 mb-6 text-bg-dark dark:text-bg-light"}>
                         {
                             mediaLinks.map((link) => (
-                                <a key={link.name + "-link"} className={"flex"} href={link.link} title={link.title} target={"_blank"}>
+                                <a
+                                    key={link.name + "-link"}
+                                    className={"flex transition-transform transform scale-100 hover:scale-125"}
+                                    href={link.link}
+                                    title={link.title}
+                                    target={"_blank"}
+                                >
                                     <FontAwesomeIcon icon={link.icon} size={link.size}/>
                                 </a>
                             ))

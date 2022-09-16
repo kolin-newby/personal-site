@@ -52,7 +52,7 @@ export default function App() {
                             <span className={"flex"}>I really enjoy doing personal projects like making Python web bots and computer vision scanners for scanning board game pieces.
                                 Recently, I have been trying my hand in the vast world of game development using C++ and SFML to recreate some classics.</span>
                         </div>
-                        <div className={"flex largest:w-2/3"}>
+                        <div className={"flex largest:w-2/3 h-full"}>
                             <PhotoCarousel/>
                         </div>
                     </div>

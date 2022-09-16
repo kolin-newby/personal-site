@@ -76,16 +76,34 @@ a {
   height: 100%;
 }
 
-.carousel > div.left{
-  transform: scale(75%);
-  opacity: 50%;
+.carousel > div{
+  transform-origin: top left;
+  transform: translateX(-30%) translateY(-50%);
 }
-.carousel > div.right{
-  transform: scale(75%);
-  opacity: 50%;
+
+.carousel > div:nth-child(1).inactive{
+  border-radius: 0.75rem;
+  background-color: black;
+  transform: scale(80%) translateX(-70%) translateY(-50%);
+  z-index: 20;
+}
+
+.carousel > div:nth-child(2).inactive{
+  border-radius: 0.75rem;
+  background-color: black;
+  transform: scale(60%) translateX(-125%) translateY(-50%);
+  z-index: 10;
 }
 
 .carousel > div.active{
+  z-index: 30;
+  border-radius: 0.75rem;
+  transform: translateX(-30%) translateY(-50%);
+  /*--------------------------*/
+  transition-property: all;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 150ms;
+  /*--------------------------*/
   animation-name: carousel-active;
   animation-direction: normal;
   animation-duration: 0.5s;
@@ -93,6 +111,11 @@ a {
   animation-play-state: running;
   animation-timing-function: linear;
   animation-iteration-count: 1;
+}
+
+.carousel > div.active:hover{
+  z-index: 30;
+  transform: translateX(-30%) translateY(-52%);
 }
 
 @keyframes carousel-active {

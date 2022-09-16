@@ -8,7 +8,7 @@ export default function PhotoCarousel() {
             info: {
                 name: "Clyfford Still Museum",
                 location: "Denver USA",
-                desc: "Beautiful architecture in Denver"
+                desc: "Architecture in Denver"
                 }
         },
         {
@@ -29,46 +29,61 @@ export default function PhotoCarousel() {
         }
     ]
 
-    const [activePhoto, setActivePhoto] = useState("prof.jpg");
+    const [activePhoto, setActivePhoto] = useState("KBN02251.jpg");
 
-    function returnPhotoClass(photo, i) {
-        let activeClass = "active";
-        let leftClass = "left";
-        let rightClass = "right";
+    function returnPhotoClass(photo) {
+        if (photo === activePhoto) return "active";
+        else return "inactive";
+    }
 
-        if (photo === activePhoto) return activeClass;
+    function handlePhotoClick(photo) {
+        if (photo.src === activePhoto) return;
 
-        let activeIndex = photoFiles.findIndex((file) => file === activePhoto)
-        if (activeIndex === 2) {
-            if (i === 0) return rightClass;
-            if (i === 1) return leftClass;
-        }
-        if (activeIndex === 0) {
-            if (i === 1) return rightClass;
-            if (i === 2) return leftClass;
-        }
-        else {
-            if (i === 2) return rightClass;
-            if (i === 0) return leftClass;
-        }
+        setActivePhoto(photo.src);
     }
 
     return(
-        <div className={"flex w-full h-full carousel items-center justify-center"} style={{backgroundImage:activePhoto}}>
-            {photoFiles.map((photo, index) => (
-                <div className={`${returnPhotoClass(photo.src, index)} h-[18rem] w-[12rem] largest:h-[40rem] largest:w-[28rem] pt-6 group object-cover relative`}>
+        <div className={"relative w-full h-full carousel"}>
+            {photoFiles.sort((a, b) => {
+                if (a.src === activePhoto && b.src !== activePhoto) return 1;
+                if (b.src === activePhoto && a.src !== activePhoto) return -1;
+                return 0;
+
+            }).map((photo) => (
+                <div className={`${returnPhotoClass(photo.src)} absolute transition-all top-1/2 left-1/2 h-[18rem] w-[12rem] largest:h-[44rem] largest:w-[32rem] group object-cover ${
+                    returnPhotoClass(photo.src) === "active" ?
+                    "shadow-lg dark:shadow-blue-900 hover:shadow-2xl"
+                    :
+                    ""}`}>
                     <div
-                        className={"absolute flex flex-col top-5 left-10"}
+                        className={`absolute flex justify-center items-end flex-col top-16 right-0 bg-bg-light dark:bg-bg-dark bg-opacity-70 dark:bg-opacity-70 rounded-l pl-3 py-2 pr-4 ${returnPhotoClass(photo.src) === "active" ? "visible" : "invisible"}`}
                     >
-                        <span className={"flex text-3xl font-bold"}>{photo.info.name}</span>
-                        <span className={"flex transition-opacity duration-300 opacity-0 group-hover:opacity-100 text-2xl border-b border-bg-light w-max pb-2 mb-2"}>{"- " + photo.info.location}</span>
-                        <span className={"flex transition-opacity duration-300 opacity-0 group-hover:opacity-100 text-xl"}>{photo.info.desc}</span>
+                        <span
+                            className={`${returnPhotoClass(photo.src) === "active" ? "visible" : "invisible"} flex largest:text-3xl font-bold`}
+                        >
+                            {photo.info.name}
+                        </span>
+                        <span
+                            className={`${returnPhotoClass(photo.src) === "active" ? "visible" : "invisible"} flex transition-opacity duration-300 largest:text-2xl border-b border-black dark:border-white w-max pb-2 mb-2`}
+                        >
+                            {photo.info.location}
+                        </span>
+                        <span
+                            className={`${returnPhotoClass(photo.src) === "active" ? "visible" : "invisible"} flex transition-opacity duration-300 largest:text-xl`}
+                        >
+                            {photo.info.desc}
+                        </span>
                     </div>
                     <img
                         key={"key-" + photo.src}
                         src={"/photos/" + photo.src}
                         alt={photo.src}
-                        className={"w-full h-full object-cover rounded-xl"}
+                        onClick={() => handlePhotoClick(photo)}
+                        className={`w-full h-full object-cover rounded-xl ${returnPhotoClass(photo.src) === "active" ?
+                            "opacity-100"
+                            :
+                            "opacity-40 hover:opacity-60 transition-opacity"}
+                            `}
                     />
                 </div>
             ))}

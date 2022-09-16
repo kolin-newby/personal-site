@@ -5,6 +5,7 @@ import {loadIcons} from "./config/iconLoader";
 import useScript from "./components/script-loader";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {RadarChart, PolarGrid, PolarAngleAxis, Radar, ResponsiveContainer} from "recharts";
+import PhotoCarousel from "./components/photo-carousel";
 
 loadIcons();
 export default function App() {
@@ -20,6 +21,11 @@ export default function App() {
         {name: "Back-End", level: "55%", levelNum: 55},
     ]
 
+    useEffect(() => {
+        let mode = (document.cookie.split("=")[1] === "true");
+        setDarkMode(mode);
+    }, [])
+
     return (
         <div className={`${darkMode ? "dark" : ""}`}>
             <div id={"topDiv"} className={"flex small:flex-row flex-col overflow-hidden h-screen dark:text-white bg-bg-light dark:bg-bg-dark"}>
@@ -33,6 +39,21 @@ export default function App() {
                                 <span className={"flex"}>Hi, I'm Kolin.</span>
                                 <span className={"flex"}>Software Developer</span>
                             </div>
+                        </div>
+                    </div>
+                    <div id={"about"} className={"flex largest:flex-row flex-col smallest:h-screen items-center px-20"}>
+                        <div className={"flex flex-col text-xl largest:text-2xl space-y-6 largest:w-1/3 pt-5"}>
+                            <span className={"flex font-bold largest:text-6xl text-5xl justify-center mb-4"}>About Me...</span>
+                            <span className={"flex"}>I'm a developer early in his career, living in Colorado, USA. I have a passion for the hiking, backpacking, and photography; feel free to check out some of my favorite photos!
+                                I love the outdoors and I aspire to make a positive impact on our planets current climate crisis the only way I know how, with code.</span>
+                            <span className={"flex"}>I got my undergraduate degree in Computer Science at CU Boulder and I went form there to working on a web logger written in the Go programming language, this project was open-source so
+                            check out my github if you're interested! I moved on to a front-end environment that uses React and Node.js to display massive amounts of, searchable, detailed
+                                API request and response data, collected by loggers like the Go logger I mentioned earlier. </span>
+                            <span className={"flex"}>I really enjoy doing personal projects like making Python web bots and computer vision scanners for scanning board game pieces.
+                                Recently, I have been trying my hand in the vast world of game development using C++ and SFML to recreate some classics.</span>
+                        </div>
+                        <div className={"flex largest:w-2/3 h-full"}>
+                            <PhotoCarousel/>
                         </div>
                     </div>
                     <div id={"xp"} className={"flex h-screen items-center"}>
@@ -197,7 +218,6 @@ export default function App() {
 
 /*
 TODO:
-    - make side-bar select/hover animation
     - Make SVG icon for title
     - Add more to home page???
     - Add About section

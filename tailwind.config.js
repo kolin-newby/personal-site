@@ -1,4 +1,5 @@
 /** @type {import('tailwindcss').Config} */
+
 module.exports = {
   darkMode: 'class',
   content: [
@@ -7,13 +8,19 @@ module.exports = {
   ],
   theme: {
     extend: {
+      keyframes: {
+        wiggle: {
+          '0%, 100%': {transform: 'rotate(-2deg)'},
+          '50%': {transform: 'rotate(2deg)'},
+        }
+      },
+      animation: {
+        wiggle: 'wiggle 0.5s ease-in-out infinite',
+      },
       screens: {
         'smallest': '770px',
         'small': '930px',
         'largest': '1600px'
-      },
-      animation: {
-        'pulse-slow': 'pulse 5s linear infinite',
       },
       colors: {
         'theme-light-1': '#f5154e',

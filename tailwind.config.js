@@ -14,13 +14,12 @@ module.exports = {
           '50%': {transform: 'rotate(2deg)'},
         }
       },
+      scale: {
+        '98': '0.98',
+        '99': '0.99'
+      },
       animation: {
         wiggle: 'wiggle 0.5s ease-in-out infinite',
-      },
-      screens: {
-        'smallest': '770px',
-        'small': '930px',
-        'largest': '1600px'
       },
       colors: {
         'theme-light-1': '#f5154e',

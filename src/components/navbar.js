@@ -57,7 +57,7 @@ export default function Navbar({darkMode, setDarkMode}) {
     }
     return (
         <>
-            <div className=" hidden small:flex z-20 w-40 h-screen flex-col justify-between transition-colors bg-gradient-to-b from-theme-light-1/70 to-theme-light-2/70 dark:from-theme-dark-1 dark:to-theme-dark-2">
+            <div className=" hidden lg:flex z-20 w-40 h-screen flex-col justify-between transition-colors bg-gradient-to-b from-theme-light-1/70 to-theme-light-2/70 dark:from-theme-dark-1 dark:to-theme-dark-2">
                 <a className={"group flex flex-col items-center cursor-pointer h-max justify-center py-16 bg-black/70 dark:bg-white/70"} onClick={() => scrollTo("home")}>
                     <span className={"text-8xl font-extrabold bg-clip-text text-transparent " +
                         "bg-gradient-to-r from-theme-light-1 to-theme-light-2 " +
@@ -98,7 +98,7 @@ export default function Navbar({darkMode, setDarkMode}) {
                     <ThemeSlider darkMode={darkMode} setDarkMode={setDarkMode}/>
                 </div>
             </div>
-            <div className="z-50 flex w-full relative small:hidden flex-col justify-between transition-colors bg-gradient-to-r from-theme-light-1/70 to-theme-light-2/70 dark:bg-bg-dark">
+            <div className="z-50 flex w-full relative lg:hidden flex-col justify-between transition-colors bg-gradient-to-r from-theme-light-1/70 to-theme-light-2/70 dark:bg-bg-dark">
                 <button onClick={() => setOpen(!open)} className={"z-50 h-20 w-20 absolute top-0 left-0 bg-gradient-to-t from-theme-light-1 to-theme-light-2 dark:from-theme-dark-1 dark:to-theme-dark-2"}>
                     <FontAwesomeIcon size={"2xl"} className={"bg-clip-text text-bg-dark dark:text-bg-light"} icon={"bars"}/>
                 </button>

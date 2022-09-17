@@ -30,6 +30,7 @@ module.exports = {
         'theme-dark-2': '#420b9f',
         'theme-dark-3': '#3daf94',
         'bg-dark': 'rgb(3,1,24)',
+        // 'bg-dark-accent': 'rgb(8,3,65)',
         'bg-light': '#eeeeee',
       }
     },

@@ -25,6 +25,7 @@ export default function Navbar({darkMode, setDarkMode}) {
     const navbarItems: INavbarItems[] = [
         {id: "about", title: "About"},
         {id: "xp", title: "Experience"},
+        {id: "contact", title: "Contact"}
     ];
 
     const mediaLinks: IMediaLinks[] = [

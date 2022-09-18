@@ -1,4 +1,5 @@
 import React, {useEffect, useState} from "react";
+// require('dotenv').config();
 
 export default function Contact() {
     const title = "Contact_Me...";
@@ -31,7 +32,7 @@ export default function Contact() {
         let msg = `{"text" : "New website message from: ${name}<br>Subject: ${subject}<br>Respond to: ${email}<br><br>${message}"}`
         // hermes.send(msg);
 
-        console.log(slackWebHook);
+        console.log(process.env);
         //--------------------------
         setSent(true);
         setName("");
@@ -105,6 +106,7 @@ export default function Contact() {
                             "focus:outline-none transform transition-transform origin-top focus:scale-y-98"}
                         placeholder={"message"}
                         value={message}
+                        onChange={(input) => setMessage(input.target.value)}
                     />
                 </div>
             </div>

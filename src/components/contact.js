@@ -1,6 +1,5 @@
 import React, {useEffect, useState} from "react";
 // require('dotenv').config();
-
 export default function Contact() {
     const title = "Contact_Me...";
     const slackWebHook = process.env.SLACKHOOK;
@@ -65,7 +64,7 @@ export default function Contact() {
             <div className={"flex relative flex-col lg:w-1/2 w-2/3 mt-20 text-xl lg:text-2xl space-y-5"}>
                 <div className={`${sent ? "opacity-100" : "opacity-0"} transition-opacity duration-500 pointer-events-none absolute flex z-10 inset-0 bg-bg-light dark:bg-bg-dark bg-opacity-80 dark:bg-opacity-60 text-3xl font-bold justify-center items-center`}>Message Sent!</div>
                 <div className={"flex flex-col lg:flex-row w-full space-y-5 lg:space-y-0 lg:space-x-5"}>
-                    <div className={"group flex lg:w-1/2 w-full bg-gradient-to-r from-theme-light-1 to-theme-light-2 rounded"}>
+                    <div className={"flex lg:w-1/2 w-full bg-gradient-to-r from-theme-light-1 to-theme-light-2 rounded"}>
                         <input
                             id={"inputName"}
                             className={"flex w-full bg-gray-300 dark:bg-gray-200 dark:bg-opacity-20 h-14 rounded p-5 text-center " +
@@ -76,7 +75,7 @@ export default function Contact() {
                             onChange={(input) => setName(input.target.value)}
                         />
                     </div>
-                    <div className={"group flex lg:w-1/2 w-full bg-gradient-to-r from-theme-light-1 to-theme-light-2 rounded"}>
+                    <div className={"flex lg:w-1/2 w-full bg-gradient-to-r from-theme-light-1 to-theme-light-2 rounded"}>
                         <input
                             id={"inputEmail"}
                             className={"flex w-full bg-gray-300 dark:bg-gray-200 dark:bg-opacity-20 h-14 rounded p-5 text-center " +
@@ -88,7 +87,7 @@ export default function Contact() {
                         />
                     </div>
                 </div>
-                <div className={"group flex w-full bg-gradient-to-r from-theme-light-1 to-theme-light-2 rounded"}>
+                <div className={"flex w-full bg-gradient-to-r from-theme-light-1 to-theme-light-2 rounded"}>
                     <input
                         id={"inputSubject"}
                         className={"flex w-full bg-gray-300 dark:bg-gray-200 dark:bg-opacity-20 h-14 rounded p-5 text-center " +
@@ -99,7 +98,7 @@ export default function Contact() {
                         onChange={(input) => setSubject(input.target.value)}
                     />
                 </div>
-                <div className={"group flex w-full bg-gradient-to-r from-theme-light-1 to-theme-light-2 rounded"}>
+                <div className={"flex w-full bg-gradient-to-r from-theme-light-1 to-theme-light-2 rounded"}>
                     <textarea
                         id={"inputMessage"}
                         className={"flex-wrap w-full bg-gray-300 dark:bg-gray-200 dark:bg-opacity-20 h-48 rounded p-5 " +

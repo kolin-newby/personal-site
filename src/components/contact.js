@@ -31,7 +31,7 @@ export default function Contact() {
         let msg = `{"text" : "New website message from: ${name}<br>Subject: ${subject}<br>Respond to: ${email}<br><br>${message}"}`
         // hermes.send(msg);
 
-        console.log(process.env.REACT_ENV_SLACKHOOK);
+        console.log(process.env);
         //--------------------------
         setSent(true);
         setName("");

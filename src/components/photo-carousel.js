@@ -43,33 +43,32 @@ export default function PhotoCarousel() {
     }
 
     return(
-        <div className={"relative w-full h-full carousel"}>
+        <div className={"relative w-full block carousel"}>
             {photoFiles.sort((a, b) => {
                 if (a.src === activePhoto && b.src !== activePhoto) return 1;
                 if (b.src === activePhoto && a.src !== activePhoto) return -1;
                 return 0;
-
             }).map((photo) => (
-                <div className={`${returnPhotoClass(photo.src)} absolute transition-all top-1/2 left-1/2 h-[18rem] w-[12rem] largest:h-[44rem] largest:w-[32rem] group object-cover ${
+                <div className={`${returnPhotoClass(photo.src)} absolute transition-all top-1/2 left-1/2 h-[20rem] w-[14rem] xs:h-[20rem] xs:w-[18rem] lg:h-[22rem] lg:w-[22rem] 2xl:h-[40rem] 2xl:w-[30rem] group object-cover ${
                     returnPhotoClass(photo.src) === "active" ?
                     "shadow-lg dark:shadow-blue-900 hover:shadow-2xl"
                     :
                     ""}`}>
                     <div
-                        className={`absolute flex justify-center items-end flex-col top-16 right-0 bg-bg-light dark:bg-bg-dark bg-opacity-70 dark:bg-opacity-70 rounded-l pl-3 py-2 pr-4 ${returnPhotoClass(photo.src) === "active" ? "visible" : "invisible"}`}
+                        className={`small:flex hidden absolute justify-center items-end flex-col top-16 right-0 bg-bg-light dark:bg-bg-dark bg-opacity-70 dark:bg-opacity-70 rounded-l pl-3 py-2 pr-4 ${returnPhotoClass(photo.src) === "active" ? "visible" : "invisible"}`}
                     >
                         <span
-                            className={`${returnPhotoClass(photo.src) === "active" ? "visible" : "invisible"} flex largest:text-3xl font-bold`}
+                            className={`${returnPhotoClass(photo.src) === "active" ? "visible" : "invisible"} flex 2xl:text-3xl font-bold`}
                         >
                             {photo.info.name}
                         </span>
                         <span
-                            className={`${returnPhotoClass(photo.src) === "active" ? "visible" : "invisible"} flex transition-opacity duration-300 largest:text-2xl border-b border-black dark:border-white w-max pb-2 mb-2`}
+                            className={`${returnPhotoClass(photo.src) === "active" ? "visible" : "invisible"} flex transition-opacity duration-300 2xl:text-2xl border-b border-black dark:border-white w-max pb-2 mb-2`}
                         >
                             {photo.info.location}
                         </span>
                         <span
-                            className={`${returnPhotoClass(photo.src) === "active" ? "visible" : "invisible"} flex transition-opacity duration-300 largest:text-xl`}
+                            className={`${returnPhotoClass(photo.src) === "active" ? "visible" : "invisible"} flex transition-opacity duration-300 2xl:text-xl`}
                         >
                             {photo.info.desc}
                         </span>

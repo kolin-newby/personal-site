@@ -1,7 +1,6 @@
 const canvas = document.getElementById("canvas");
 const ctx = canvas.getContext("2d");
 
-
 let hueIncrease = true;
 const hueTop = 345;
 const hueBottom = 262;
@@ -26,8 +25,9 @@ canvas.addEventListener("mousemove", function (event) {
 
 class Particle {
     constructor() {
-        this.x = mouse.x - 150;
-        this.y = mouse.y;
+        const mobile = window.innerWidth < 1024;
+        this.x = mobile ? (mouse.x) : (mouse.x - 150);
+        this.y = mobile ? (mouse.y-80) : (mouse.y);
         this.size = Math.random() * 2 + 0.1;
         this.speedX = Math.random() * 2;
         this.speedY = Math.random() * 2;

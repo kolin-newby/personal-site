@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from "react";
-// require('dotenv').config();
+
 export default function Contact() {
     const title = "Contact_Me...";
     const slackWebHook = process.env.REACT_APP_SLACKHOOK;
@@ -23,11 +23,10 @@ export default function Contact() {
 
         let hermes = new XMLHttpRequest();
         hermes.open("POST", slackWebHook);
-        hermes.setRequestHeader("Content-type", "application/json");
 
-        hermes.onload = () => console.log(hermes.responseText);
+        hermes.onload = () => console.log(hermes.responseText.replaceAll(slackWebHook, "[REDACTED]"));
 
-        let msg = `{"text" : "New website message from: ${name}<br>Subject: ${subject}<br>Respond to: ${email}<br><br>${message}"}`
+        let msg = `{"text" : "New website message from: ${name}\nSubject: ${subject}\nRespond to: ${email}\n\n${message}"}`
         hermes.send(msg);
         //--------------------------
         setSent(true);

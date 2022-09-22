@@ -2,7 +2,7 @@ import React, {useEffect, useState} from "react";
 // require('dotenv').config();
 export default function Contact() {
     const title = "Contact_Me...";
-    const slackWebHook = process.env.SLACKHOOK;
+    const slackWebHook = process.env.REACT_APP_SLACKHOOK;
 
     const [name, setName] = useState("");
     const [email, setEmail] = useState("");
@@ -27,11 +27,8 @@ export default function Contact() {
 
         hermes.onload = () => console.log(hermes.responseText);
 
-        // let test = `{"text":"hello there..."}`
         let msg = `{"text" : "New website message from: ${name}<br>Subject: ${subject}<br>Respond to: ${email}<br><br>${message}"}`
-        // hermes.send(msg);
-
-        console.log(process.env);
+        hermes.send(msg);
         //--------------------------
         setSent(true);
         setName("");
@@ -67,7 +64,7 @@ export default function Contact() {
                     <div className={"flex lg:w-1/2 w-full bg-gradient-to-r from-theme-light-1 to-theme-light-2 rounded"}>
                         <input
                             id={"inputName"}
-                            className={"flex w-full bg-gray-300 dark:bg-gray-200 dark:bg-opacity-20 h-14 rounded p-5 text-center " +
+                            className={"flex w-full bg-gray-300 dark:bg-[#080430] h-14 rounded p-5 text-center " +
                                 "focus:outline-none transform transition-transform origin-top focus:scale-y-95"}
                             type={"text"}
                             placeholder={"name"}
@@ -78,7 +75,7 @@ export default function Contact() {
                     <div className={"flex lg:w-1/2 w-full bg-gradient-to-r from-theme-light-1 to-theme-light-2 rounded"}>
                         <input
                             id={"inputEmail"}
-                            className={"flex w-full bg-gray-300 dark:bg-gray-200 dark:bg-opacity-20 h-14 rounded p-5 text-center " +
+                            className={"flex w-full bg-gray-300 dark:bg-[#080430] h-14 rounded p-5 text-center " +
                                 "focus:outline-none transform transition-transform origin-top focus:scale-y-95"}
                             type={"email"}
                             placeholder={"email"}
@@ -90,7 +87,7 @@ export default function Contact() {
                 <div className={"flex w-full bg-gradient-to-r from-theme-light-1 to-theme-light-2 rounded"}>
                     <input
                         id={"inputSubject"}
-                        className={"flex w-full bg-gray-300 dark:bg-gray-200 dark:bg-opacity-20 h-14 rounded p-5 text-center " +
+                        className={"flex w-full bg-gray-300 dark:bg-[#080430] h-14 rounded p-5 text-center " +
                             "focus:outline-none transform transition-transform origin-top focus:scale-y-95"}
                         type={"text"}
                         placeholder={"subject"}
@@ -101,7 +98,7 @@ export default function Contact() {
                 <div className={"flex w-full bg-gradient-to-r from-theme-light-1 to-theme-light-2 rounded"}>
                     <textarea
                         id={"inputMessage"}
-                        className={"flex-wrap w-full bg-gray-300 dark:bg-gray-200 dark:bg-opacity-20 h-48 rounded p-5 " +
+                        className={"flex-wrap w-full bg-gray-300 dark:bg-[#080430] h-48 rounded p-5 " +
                             "focus:outline-none transform transition-transform origin-top focus:scale-y-98"}
                         placeholder={"message"}
                         value={message}
@@ -112,7 +109,7 @@ export default function Contact() {
             <button className={"px-5 py-3 mt-5 text-xl lg:w-1/6 font-bold text-bg-light dark:text-bg-dark rounded flex justify-center " +
                 "shadow-lg " +
                 `dark:shadow-blue-900 ${(name === "" || email === "" || subject === "" || message === "") ?
-                    "opacity-50 text-bg-dark dark:text-bg-light cursor-no-drop" :
+                    "opacity-50 text-bg-dark dark:text-bg-light bg-gray-300 dark:bg-gray-500/30 cursor-no-drop" :
                     "bg-gradient-to-r from-theme-light-1 to-theme-light-2 hover:shadow-xl hover:-translate-y-1 transform transition-all transform transition-all"}`}
                     disabled={name === "" || email === "" || subject === "" || message === ""}
                     onClick={() => handleContactSubmit()}

@@ -2,7 +2,7 @@ import React, {useEffect, useState} from "react";
 // require('dotenv').config();
 export default function Contact() {
     const title = "Contact_Me...";
-    const slackWebHook = process.env.SLACKHOOK;
+    const slackWebHook = process.env.REACT_APP_SLACKHOOK;
 
     const [name, setName] = useState("");
     const [email, setEmail] = useState("");
@@ -27,11 +27,8 @@ export default function Contact() {
 
         hermes.onload = () => console.log(hermes.responseText);
 
-        // let test = `{"text":"hello there..."}`
         let msg = `{"text" : "New website message from: ${name}<br>Subject: ${subject}<br>Respond to: ${email}<br><br>${message}"}`
-        // hermes.send(msg);
-
-        console.log(process.env);
+        hermes.send(msg);
         //--------------------------
         setSent(true);
         setName("");

@@ -78,6 +78,7 @@ export default function Contact() {
                                 "focus:outline-none transform transition-transform origin-top focus:scale-y-95"}
                             type={"text"}
                             placeholder={"name"}
+                            maxLength={40}
                             value={name}
                             onChange={(input) => setName(input.target.value)}
                         />
@@ -89,6 +90,7 @@ export default function Contact() {
                                 "focus:outline-none transform transition-transform origin-top focus:scale-y-95"}
                             type={"email"}
                             placeholder={"email"}
+                            maxLength={40}
                             value={email}
                             onChange={(input) => setEmail(input.target.value)}
                         />
@@ -101,6 +103,7 @@ export default function Contact() {
                             "focus:outline-none transform transition-transform origin-top focus:scale-y-95"}
                         type={"text"}
                         placeholder={"subject"}
+                        maxLength={100}
                         value={subject}
                         onChange={(input) => setSubject(input.target.value)}
                     />
@@ -120,7 +123,7 @@ export default function Contact() {
             <button className={"px-5 py-3 mt-5 text-xl lg:w-1/6 font-bold text-bg-light dark:text-bg-dark rounded flex justify-center " +
                 "shadow-lg " +
                 `dark:shadow-blue-900 ${sendButtonErrs().length !== 0 ?
-                    "opacity-50 text-bg-dark dark:text-bg-light bg-gray-300 dark:bg-gray-500/30 cursor-no-drop" :
+                    "opacity-50 text-bg-dark dark:text-bg-light bg-gray-300 dark:bg-gray-500/30 cursor-not-allowed" :
                     "bg-gradient-to-r from-theme-light-1 to-theme-light-2 hover:shadow-xl hover:-translate-y-1 transform transition-all transform transition-all"}`}
                     disabled={name === "" || email === "" || subject === "" || message === ""}
                     onClick={() => handleContactSubmit()}

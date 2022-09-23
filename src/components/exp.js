@@ -21,8 +21,8 @@ export default function Experience({darkMode}) {
                     <span
                         className={"flex 2xl:text-6xl sm:text-5xl text-4xl mt-5 2xl:mt-0 justify-center font-extrabold pb-10"}
                     >
-                        {title.split("").map((letter) => (
-                            <span className={"cursor-default hover:text-transparent transition-all duration-75 " +
+                        {title.split("").map((letter, index) => (
+                            <span key={"exp-title-" + letter + index} className={"cursor-default hover:text-transparent transition-all duration-75 " +
                                 "hover:transform hover:-translate-y-3 bg-clip-text bg-gradient-to-r " +
                                 `from-theme-light-1 to-theme-light-2 dark:from-theme-dark-1 dark:to-theme-dark-2 ${letter === "_" ? "invisible" : "visible"}`}>{letter}</span>
                         ))}

@@ -29,7 +29,7 @@ export default function PhotoCarousel() {
         }
     ]
 
-    const [activePhoto, setActivePhoto] = useState("KBN02251.jpg");
+    const [activePhoto, setActivePhoto] = useState("prof.jpg");
 
     function returnPhotoClass(photo) {
         if (photo === activePhoto) return "active";
@@ -49,13 +49,13 @@ export default function PhotoCarousel() {
                 if (b.src === activePhoto && a.src !== activePhoto) return -1;
                 return 0;
             }).map((photo) => (
-                <div className={`${returnPhotoClass(photo.src)} absolute transition-all top-1/2 left-1/2 h-[20rem] w-[14rem] xs:h-[20rem] xs:w-[18rem] lg:h-[22rem] lg:w-[22rem] 2xl:h-[40rem] 2xl:w-[30rem] group object-cover ${
+                <div key={"carousel-photo-" + photo.info.name} className={`${returnPhotoClass(photo.src)} absolute transition-all top-1/2 left-1/2 h-[20rem] w-[14rem] xs:h-[20rem] xs:w-[18rem] lg:h-[22rem] lg:w-[22rem] 2xl:h-[40rem] 2xl:w-[30rem] group object-cover ${
                     returnPhotoClass(photo.src) === "active" ?
                     "shadow-lg dark:shadow-blue-900 hover:shadow-2xl"
                     :
                     ""}`}>
                     <div
-                        className={`small:flex hidden absolute justify-center items-end flex-col top-16 right-0 bg-bg-light dark:bg-bg-dark bg-opacity-70 dark:bg-opacity-70 rounded-l pl-3 py-2 pr-4 ${returnPhotoClass(photo.src) === "active" ? "visible" : "invisible"}`}
+                        className={`2xl:flex hidden absolute justify-center items-end flex-col top-12 right-0 bg-bg-light dark:bg-bg-dark bg-opacity-70 dark:bg-opacity-70 rounded-l pl-3 py-2 pr-4 ${returnPhotoClass(photo.src) === "active" ? "visible" : "invisible"}`}
                     >
                         <span
                             className={`${returnPhotoClass(photo.src) === "active" ? "visible" : "invisible"} flex 2xl:text-3xl font-bold`}

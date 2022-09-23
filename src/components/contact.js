@@ -18,6 +18,17 @@ export default function Contact() {
             }, 3000)
         }
     }, [sent])
+
+    function sendButtonErrs() {
+        let errors = [];
+        if (!name.length > 0) errors.push("Please enter your name.");
+        if (!email.length > 0) errors.push("Please enter an email address.");
+        if (!email.includes("@") || !email.includes(".")) errors.push("Please enter a valid email address.");
+        if (!subject.length > 0) errors.push("Please enter a subject.");
+        if (!message.length > 0) errors.push("Please enter a message.");
+        return errors;
+    }
+
     function handleContactSubmit() {
         // if (slackWebHook === undefined) return;
 
@@ -26,7 +37,7 @@ export default function Contact() {
 
         hermes.onload = () => console.log(hermes.responseText.replaceAll(slackWebHook, "[REDACTED]"));
 
-        let msg = `{"text" : "New website message from: ${name}\nSubject: ${subject}\nRespond to: ${email}\n\n${message}"}`
+        let msg = `{"text" : "New message from:\n${name}\n\nSubject:\n${subject}\n\nRespond to:\n${email}\n\n\n${message}"}`
         hermes.send(msg);
         //--------------------------
         setSent(true);
@@ -40,7 +51,7 @@ export default function Contact() {
         <div id={"contact"} className={"flex flex-grow flex-col min-h-screen items-center justify-center"}>
             <div className={"flex flex-col items-center justify-center w-full"}>
                 <span
-                    className={"flex 2xl:text-6xl text-5xl mt-5 2xl:mt-0 justify-center font-extrabold pb-20"}
+                    className={"flex 2xl:text-6xl sm:text-5xl text-4xl mt-5 2xl:mt-0 justify-center font-extrabold pb-20"}
                 >
                         {title.split("").map((letter) => (
                             <span className={"cursor-default hover:text-transparent transition-all duration-75 " +
@@ -101,18 +112,19 @@ export default function Contact() {
                             "focus:outline-none transform transition-transform origin-top focus:scale-y-98"}
                         placeholder={"message"}
                         value={message}
+                        maxLength={600}
                         onChange={(input) => setMessage(input.target.value)}
                     />
                 </div>
             </div>
             <button className={"px-5 py-3 mt-5 text-xl lg:w-1/6 font-bold text-bg-light dark:text-bg-dark rounded flex justify-center " +
                 "shadow-lg " +
-                `dark:shadow-blue-900 ${(name === "" || email === "" || subject === "" || message === "") ?
+                `dark:shadow-blue-900 ${sendButtonErrs().length !== 0 ?
                     "opacity-50 text-bg-dark dark:text-bg-light bg-gray-300 dark:bg-gray-500/30 cursor-no-drop" :
                     "bg-gradient-to-r from-theme-light-1 to-theme-light-2 hover:shadow-xl hover:-translate-y-1 transform transition-all transform transition-all"}`}
                     disabled={name === "" || email === "" || subject === "" || message === ""}
                     onClick={() => handleContactSubmit()}
-                    title={(name === "" || email === "" || subject === "" || message === "") ? "Please fill out all fields above." : null}
+                    title={(sendButtonErrs().length !== 0) ? "Please fill out all fields above." : null}
             >
                 Submit
             </button>

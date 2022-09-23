@@ -19,7 +19,7 @@ export default function Experience({darkMode}) {
             <div className={"flex flex-col 2xl:flex-row items-center h-full 2xl:h-[50rem] w-full"}>
                 <div className={"flex shrink flex-col 2xl:w-[37.5%] justify-center px-10 2xl:mb-0 mb-10"}>
                     <span
-                        className={"flex 2xl:text-6xl text-5xl mt-5 2xl:mt-0 justify-center font-extrabold pb-10"}
+                        className={"flex 2xl:text-6xl sm:text-5xl text-4xl mt-5 2xl:mt-0 justify-center font-extrabold pb-10"}
                     >
                         {title.split("").map((letter) => (
                             <span className={"cursor-default hover:text-transparent transition-all duration-75 " +
@@ -27,17 +27,17 @@ export default function Experience({darkMode}) {
                                 `from-theme-light-1 to-theme-light-2 dark:from-theme-dark-1 dark:to-theme-dark-2 ${letter === "_" ? "invisible" : "visible"}`}>{letter}</span>
                         ))}
                     </span>
-                    <span className={"text-lg lg:text-xl 2xl:text-2xl pb-8 px-10"}>
+                    <span className={"text-lg lg:text-xl 2xl:text-2xl pb-8 sm:px-10"}>
                                     Since starting my career, I've done contract work and worked remotely with startups.
                                     I have collaborated with brilliant folks from across the world to create robust software systems.
                                 </span>
-                    <span className={"text-lg lg:text-xl 2xl:text-2xl pb-8 px-10"}>
+                    <span className={"text-lg lg:text-xl 2xl:text-2xl pb-8 sm:px-10"}>
                                     I have established skills in both front-end and back-end development,
                                     though currently I primarily work in front-end.
                                     I have developed an intuitive, powerful UI and built and supported open source,
                                     low-latency web loggers.
                                 </span>
-                    <span className={"text-lg lg:text-xl 2xl:text-2xl pb-0 sm:pb-8 px-10"}>
+                    <span className={"text-lg lg:text-xl 2xl:text-2xl pb-0 sm:pb-8 sm:px-10"}>
                                     For more details, feel free to check out my <a href={"https://www.linkedin.com/in/knewby/"} target={"_blank"} className={"bg-clip-text text-transparent bg-gradient-to-r from-theme-light-1 to-theme-light-2 dark:from-theme-dark-1 dark:to-theme-dark-2"}>Linkedin</a>!
                                 </span>
                 </div>

@@ -1,7 +1,6 @@
 import React, {useState} from "react";
 import {IconProp, SizeProp} from "@fortawesome/fontawesome-svg-core";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {useRouter} from "next/router";
 import ThemeSlider from "./theme-slider";
 import {Transition} from "@headlessui/react";
 
@@ -19,7 +18,6 @@ interface IMediaLinks {
 }
 
 export default function Navbar({darkMode, setDarkMode}) {
-    const router = useRouter();
     const [open, setOpen] = useState(false);
 
     const navbarItems: INavbarItems[] = [
@@ -44,11 +42,6 @@ export default function Navbar({darkMode, setDarkMode}) {
             size: "xl",
         }
     ];
-
-    const handleLinkClick = (e: any, path: any) => {
-        e.preventDefault();
-        router.push(path).catch(error => console.error(error));
-    };
 
     function scrollTo(key: string) {
         let el = document.getElementById(key);

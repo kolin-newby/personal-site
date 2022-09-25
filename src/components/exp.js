@@ -118,12 +118,12 @@ export default function Experience({darkMode}) {
                         "from-theme-light-1/50 to-theme-light-2/70 dark:from-theme-dark-1/50 " +
                         "dark:to-theme-dark-2/70 w-5/6 sm:w-full self-center sm:self-auto"}>
                         <span className={"flex text-center 2xl:text-2xl font-bold"}>Interested in learning more?</span>
-                        <span className={"flex text-center 2xl:text-xl"}>
+                        <a href={"/resume.pdf"} download={"knewby_resume.pdf"} className={"group flex text-center 2xl:text-xl cursor-pointer"}>
                             Download my resume
-                            <button className={"px-2 hover:animate-pulse"}>
+                            <span className={"px-2 group-hover:animate-pulse"}>
                                 <FontAwesomeIcon icon={"download"} className={"drop-shadow-lg"}/>
-                            </button>
-                        </span>
+                            </span>
+                        </a>
                     </div>
                 </div>
             </div>

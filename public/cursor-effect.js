@@ -28,7 +28,7 @@ class Particle {
         const mobile = window.innerWidth < 1024;
         this.x = mobile ? (mouse.x) : (mouse.x - 150);
         this.y = mobile ? (mouse.y-80) : (mouse.y);
-        this.size = Math.random() * 2 + 0.1;
+        this.size = Math.random() * 2.5 + 0.1;
         this.speedX = Math.random() * 2;
         this.speedY = Math.random() * 2;
         this.color = "hsl(" + hue + ", 100%, 40%)";

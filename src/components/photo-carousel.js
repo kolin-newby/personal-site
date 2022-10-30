@@ -51,7 +51,7 @@ export default function PhotoCarousel() {
             }).map((photo) => (
                 <div key={"carousel-photo-" + photo.info.name} className={`${returnPhotoClass(photo.src)} 
                 absolute top-1/2 left-1/2 h-[20rem] w-[14rem] xs:h-[20rem] xs:w-[18rem] 
-                lg:h-[22rem] lg:w-[22rem] 2xl:h-[40rem] 2xl:w-[30rem] group object-cover ${
+                lg:h-[22rem] lg:w-[22rem] 2xl:h-[40rem] 2xl:w-[30rem] group object-cover transition-all ${
                     returnPhotoClass(photo.src) === "active" ?
                     "shadow-lg dark:shadow-blue-900 hover:shadow-2xl"
                     :
@@ -83,7 +83,7 @@ export default function PhotoCarousel() {
                         className={`w-full h-full object-cover rounded-xl ${returnPhotoClass(photo.src) === "active" ?
                             "opacity-100"
                             :
-                            "opacity-40 hover:opacity-60"}
+                            "opacity-40 hover:opacity-60 transition-opacity"}
                             `}
                     />
                 </div>

@@ -96,7 +96,7 @@ a {
 .carousel > div.active{
   z-index: 30;
   border-radius: 0.75rem;
-  transition-property: transform;
+  transition-property: all;
   transform: translateX(-30%) translateY(-50%);
   /*--------------------------*/
   /*animation-name: carousel-active;*/

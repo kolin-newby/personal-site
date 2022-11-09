@@ -70,7 +70,7 @@ export default function Experience({darkMode}) {
                             "bg-gradient-to-r from-theme-light-1 to-theme-light-2 dark:from-theme-dark-1 " +
                             "dark:to-theme-dark-2 transition-all med:p-[5px] 2xl:p-[8px] " +
                             "largest:hover:p-[5px] mr-3"}>
-                            <div className={"flex 2xl:hidden relative items-center justify-center rounded-lg " +
+                            <div className={"flex 2xl:hidden dark:hidden relative items-center justify-center rounded-lg " +
                                 "bg-bg-light dark:bg-bg-dark h-full w-full"}>
                                 <ResponsiveContainer
                                     width={390}
@@ -79,7 +79,21 @@ export default function Experience({darkMode}) {
                                 >
                                     <RadarChart outerRadius={90} width={730} height={250} data={skills}>
                                         <PolarGrid />
-                                        <PolarAngleAxis dataKey="name" stroke={darkMode ? "white" : "black"} tickLine={false} axisLine={false} tickSize={8}/>
+                                        <PolarAngleAxis dataKey="name" stroke={"black"} tickLine={false} axisLine={false} tickSize={8}/>
+                                        <Radar name="skills" dataKey="levelNum" stroke={"#f5154e"} fill={"#f5154e"} fillOpacity={0.65} />
+                                    </RadarChart>
+                                </ResponsiveContainer>
+                            </div>
+                            <div className={"2xl:hidden hidden dark:flex relative items-center justify-center rounded-lg " +
+                                "bg-bg-light dark:bg-bg-dark h-full w-full"}>
+                                <ResponsiveContainer
+                                    width={390}
+                                    aspect={1}
+                                    className={"flex"}
+                                >
+                                    <RadarChart outerRadius={90} width={730} height={250} data={skills}>
+                                        <PolarGrid />
+                                        <PolarAngleAxis dataKey="name" stroke={"white"} tickLine={false} axisLine={false} tickSize={8}/>
                                         <Radar name="skills" dataKey="levelNum" stroke={"#f5154e"} fill={"#f5154e"} fillOpacity={0.65} />
                                     </RadarChart>
                                 </ResponsiveContainer>

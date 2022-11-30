@@ -2,8 +2,8 @@ const canvas = document.getElementById("canvas");
 const ctx = canvas.getContext("2d");
 
 let hueIncrease = true;
-const hueTop = 345;
-const hueBottom = 262;
+const hueTop = 221;
+const hueBottom = 161;
 
 canvas.width = window.innerWidth;
 canvas.height = window.innerHeight;

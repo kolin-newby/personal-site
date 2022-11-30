@@ -117,3 +117,13 @@ a {
 /*    transform: rotateY(0deg) translateX(0%);*/
 /*  }*/
 /*}*/
+
+@media print {
+  .no-print, .no-print * {
+    display: none !important;
+  }
+
+  .printable, .printable * {
+    display: block !important;
+  }
+}

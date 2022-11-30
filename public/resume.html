@@ -26,44 +26,21 @@
         }
       }
 
-      /*@media print {*/
-      /*  @page {*/
-      /*    size: 14in 16.6in;*/
-      /*  }*/
-      /*}*/
     </style>
     <script type="text/javascript">
-      function convertPDF() {
-        const PDFDocument = require('pdfkit');
-        const fs = require('fs');
-
-      }
-
       function printPDF() {
         window.print();
       }
     </script>
   </head>
   <body lang="en" class="m-8">
-    <div class="fixed z-50 right-0 top-0 flex pb-12 pl-8 rounded-bl-5xl bg-gradient-to-bl from-white via-transparent to-transparent no-print">
-      <button
-        id="pdf_btn"
-        class="flex mr-8 mt-12 text-xl py-2 px-4 transition-all rounded-sm bg-gradient-to-l from-blue-600 via-cyan-600 to-emerald-600 shadow-lg hover:shadow-xl transform hover:-translate-y-1"
-        type="button"
-        onclick="printPDF()"
-      >
-        Print PDF
-      </button>
-    </div>
-    <section id="intro" class="mb-2">
+    <section id="intro" class="mb-0">
       <div class="flex flex-col w-full">
         <div class="flex flex-col w-full justify-start my-2">
           <span class="flex text-6xl font-extrabold">KOLIN NEWBY</span>
           <span class="text-2xl font-bold">Software Developer</span>
         </div>
-        <div
-      class="flex w-full h-4 bg-gradient-to-r from-blue-600 via-cyan-600 to-emerald-600 rounded-sm"
-    ></div>
+        <div class="flex w-full h-3 bg-gradient-to-r from-blue-600 via-cyan-600 to-emerald-600 rounded-t-sm"></div>
       </div>
     </section>
     <div class="grid grid-cols-12 w-full">
@@ -71,7 +48,7 @@
         <section id="work">
           <div class="flex flex-col">
             <span
-              class="text-2xl font-bold mb-2 py-1 w-full text-center bg-gray-200/80 rounded-sm"
+              class="text-2xl font-bold mb-2 py-1 w-full text-center bg-gray-200/80 rounded-b-sm"
               >EXPERIENCE</span
             >
             <div
@@ -286,7 +263,7 @@
         </section>
       </div>
       <div
-        class="relative col-span-3 flex flex-col p-6 bg-gray-200/80 rounded-sm space-y-16 items-center justify-start"
+        class="relative col-span-3 flex flex-col p-6 bg-gray-200/80 rounded-b-sm space-y-16 items-center justify-center"
       >
         <!-- <div class="absolute -z-10 inset-0 bg-gradient-to-br from-blue-600 via-teal-400 to-emerald-600 rounded-sm"></div> -->
         <section id="contact" class="flex flex-col">
@@ -361,7 +338,7 @@
                 </li>
                 <li>
                   <a href="https://github.com/kolin-newby" target="_blank" class="flex items-center justify-center min-[1160px]:justify-start">
-                    <i class="hidden min-[1160px]:flex fa-brands fa-github mr-1.5"></i>
+                    <i class="hidden min-[1138px]:flex fa-brands fa-github mr-1.5"></i>
                     <span>github.com/kolin-newby</span>
                   </a>
                 </li>
@@ -395,22 +372,22 @@
             >
             <hr class="h-0.5 w-5/6 bg-gray-300 rounded-sm mt-4" />
             <ul
-              class="grid grid-cols-1 min-[1700px]:grid-cols-2 text-xl space-y-2.5 min-[1200px]:list-disc min-[1700px]:list-none"
+              class="flex flex-col text-xl space-y-3 list-disc list-outside"
             >
-              <li class="min-[1700px]:text-center mt-2.5">JavaScript/TypeScript</li>
-              <li class="min-[1700px]:text-center">React</li>
-              <li class="min-[1700px]:text-center">Node.JS</li>
-              <li class="min-[1700px]:text-center">HTML/CSS</li>
-              <li class="min-[1700px]:text-center">Tailwind CSS</li>
-              <li class="min-[1700px]:text-center">GraphQL</li>
-              <li class="min-[1700px]:text-center">REST APIs</li>
-              <li class="min-[1700px]:text-center">Agile Development</li>
-              <li class="min-[1700px]:text-center">Docker</li>
-              <li class="min-[1700px]:text-center">Git</li>
-              <li class="min-[1700px]:text-center">Golang</li>
-              <li class="min-[1700px]:text-center">OOP</li>
-              <li class="min-[1700px]:text-center">AWS</li>
-              <li class="min-[1700px]:text-center">Python</li>
+              <li class="mt-2.5">JavaScript/TypeScript</li>
+              <li class="">React</li>
+              <li class="">Node.JS</li>
+              <li class="">HTML/CSS</li>
+              <li class="">Tailwind CSS</li>
+              <li class="">REST APIs</li>
+              <li class="">GraphQL</li>
+              <li class="">Agile Development</li>
+              <li class="">Docker</li>
+              <li class="">Git</li>
+              <li class="">Golang</li>
+              <li class="">OOP</li>
+              <li class="">AWS</li>
+              <li class="">Python</li>
             </ul>
           </div>
         </section>

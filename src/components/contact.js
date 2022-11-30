@@ -1,4 +1,6 @@
 import React, {useEffect, useState} from "react";
+import {Transition} from "@headlessui/react";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 
 export default function Contact() {
     const title = "Contact_Me...";
@@ -10,6 +12,7 @@ export default function Contact() {
     const [message, setMessage] = useState("");
 
     const [sent, setSent] = useState(false);
+    const [showErrors, setShowErrors] = useState(false);
 
     useEffect(() => {
         if (sent) {
@@ -23,21 +26,30 @@ export default function Contact() {
         let errors = [];
         if (!name.length > 0) errors.push("Please enter your name.");
         if (!email.length > 0) errors.push("Please enter an email address.");
-        if (!email.includes("@") || !email.includes(".")) errors.push("Please enter a valid email address.");
+        else if (!email.includes("@") || !email.includes(".")) errors.push("Please enter a valid email address.");
         if (!subject.length > 0) errors.push("Please enter a subject.");
         if (!message.length > 0) errors.push("Please enter a message.");
         return errors;
     }
 
     function handleContactSubmit() {
-        // if (slackWebHook === undefined) return;
+        let msg = `{"text" : "New message from:\n${name}\n\nSubject:\n${subject}\n\nRespond to:\n${email}\n\n\n${message}"}`
+        if (slackWebHook === undefined) {
+            console.log(`No webhook detected, development environment assumed.\nMessage not sent...\n\nWould have sent message as follows:\n${msg}`);
+            setSent(true);
+            setName("");
+            setEmail("");
+            setSubject("");
+            setMessage("");
+            setShowErrors(false);
+            return;
+        }
 
         let hermes = new XMLHttpRequest();
         hermes.open("POST", slackWebHook);
 
-        hermes.onload = () => console.log(hermes.responseText.replaceAll(slackWebHook, "[REDACTED]"));
+        // hermes.onload = () => console.log(hermes.responseText.replaceAll(slackWebHook, "[REDACTED]"));
 
-        let msg = `{"text" : "New message from:\n${name}\n\nSubject:\n${subject}\n\nRespond to:\n${email}\n\n\n${message}"}`
         hermes.send(msg);
         //--------------------------
         setSent(true);
@@ -45,6 +57,7 @@ export default function Contact() {
         setEmail("");
         setSubject("");
         setMessage("");
+        setShowErrors(false);
     }
 
     return(
@@ -74,7 +87,7 @@ export default function Contact() {
                     <div className={"flex lg:w-1/2 w-full bg-gradient-to-r from-theme-light-1 to-theme-light-2 rounded"}>
                         <input
                             id={"inputName"}
-                            className={"flex w-full bg-gray-300 dark:bg-[#080430] h-14 rounded p-5 text-center " +
+                            className={"flex w-full bg-gray-300 dark:bg-dark-accent h-14 rounded p-5 text-center " +
                                 "focus:outline-none transform transition-transform origin-top focus:scale-y-95"}
                             type={"text"}
                             placeholder={"name"}
@@ -86,7 +99,7 @@ export default function Contact() {
                     <div className={"flex lg:w-1/2 w-full bg-gradient-to-r from-theme-light-1 to-theme-light-2 rounded"}>
                         <input
                             id={"inputEmail"}
-                            className={"flex w-full bg-gray-300 dark:bg-[#080430] h-14 rounded p-5 text-center " +
+                            className={"flex w-full bg-gray-300 dark:bg-dark-accent h-14 rounded p-5 text-center " +
                                 "focus:outline-none transform transition-transform origin-top focus:scale-y-95"}
                             type={"email"}
                             placeholder={"email"}
@@ -99,7 +112,7 @@ export default function Contact() {
                 <div className={"flex w-full bg-gradient-to-r from-theme-light-1 to-theme-light-2 rounded"}>
                     <input
                         id={"inputSubject"}
-                        className={"flex w-full bg-gray-300 dark:bg-[#080430] h-14 rounded p-5 text-center " +
+                        className={"flex w-full bg-gray-300 dark:bg-dark-accent h-14 rounded p-5 text-center " +
                             "focus:outline-none transform transition-transform origin-top focus:scale-y-95"}
                         type={"text"}
                         placeholder={"subject"}
@@ -111,7 +124,7 @@ export default function Contact() {
                 <div className={"flex w-full bg-gradient-to-r from-theme-light-1 to-theme-light-2 rounded"}>
                     <textarea
                         id={"inputMessage"}
-                        className={"flex-wrap w-full bg-gray-300 dark:bg-[#080430] h-48 rounded p-5 " +
+                        className={"flex-wrap w-full bg-gray-300 dark:bg-dark-accent h-48 rounded p-5 " +
                             "focus:outline-none transform transition-transform origin-top focus:scale-y-98"}
                         placeholder={"message"}
                         value={message}
@@ -120,17 +133,37 @@ export default function Contact() {
                     />
                 </div>
             </div>
-            <button className={"px-5 py-3 mt-5 text-xl lg:w-1/6 font-bold text-bg-light dark:text-bg-dark rounded flex justify-center " +
-                "shadow-lg " +
-                `dark:shadow-blue-900 ${sendButtonErrs().length !== 0 ?
-                    "opacity-50 text-bg-dark dark:text-bg-light bg-gray-300 dark:bg-gray-500/30 cursor-not-allowed" :
-                    "bg-gradient-to-r from-theme-light-1 to-theme-light-2 hover:shadow-xl hover:-translate-y-1 transform transition-all transform transition-all"}`}
-                    disabled={name === "" || email === "" || subject === "" || message === ""}
-                    onClick={() => handleContactSubmit()}
-                    title={(sendButtonErrs().length !== 0) ? "Please fill out all fields above." : null}
-            >
-                Submit
-            </button>
+            <div className={"relative flex w-full justify-center"}>
+                <button className={"px-5 py-3 mt-5 text-xl lg:w-1/6 font-bold text-bg-light dark:text-bg-dark rounded flex justify-center " +
+                    "shadow-lg " +
+                    `dark:shadow-blue-900 ${sendButtonErrs().length !== 0 ?
+                        "opacity-50 text-bg-dark dark:text-bg-light bg-gray-300 dark:bg-gray-500/30 cursor-not-allowed" :
+                        "bg-gradient-to-r from-theme-light-1 to-theme-light-2 hover:shadow-xl hover:-translate-y-1 transform transition-all transform transition-all"}`}
+                        onClick={sendButtonErrs().length !== 0 ? null : () => handleContactSubmit()}
+                        onMouseEnter={() => setShowErrors(true)}
+                        onMouseLeave={() => setShowErrors(false)}
+                >
+                    Submit
+                </button>
+                <Transition
+                    show={showErrors && sendButtonErrs().length > 0}
+                    className={"absolute top-full left-1/2 mt-8 flex text-sm w-max transform -translate-x-1/2 rounded-lg bg-gradient-to-r from-theme-dark-1 via-theme-dark-2 to-theme-dark-3"}
+                    enter={"transition-opacity duration-200"}
+                    enterFrom={"opacity-0"}
+                    enterTo={"opacity-100"}
+                    leave={"transition-opacity duration-300"}
+                    leaveFrom={"opacity-100"}
+                    leaveTo={"opacity-0"}
+                >
+                    <div className={"flex flex-col w-full bg-bg-light dark:bg-bg-dark m-1 rounded-lg py-3 px-6"}>
+                        <ul className={"list-inside"}>
+                            {sendButtonErrs().map((err) => (
+                                <li><span><FontAwesomeIcon icon="circle-exclamation" size={"sm"} className={"mr-1.5 text-cyan-500"} />{err}</span></li>
+                            ))}
+                        </ul>
+                    </div>
+                </Transition>
+            </div>
         </div>
     )
 }

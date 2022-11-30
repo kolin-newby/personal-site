@@ -1,15 +1,41 @@
-export default function Resume({darkMode}) {
-    return (
-        <div lang="en" className="m-8">
-            <div
-                className="fixed z-50 right-0 top-0 flex pb-12 pl-8 rounded-bl-5xl bg-gradient-to-bl from-white via-transparent to-transparent no-print">
+import React, {useState} from 'react'
+import {Transition} from '@headlessui/react'
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import {jsPDF} from "jspdf";
+
+export default function Resume({open, setOpen, darkMode}) {
+
+    function convertToPDF() {
+
+    }
+
+    return (<Transition
+        show={open}
+        className={"absolute inset-0 z-50 overflow-y-auto bg-gray-800/80"}
+        enter={"transition-opacity duration-500"}
+        enterFrom={"opacity-0"}
+        enterTo={"opacity-100"}
+        leave={"transition-opacity duration-500"}
+        leaveFrom={"opacity-100"}
+        leaveTo={"opacity-0"}
+    >
+        <div id="resume-html" className="flex flex-col m-16 p-8 bg-white text-black printable">
+            <div className="fixed z-50 right-24 top-20 space-x-4 flex pb-12 pl-8 rounded-bl-5xl no-print" data-html2canvas-ignore>
+                <a
+                    id="pdf_btn"
+                    className="flex py-2 px-4 cursor-pointer items-center rounded-sm transition-all bg-gradient-to-tl from-theme-light-1 to-theme-light-2 shadow-lg hover:shadow-xl transform hover:-translate-y-1"
+                    href={"/Kolin-Newby-resume.pdf"}
+                    download
+                >
+                    Save PDF
+                </a>
                 <button
                     id="pdf_btn"
-                    className="flex mr-8 mt-12 text-xl py-2 px-4 transition-all rounded-sm bg-gradient-to-l from-blue-600 via-cyan-600 to-emerald-600 shadow-lg hover:shadow-xl transform hover:-translate-y-1"
+                    className="flex p-4 rounded-sm transition-all bg-gradient-to-tl from-theme-light-1 to-theme-light-2 shadow-lg hover:shadow-xl transform hover:-translate-y-1"
                     type="button"
-                    onClick="printPDF()"
+                    onClick={() => setOpen(false)}
                 >
-                    Print PDF
+                    <FontAwesomeIcon icon={"times"} className={"drop-shadow-lg"}/>
                 </button>
             </div>
             <section id="intro" className="mb-2">
@@ -19,7 +45,7 @@ export default function Resume({darkMode}) {
                         <span className="text-2xl font-bold">Software Developer</span>
                     </div>
                     <div
-                        className="flex w-full h-4 bg-gradient-to-r from-blue-600 via-cyan-600 to-emerald-600 rounded-sm"
+                        className="flex w-full h-4 bg-gradient-to-r from-theme-light-1 via-theme-light-2 to-theme-light-3 rounded-sm"
                     ></div>
                 </div>
             </section>
@@ -27,10 +53,11 @@ export default function Resume({darkMode}) {
                 <div className="col-span-9 p-6 pl-0 pt-0 space-y-2">
                     <section id="work">
                         <div className="flex flex-col">
-        <span
-            className="text-2xl font-bold mb-2 py-1 w-full text-center bg-gray-200/80 rounded-sm"
-        >EXPERIENCE</span
-        >
+                            <span
+                                className="text-2xl font-bold mb-2 py-1 w-full text-center bg-gray-200/80 rounded-sm"
+                            >
+                                EXPERIENCE
+                            </span>
                             <div
                                 id="resurface_xp"
                                 className="flex flex-col pb-6 border-l-2 border-gray-300 rounded-tl-lg"
@@ -39,33 +66,32 @@ export default function Resume({darkMode}) {
                                     <span className="pl-2">Software Engineer, Resurface Labs</span>
                                     <hr className="h-0.5 w-full bg-gray-300 rounded-sm"/>
                                     <span className="text-gray-500 text-base text-start pl-2 relative">
-        <div
-            className="absolute top-0 left-0 transform -translate-x-1/2 -translate-y-1/2"
-        >
-        <i className="fa-solid fa-play text-gray-300"></i>
-        </div>
-        June 2021 - Currently Employed
-        </span>
+                                        <div
+                                            className="absolute top-0 left-0 transform -translate-x-1/2 -translate-y-1/2">
+                                            <FontAwesomeIcon className={"text-gray-300"} icon="play" />
+                                        </div>
+                                        June 2021 - Currently Employed
+                                    </span>
                                 </div>
                                 <ul className="list-disc list-inside ml-8 text-lg mt-3 space-y-1.5">
                                     <li>
                                         Lead maintenance and development of the product UI, running on
-                                        <span className="font-bold">Node.js</span> using
-                                        <span className="font-bold">React</span> with
-                                        <span className="font-bold">TypeScript</span> and
-                                        <span className="font-bold">JavaScript</span>
+                                        <span className="font-bold"> Node.js</span> using
+                                        <span className="font-bold"> React</span> with
+                                        <span className="font-bold"> TypeScript</span> and
+                                        <span className="font-bold"> JavaScript</span>
                                     </li>
                                     <li>
                                         Work with backend components to optimize
-                                        <span className="font-bold">SQL</span> queries, system latency,
+                                        <span className="font-bold"> SQL</span> queries, system latency,
                                         and overall performance given large data sets
                                     </li>
                                     <li>
                                         Assist in the development and maintenance of open-source
                                         logging software in the
-                                        <span className="font-bold">Go</span> programming language, which
+                                        <span className="font-bold"> Go</span> programming language, which
                                         utilizes go routines for
-                                        <span className="font-bold">asynchronous</span>, background http
+                                        <span className="font-bold"> asynchronous</span>, background http
                                         submission
                                     </li>
                                     <li>
@@ -74,9 +100,9 @@ export default function Resume({darkMode}) {
                                     </li>
                                     <li>
                                         Develop and maintain a test
-                                        <span className="font-bold">API</span> for Go logger that used
+                                        <span className="font-bold"> API</span> for Go logger that used
                                         Golang, Gorilla mux, and
-                                        <span className="font-bold">GraphQL</span>
+                                        <span className="font-bold"> GraphQL</span>
                                     </li>
                                     <li>
                                         Coordinate efforts with fellow engineers to develop supporting
@@ -92,19 +118,19 @@ export default function Resume({darkMode}) {
                                     <span className="pl-2">Technology Lead, CU Boulder Bookstore</span>
                                     <hr className="h-0.5 w-full bg-gray-300 rounded-sm"/>
                                     <span className="text-gray-500 text-base text-start pl-2 relative">
-        <div
-            className="absolute top-0 left-0 transform -translate-x-1/2 -translate-y-1/2"
-        >
-        <i className="fa-solid fa-play text-gray-300"></i>
-        </div>
-        August 2017 - May 2021
-        </span>
+                                        <div
+                                            className="absolute top-0 left-0 transform -translate-x-1/2 -translate-y-1/2"
+                                        >
+                                            <FontAwesomeIcon className={"text-gray-300"} icon="play" />
+                                        </div>
+                                        August 2017 - May 2021
+                                    </span>
                                 </div>
                                 <ul className="list-disc list-inside ml-8 text-lg mt-3 space-y-1.5">
                                     <li>
                                         Develop and maintain display website for selling 3D prints
                                         using <span className="font-bold">HTML/CSS</span> and
-                                        <span className="font-bold">Express</span> framework
+                                        <span className="font-bold"> Express</span> framework
                                     </li>
                                     <li>
                                         Scheduled, trained, and supervised other technology desk employees
@@ -120,18 +146,18 @@ export default function Resume({darkMode}) {
                                 className="flex flex-col border-l-2 border-gray-300 rounded-bl-lg"
                             >
                                 <div className="flex flex-col text-xl font-bold w-max">
-        <span className="pl-2"
-        >Assistant Engineer, Colorado Airline Services</span
-        >
+                                    <span className="pl-2">
+                                        Assistant Engineer, Colorado Airline Services
+                                    </span>
                                     <hr className="h-0.5 w-full bg-gray-300 rounded-sm"/>
                                     <span className="text-gray-500 text-base text-start pl-2 relative">
-        <div
-            className="absolute top-0 left-0 transform -translate-x-1/2 -translate-y-1/2"
-        >
-        <i className="fa-solid fa-play text-gray-300"></i>
-        </div>
-        June 2016 - July 2019
-        </span>
+                                    <div
+                                        className="absolute top-0 left-0 transform -translate-x-1/2 -translate-y-1/2"
+                                    >
+                                    <FontAwesomeIcon className={"text-gray-300"} icon="play" />
+                                    </div>
+                                    June 2016 - July 2019
+                                    </span>
                                 </div>
                                 <ul className="list-disc list-inside ml-8 text-lg mt-3 space-y-1.5">
                                     <li>
@@ -148,10 +174,11 @@ export default function Resume({darkMode}) {
                     </section>
                     <section id="projects">
                         <div className="flex flex-col">
-        <span
-            className="text-2xl font-bold mb-2 py-1 w-full text-center bg-gray-200/80 rounded-sm"
-        >PROJECTS</span
-        >
+                            <span
+                                className="text-2xl font-bold mb-2 py-1 w-full text-center bg-gray-200/80 rounded-sm"
+                            >
+                                PROJECTS
+                            </span>
                             <div
                                 id="wordzilla_proj"
                                 className="flex flex-col border-l-2 border-gray-300 rounded-tl-lg pb-6"
@@ -160,23 +187,26 @@ export default function Resume({darkMode}) {
                                     <span className="pl-2">WordZilla, Personal Project</span>
                                     <hr className="h-0.5 w-full bg-gray-300 rounded-sm"/>
                                     <span className="text-gray-500 text-base text-start pl-2 relative">
-        <div
-            className="absolute top-0 left-0 transform -translate-x-1/2 -translate-y-1/2"
-        >
-        <i className="fa-solid fa-play text-gray-300"></i>
-        </div>
-        August 2022 - Present
-        </span>
+                                    <div
+                                        className="absolute top-0 left-0 transform -translate-x-1/2 -translate-y-1/2"
+                                    >
+                                    <FontAwesomeIcon className={"text-gray-300"} icon="play" />
+                                    </div>
+                                    August 2022 - Present
+                                    </span>
                                 </div>
                                 <ul className="list-disc list-inside ml-8 text-lg mt-3 space-y-1.5">
                                     <li>
-                                        Developing a SASS application that generates marketing copy using a custom <span
+                                        Developing a SASS application that generates marketing copy using a
+                                        custom <span
                                         className="font-bold">REST API</span> powered by OpenAI's GPT-3
                                     </li>
                                     <li>
-                                        Developing an application front end using <span
-                                        className="font-bold">PHP</span>, <span className="font-bold">HTML/CSS</span>,
-                                        and <span className="font-bold">Tailwind CSS</span>; then deploying app on
+                                        Developing a front end for said app using <span
+                                        className="font-bold">PHP</span>, <span
+                                        className="font-bold">HTML/CSS</span>,
+                                        and <span className="font-bold">Tailwind CSS</span> that we will be deploying
+                                        app on
                                         Digital Ocean
                                     </li>
                                 </ul>
@@ -189,23 +219,23 @@ export default function Resume({darkMode}) {
                                     <span className="pl-2">Professional Website, Personal Project</span>
                                     <hr className="h-0.5 w-full bg-gray-300 rounded-sm"/>
                                     <span className="text-gray-500 text-base text-start pl-2 relative">
-        <div
-            className="absolute top-0 left-0 transform -translate-x-1/2 -translate-y-1/2"
-        >
-        <i className="fa-solid fa-play text-gray-300"></i>
-        </div>
-        July 2022 - December 2021
-        </span>
+                                    <div
+                                        className="absolute top-0 left-0 transform -translate-x-1/2 -translate-y-1/2"
+                                    >
+                                    <FontAwesomeIcon className={"text-gray-300"} icon="play" />
+                                    </div>
+                                    July 2022 - December 2021
+                                    </span>
                                 </div>
                                 <ul className="list-disc list-inside ml-8 text-lg mt-3 space-y-1.5">
                                     <li>
                                         Built a site for professional representation and as a
                                         landing page for possible freelance opportunities. Site uses
-                                        <span className="font-bold">Node.js</span>,
-                                        <span className="font-bold">React</span>,
-                                        <span className="font-bold">JavaScript</span>,
-                                        <span className="font-bold">CSS</span>, and
-                                        <span className="font-bold">Tailwind CSS</span>.
+                                        <span className="font-bold"> Node.js</span>,
+                                        <span className="font-bold"> React</span>,
+                                        <span className="font-bold"> JavaScript</span>,
+                                        <span className="font-bold"> CSS</span>, and
+                                        <span className="font-bold"> Tailwind CSS</span>.
                                     </li>
                                 </ul>
                             </div>
@@ -217,23 +247,23 @@ export default function Resume({darkMode}) {
                                     <span className="pl-2">API Logger, Capstone Project</span>
                                     <hr className="h-0.5 w-full bg-gray-300 rounded-sm"/>
                                     <span className="text-gray-500 text-base text-start pl-2 relative">
-        <div
-            className="absolute top-0 left-0 transform -translate-x-1/2 -translate-y-1/2"
-        >
-        <i className="fa-solid fa-play text-gray-300"></i>
-        </div>
-        August 2020 - April 2021
-        </span>
+                                    <div
+                                        className="absolute top-0 left-0 transform -translate-x-1/2 -translate-y-1/2"
+                                    >
+                                    <FontAwesomeIcon className={"text-gray-300"} icon="play" />
+                                    </div>
+                                    August 2020 - April 2021
+                                    </span>
                                 </div>
                                 <ul className="list-disc list-inside ml-8 text-lg mt-3 space-y-1.5">
                                     <li>
                                         Created <span className="font-bold">open source</span>,
-                                        <span className="font-bold">Go</span> based, API logging software
+                                        <span className="font-bold"> Go</span> based, API logging software
                                         in association with Resurface Labs in Boulder
                                     </li>
                                     <li>
                                         Was individually responsible for creating
-                                        <span className="font-bold">unit tests</span> for the logging
+                                        <span className="font-bold"> unit tests</span> for the logging
                                         system as well as documenting my teams progress throughout the
                                         project
                                     </li>
@@ -245,83 +275,46 @@ export default function Resume({darkMode}) {
                 <div
                     className="relative col-span-3 flex flex-col p-6 bg-gray-200/80 rounded-sm space-y-16 items-center justify-start"
                 >
-                    <!-- <div className="absolute -z-10 inset-0 bg-gradient-to-br from-blue-600 via-teal-400 to-emerald-600 rounded-sm"></div> -->
                     <section id="contact" className="flex flex-col">
                         <div className="flex flex-col justify-center items-center space-y-4">
-        <span className="flex font-bold text-2xl justify-center">
-        CONTACT INFO
-        </span>
+                            <span className="flex font-bold text-2xl justify-center">
+                            CONTACT INFO
+                            </span>
                             <hr className="h-0.5 w-5/6 bg-gray-300 rounded-sm"/>
                             <div className="flex w-full justify-center items-center">
-                                <!-- wide width list -->
                                 <ul
-                                    className="hidden min-[2300px]:grid grid-cols-1 gap-2 grid-cols-2 w-max text-xl"
+                                    className="flex flex-col text-xl list-inside items-start"
                                 >
-                                    <li className="text-end mr-4">
-                                        <i className="fa-solid fa-earth-americas mr-1.5"></i>
+                                    <li className="flex items-center">
+                                        <FontAwesomeIcon className={"mr-1.5"} icon="earth-americas" />
                                         <span>Boulder, Colorado</span>
                                     </li>
-                                    <li className="">
-                                        <a href="https://knewby.io" target="_blank">
-                                            <i className="fa-solid fa-globe mr-1.5"></i>
-                                            <span>knewby.io</span>
-                                        </a>
-                                    </li>
-                                    <li className="text-end mr-4">
-                                        <i className="fa-solid fa-paper-plane mr-1.5"></i>
+                                    <li className="flex items-center">
+                                        <FontAwesomeIcon className={"mr-1.5"} icon="paper-plane" />
                                         <span>kolin@knewby.io</span>
                                     </li>
-                                    <li className="">
-                                        <a href="https://www.linkedin.com/in/knewby/" target="_blank">
-                                            <i className="fa-brands fa-linkedin mr-1.5"></i>
-                                            <span>linkedin.com/in/knewby</span>
-                                        </a>
-                                    </li>
-                                    <li className="text-end mr-4">
-                                        <i className="fa-solid fa-phone mr-1.5"></i>
-                                        <span>+1 720.545.8100</span>
-                                    </li>
-                                    <li className="">
-                                        <a href="https://github.com/kolin-newby" target="_blank">
-                                            <i className="fa-brands fa-github mr-1.5"></i>
-                                            <span>github.com/kolin-newby</span>
-                                        </a>
-                                    </li>
-                                </ul>
-                                <!-- small width list -->
-                                <ul
-                                    className="grid min-[2300px]:hidden grid-cols-1 gap-2 w-max text-xl"
-                                >
-                                    <li className="flex items-center justify-center min-[1160px]:justify-start">
-                                        <i className="hidden min-[1160px]:flex fa-solid fa-earth-americas mr-1.5"></i>
-                                        <span>Boulder, Colorado</span>
-                                    </li>
-                                    <li className="flex items-center justify-center min-[1160px]:justify-start">
-                                        <i className="hidden min-[1160px]:flex fa-solid fa-paper-plane mr-1.5"></i>
-                                        <span>kolin@knewby.io</span>
-                                    </li>
-                                    <li className="flex items-center justify-center min-[1160px]:justify-start">
-                                        <i className="hidden min-[1160px]:flex fa-solid fa-phone mr-1.5"></i>
+                                    <li className="flex items-center">
+                                        <FontAwesomeIcon className={"mr-1.5"} icon="phone" />
                                         <span>+1 720.545.8100</span>
                                     </li>
                                     <li>
                                         <a href="https://knewby.io" target="_blank"
-                                           className="flex items-center justify-center min-[1160px]:justify-start">
-                                            <i className="hidden min-[1160px]:flex fa-solid fa-globe mr-1.5"></i>
+                                           className="flex items-center">
+                                            <FontAwesomeIcon className={"mr-1.5"} icon="globe" />
                                             <span>knewby.io</span>
                                         </a>
                                     </li>
                                     <li>
                                         <a href="https://www.linkedin.com/in/knewby/" target="_blank"
-                                           className="flex items-center justify-center min-[1160px]:justify-start">
-                                            <i className="hidden min-[1160px]:flex fa-brands fa-linkedin mr-1.5"></i>
+                                           className="flex items-center">
+                                            <FontAwesomeIcon className={"mr-1.5"} icon={["fab", "linkedin"]} />
                                             <span>linkedin.com/in/knewby</span>
                                         </a>
                                     </li>
                                     <li>
                                         <a href="https://github.com/kolin-newby" target="_blank"
-                                           className="flex items-center justify-center min-[1160px]:justify-start">
-                                            <i className="hidden min-[1160px]:flex fa-brands fa-github mr-1.5"></i>
+                                           className="flex items-center">
+                                            <FontAwesomeIcon className={"mr-1.5"} icon={["fab", "github"]} />
                                             <span>github.com/kolin-newby</span>
                                         </a>
                                     </li>
@@ -331,14 +324,12 @@ export default function Resume({darkMode}) {
                     </section>
                     <section id="education" className="flex flex-col">
                         <div className="flex flex-col justify-center items-center">
-        <span className="flex font-bold text-2xl justify-center"
-        >EDUCATION</span
-        >
+                            <span className="flex font-bold text-2xl justify-center"
+                            >EDUCATION</span
+                            >
                             <hr className="h-0.5 w-5/6 bg-gray-300 rounded-sm my-4"/>
                             <div className="flex flex-col justify-center items-center">
-        <span className="flex text-xl text-center"
-        >University of Colorado Boulder</span
-        >
+                                <span className="flex text-xl text-center">University of Colorado Boulder</span>
                                 <span className="flex mb-2 text-gray-600 text-center">2017 - 2021</span>
                             </div>
                             <hr className="h-0.5 w-3/6 bg-gray-300 rounded-sm my-2"/>
@@ -350,32 +341,32 @@ export default function Resume({darkMode}) {
                     </section>
                     <section id="skills" className="flex flex-col">
                         <div className="flex flex-col justify-center items-center">
-        <span className="flex font-bold text-2xl justify-center text-center"
-        >TECHNICAL SKILLS</span
-        >
-                            <hr className="h-0.5 w-5/6 bg-gray-300 rounded-sm mt-4"/>
-                            <ul
-                                className="grid grid-cols-1 min-[1700px]:grid-cols-2 text-xl space-y-2.5 min-[1200px]:list-disc min-[1700px]:list-none"
+                            <span className="flex font-bold text-2xl justify-center text-center"
+                            >TECHNICAL SKILLS</span
                             >
-                                <li className="min-[1700px]:text-center mt-2.5">JavaScript/TypeScript</li>
-                                <li className="min-[1700px]:text-center">React</li>
-                                <li className="min-[1700px]:text-center">Node.JS</li>
-                                <li className="min-[1700px]:text-center">HTML/CSS</li>
-                                <li className="min-[1700px]:text-center">Tailwind CSS</li>
-                                <li className="min-[1700px]:text-center">GraphQL</li>
-                                <li className="min-[1700px]:text-center">REST APIs</li>
-                                <li className="min-[1700px]:text-center">Agile Development</li>
-                                <li className="min-[1700px]:text-center">Docker</li>
-                                <li className="min-[1700px]:text-center">Git</li>
-                                <li className="min-[1700px]:text-center">Golang</li>
-                                <li className="min-[1700px]:text-center">OOP</li>
-                                <li className="min-[1700px]:text-center">AWS</li>
-                                <li className="min-[1700px]:text-center">Python</li>
+                            <hr className="h-0.5 w-5/6 bg-gray-300 rounded-sm my-4"/>
+                            <ul
+                                className="grid grid-cols-1 text-lg space-y-2 list-disc"
+                            >
+                                <li className="">JavaScript/TypeScript</li>
+                                <li className="">React</li>
+                                <li className="">Node.JS</li>
+                                <li className="">HTML/CSS</li>
+                                <li className="">Tailwind CSS</li>
+                                <li className="">GraphQL</li>
+                                <li className="">REST APIs</li>
+                                <li className="">Agile Development</li>
+                                <li className="">Docker</li>
+                                <li className="">Git</li>
+                                <li className="">Golang</li>
+                                <li className="">OOP</li>
+                                <li className="">AWS</li>
+                                <li className="">Python</li>
                             </ul>
                         </div>
                     </section>
                 </div>
             </div>
         </div>
-    )
+    </Transition>)
 }

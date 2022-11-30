@@ -22,13 +22,17 @@ module.exports = {
         wiggle: 'wiggle 0.5s ease-in-out infinite',
       },
       colors: {
-        'theme-light-1': '#f5154e',
-        'theme-light-2': '#4e0dbd',
-        'theme-light-3': '#3daf94',
-        'theme-dark-1': '#f5154e',
-        'theme-dark-2': '#420b9f',
-        'theme-dark-3': '#3daf94',
-        'bg-dark': 'rgb(3,1,24)',
+        // 221 h
+        'theme-light-1': 'rgb(37 99 235)',
+        // 189 h
+        'theme-light-2': 'rgb(6 182 212)',
+        // 161 h
+        'theme-light-3': 'rgb(5 150 105)',
+        'theme-dark-1': 'rgb(37 99 235)',
+        'theme-dark-2': 'rgb(6 182 212)',
+        'theme-dark-3': 'rgb(5 150 105)',
+        'bg-dark': 'rgb(1,3,20)',
+        'dark-accent': 'rgb(21,21,49)',
         'bg-light': '#eeeeee',
       }
     },

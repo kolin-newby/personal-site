@@ -1,6 +1,7 @@
 import {PolarAngleAxis, PolarGrid, Radar, RadarChart, ResponsiveContainer} from "recharts";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import React from "react";
+import React, {useState} from "react";
+import Resume from "./resume";
 
 export default function Experience({darkMode}) {
 
@@ -11,6 +12,8 @@ export default function Experience({darkMode}) {
         {name: "Node.js", level: "75%", levelNum: 75},
         {name: "Back-End", level: "55%", levelNum: 55},
     ]
+
+    const [resumeOpen, setResumeOpen] = useState(false);
 
     const title = `My_Experience...`
 
@@ -38,8 +41,15 @@ export default function Experience({darkMode}) {
                                     low-latency web loggers.
                                 </span>
                     <span className={"text-lg lg:text-xl 2xl:text-2xl pb-0 sm:pb-8 sm:px-10"}>
-                                    For more details, feel free to check out my <a href={"https://www.linkedin.com/in/knewby/"} target={"_blank"} className={"bg-clip-text text-transparent bg-gradient-to-r from-theme-light-1 to-theme-light-2 dark:from-theme-dark-1 dark:to-theme-dark-2"}>Linkedin</a>!
-                                </span>
+                        For more details, feel free to check out my
+                        <a
+                            href={"https://www.linkedin.com/in/knewby/"}
+                            target={"_blank"} rel="noreferrer"
+                            className={"bg-clip-text text-transparent bg-gradient-to-r from-theme-light-1 to-theme-light-2 dark:from-theme-dark-1 dark:to-theme-dark-2"}
+                        >
+                            &nbsp;Linkedin
+                        </a>!
+                    </span>
                 </div>
                 <div className={"hidden 2xl:flex shadow-2xl dark:shadow-blue-900 hover:shadow-lg rounded-lg " +
                     "bg-gradient-to-r from-theme-light-1 to-theme-light-2 dark:from-theme-dark-1 dark:to-theme-dark-2 " +
@@ -132,15 +142,16 @@ export default function Experience({darkMode}) {
                         "from-theme-light-1/50 to-theme-light-2/70 dark:from-theme-dark-1/50 " +
                         "dark:to-theme-dark-2/70 w-5/6 sm:w-full self-center sm:self-auto"}>
                         <span className={"flex text-center 2xl:text-2xl font-bold"}>Interested in learning more?</span>
-                        <a href={"/resume.pdf"} download={"knewby_resume.pdf"} className={"group flex text-center 2xl:text-xl cursor-pointer"}>
-                            Download my resume
+                        <a onClick={() => setResumeOpen(true)} className={"group flex text-center 2xl:text-xl cursor-pointer"}>
+                            View my full resume
                             <span className={"px-2 group-hover:animate-pulse"}>
-                                <FontAwesomeIcon icon={"download"} className={"drop-shadow-lg"}/>
+                                <FontAwesomeIcon icon={"file-lines"} className={"drop-shadow-lg"}/>
                             </span>
                         </a>
                     </div>
                 </div>
             </div>
+            <Resume open={resumeOpen} setOpen={setResumeOpen}/>
         </div>
     )
 }

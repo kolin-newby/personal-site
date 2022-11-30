@@ -11,7 +11,15 @@ import {
     faSun,
     faDownload,
     faTimesCircle,
-    faBars
+    faBars,
+    faFileLines,
+    faTerminal,
+    faCircleExclamation,
+    faEarthAmericas,
+    faPhone,
+    faGlobe,
+    faPaperPlane,
+    faPlay
 } from "@fortawesome/free-solid-svg-icons";
 
 // Branded icon imports
@@ -34,6 +42,14 @@ export const loadIcons = () => {
         faSun,
         faDownload,
         faTimesCircle,
-        faBars
+        faBars,
+        faFileLines,
+        faTerminal,
+        faCircleExclamation,
+        faEarthAmericas,
+        faPhone,
+        faGlobe,
+        faPaperPlane,
+        faPlay
     );
 };

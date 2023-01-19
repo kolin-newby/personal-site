@@ -1,13 +1,8 @@
-import React, {useState} from 'react'
+import React from 'react'
 import {Transition} from '@headlessui/react'
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {jsPDF} from "jspdf";
 
-export default function Resume({open, setOpen, darkMode}) {
-
-    function convertToPDF() {
-
-    }
+export default function Resume({open, setOpen}) {
 
     return (<Transition
         show={open}
@@ -298,21 +293,21 @@ export default function Resume({open, setOpen, darkMode}) {
                                         <span>+1 720.545.8100</span>
                                     </li>
                                     <li>
-                                        <a href="https://knewby.io" target="_blank"
+                                        <a href="https://knewby.io" target="_blank" rel="noreferrer"
                                            className="flex items-center">
                                             <FontAwesomeIcon className={"mr-1.5"} icon="globe" />
                                             <span>knewby.io</span>
                                         </a>
                                     </li>
                                     <li>
-                                        <a href="https://www.linkedin.com/in/knewby/" target="_blank"
+                                        <a href="https://www.linkedin.com/in/knewby/" target="_blank" rel="noreferrer"
                                            className="flex items-center">
                                             <FontAwesomeIcon className={"mr-1.5"} icon={["fab", "linkedin"]} />
                                             <span>linkedin.com/in/knewby</span>
                                         </a>
                                     </li>
                                     <li>
-                                        <a href="https://github.com/kolin-newby" target="_blank"
+                                        <a href="https://github.com/kolin-newby" target="_blank" rel="noreferrer"
                                            className="flex items-center">
                                             <FontAwesomeIcon className={"mr-1.5"} icon={["fab", "github"]} />
                                             <span>github.com/kolin-newby</span>

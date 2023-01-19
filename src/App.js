@@ -29,7 +29,7 @@ export default function App() {
                                 <canvas id={"canvas"} className={"absolute inset-0 z-10"}></canvas>
                                 <div className={"absolute inset-0 z-20 flex flex-col text-5xl lg:text-6xl 2xl:text-7xl font-bold bg-clip-text bg-transparent pointer-events-none " +
                                     "items-center justify-center"}>
-                                    <span className={"flex text-center"}>Hi, I'm Kolin.</span>
+                                    <span className={"flex text-center"}>Hey, I'm Kolin.</span>
                                     <span className={"flex text-center"}>Software Developer</span>
                                 </div>
                             </div>

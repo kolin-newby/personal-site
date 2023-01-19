@@ -73,8 +73,7 @@ export default function Contact() {
                         ))}
                     </span>
                 <span className={"flex lg:text-2xl text-lg w-2/3 items-center text-center justify-center"}>
-                    I am interested in freelance opportunities,
-                    but if you have any other questions or ideas please feel free to let me know.
+                    I'm open to freelance opportunities! If you have any questions or ideas please feel free to reach out.
                 </span>
                 <span className={"flex lg:text-2xl text-lg w-1/2 items-center justify-center font-bold bg-clip-text bg-gradient-to-r " +
                     "from-theme-light-1 to-theme-light-2 text-transparent text-center"}>
@@ -133,36 +132,36 @@ export default function Contact() {
                     />
                 </div>
             </div>
-            <div className={"relative flex w-full justify-center"}>
-                <button className={"px-5 py-3 mt-5 text-xl lg:w-1/6 font-bold text-bg-light dark:text-bg-dark rounded flex justify-center " +
+            <div className={"flex w-full justify-center"}>
+                <button className={"relative px-5 py-3 mt-5 text-xl lg:w-1/6 font-bold text-bg-light dark:text-bg-dark rounded flex justify-center " +
                     "shadow-lg " +
                     `dark:shadow-blue-900 ${sendButtonErrs().length !== 0 ?
                         "opacity-50 text-bg-dark dark:text-bg-light bg-gray-300 dark:bg-gray-500/30 cursor-not-allowed" :
-                        "bg-gradient-to-r from-theme-light-1 to-theme-light-2 hover:shadow-xl hover:-translate-y-1 transform transition-all transform transition-all"}`}
+                        "bg-gradient-to-r from-theme-light-1 to-theme-light-2 hover:shadow-xl hover:-translate-y-1 transform transition-all"}`}
                         onClick={sendButtonErrs().length !== 0 ? null : () => handleContactSubmit()}
                         onMouseEnter={() => setShowErrors(true)}
                         onMouseLeave={() => setShowErrors(false)}
                 >
                     Submit
+                    <Transition
+                        show={showErrors && sendButtonErrs().length > 0}
+                        className={"absolute bottom-full left-1/2 mt-8 flex text-sm w-max transform -translate-x-1/2 -translate-y-1/2 rounded-lg bg-gradient-to-r from-theme-dark-1 via-theme-dark-2 to-theme-dark-3"}
+                        enter={"transition-opacity duration-200"}
+                        enterFrom={"opacity-0"}
+                        enterTo={"opacity-100"}
+                        leave={"transition-opacity duration-300"}
+                        leaveFrom={"opacity-100"}
+                        leaveTo={"opacity-0"}
+                    >
+                        <div className={"flex flex-col w-full bg-bg-light dark:bg-bg-dark m-1 rounded-lg py-3 px-6"}>
+                            <ul className={"list-inside"}>
+                                {sendButtonErrs().map((err) => (
+                                    <li><span><FontAwesomeIcon icon="circle-exclamation" size={"sm"} className={"mr-1.5 text-cyan-500"} />{err}</span></li>
+                                ))}
+                            </ul>
+                        </div>
+                    </Transition>
                 </button>
-                <Transition
-                    show={showErrors && sendButtonErrs().length > 0}
-                    className={"absolute top-full left-1/2 mt-8 flex text-sm w-max transform -translate-x-1/2 rounded-lg bg-gradient-to-r from-theme-dark-1 via-theme-dark-2 to-theme-dark-3"}
-                    enter={"transition-opacity duration-200"}
-                    enterFrom={"opacity-0"}
-                    enterTo={"opacity-100"}
-                    leave={"transition-opacity duration-300"}
-                    leaveFrom={"opacity-100"}
-                    leaveTo={"opacity-0"}
-                >
-                    <div className={"flex flex-col w-full bg-bg-light dark:bg-bg-dark m-1 rounded-lg py-3 px-6"}>
-                        <ul className={"list-inside"}>
-                            {sendButtonErrs().map((err) => (
-                                <li><span><FontAwesomeIcon icon="circle-exclamation" size={"sm"} className={"mr-1.5 text-cyan-500"} />{err}</span></li>
-                            ))}
-                        </ul>
-                    </div>
-                </Transition>
             </div>
         </div>
     )

@@ -44,7 +44,7 @@ export default function Experience({darkMode}) {
                         For more details, feel free to check out my
                         <a
                             href={"https://www.linkedin.com/in/knewby/"}
-                            target={"_blank"} rel="noreferrer"
+                            target={"_blank"} rel={"noreferrer"}
                             className={"bg-clip-text text-transparent bg-gradient-to-r from-theme-light-1 to-theme-light-2 dark:from-theme-dark-1 dark:to-theme-dark-2"}
                         >
                             &nbsp;Linkedin
@@ -113,6 +113,7 @@ export default function Experience({darkMode}) {
                             <a
                                 href={"https://www.colorado.edu/cs/academics/undergraduate-programs/bachelor-science#software_engineering-755"}
                                 target={"_blank"}
+                                rel={"noreferrer"}
                                 className={"flex flex-col 2xl:h-1/3 p-5 justify-center items-center " +
                                     "rounded-lg transition-all transform hover:-translate-y-1 shadow-lg " +
                                     "dark:shadow-blue-900 hover:shadow-2xl bg-gradient-to-r " +
@@ -124,7 +125,7 @@ export default function Experience({darkMode}) {
                                 <span className={"flex text-center 2xl:text-lg pb-4"}>2017-2021</span>
                                 <span className={"flex text-center 2xl:text-base"}>A degree in Computer Science with a focus on Software Development and a minor in Business</span>
                             </a>
-                            <a href={"https://resurface.io"} target={"_blank"} className={"flex flex-col 2xl:h-1/3 " +
+                            <a href={"https://resurface.io"} target={"_blank"} rel={"noreferrer"} className={"flex flex-col 2xl:h-1/3 " +
                                 "p-5 justify-center items-center rounded-lg transition-all transform hover:-translate-y-1 " +
                                 "shadow-lg dark:shadow-blue-900 hover:shadow-2xl bg-gradient-to-r " +
                                 "from-theme-light-1/50 to-theme-light-2/70 dark:from-theme-dark-1/50 " +
@@ -142,12 +143,12 @@ export default function Experience({darkMode}) {
                         "from-theme-light-1/50 to-theme-light-2/70 dark:from-theme-dark-1/50 " +
                         "dark:to-theme-dark-2/70 w-5/6 sm:w-full self-center sm:self-auto"}>
                         <span className={"flex text-center 2xl:text-2xl font-bold"}>Interested in learning more?</span>
-                        <a onClick={() => setResumeOpen(true)} className={"group flex text-center 2xl:text-xl cursor-pointer"}>
+                        <button onClick={() => setResumeOpen(true)} className={"group flex text-center 2xl:text-xl cursor-pointer"}>
                             View my full resume
                             <span className={"px-2 group-hover:animate-pulse"}>
                                 <FontAwesomeIcon icon={"file-lines"} className={"drop-shadow-lg"}/>
                             </span>
-                        </a>
+                        </button>
                     </div>
                 </div>
             </div>

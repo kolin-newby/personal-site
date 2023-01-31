@@ -90,7 +90,7 @@ export default function Experience({darkMode}) {
                                     <RadarChart outerRadius={90} width={730} height={250} data={skills}>
                                         <PolarGrid />
                                         <PolarAngleAxis dataKey="name" stroke={"black"} tickLine={false} axisLine={false} tickSize={8}/>
-                                        <Radar name="skills" dataKey="levelNum" stroke={"#f5154e"} fill={"#f5154e"} fillOpacity={0.65} />
+                                        <Radar name="skills" dataKey="levelNum" stroke={"#88a9ed"} fill={"#4cc7dc"} fillOpacity={0.65} />
                                     </RadarChart>
                                 </ResponsiveContainer>
                             </div>
@@ -104,7 +104,7 @@ export default function Experience({darkMode}) {
                                     <RadarChart outerRadius={90} width={730} height={250} data={skills}>
                                         <PolarGrid />
                                         <PolarAngleAxis dataKey="name" stroke={"white"} tickLine={false} axisLine={false} tickSize={8}/>
-                                        <Radar name="skills" dataKey="levelNum" stroke={"#f5154e"} fill={"#f5154e"} fillOpacity={0.65} />
+                                        <Radar name="skills" dataKey="levelNum" stroke={"#88a9ed"} fill={"#4cc7dc"} fillOpacity={0.65} />
                                     </RadarChart>
                                 </ResponsiveContainer>
                             </div>

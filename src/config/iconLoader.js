@@ -19,7 +19,8 @@ import {
     faPhone,
     faGlobe,
     faPaperPlane,
-    faPlay
+    faPlay,
+    faSquareCheck
 } from "@fortawesome/free-solid-svg-icons";
 
 // Branded icon imports
@@ -50,6 +51,7 @@ export const loadIcons = () => {
         faPhone,
         faGlobe,
         faPaperPlane,
-        faPlay
+        faPlay,
+        faSquareCheck
     );
 };

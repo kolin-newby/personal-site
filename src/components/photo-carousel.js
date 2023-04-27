@@ -22,9 +22,17 @@ export default function PhotoCarousel() {
         {
             src: "prof.jpg",
             info: {
-                name: "Grays & Torreys Peak",
-                location: "Georgetown USA",
-                desc: "Two 14ers, one day"
+                name: "Kolin Newby",
+                location: "San Diego USA",
+                desc: ""
+            }
+        },
+        {
+            src: "KBN05347-Edit.jpg",
+            info: {
+                name: "Garden of the Gods",
+                location: "Colorado Springs USA",
+                desc: "Infrared Photography"
             }
         }
     ]

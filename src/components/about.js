@@ -5,7 +5,7 @@ export default function About() {
     const title = "About_Me..."
 
     return(
-        <div id={"about"} className={"flex flex-col 2xl:flex-row flex-grow min-h-screen items-center"}>
+        <div id={"about"} className={"flex flex-col 2xl:flex-row flex-grow min-h-screen items-center justify-center"}>
             <div className={"flex flex-col text-lg lg:text-xl 2xl:text-2xl space-y-6 2xl:w-1/2 pt-5 px-10"}>
                 <span
                     className={"flex 2xl:text-6xl sm:text-5xl text-4xl mt-5 2xl:mt-0 justify-center font-extrabold lg:pb-14 pb-5"}
@@ -17,21 +17,13 @@ export default function About() {
                         ))}
                 </span>
                 <span className={"flex sm:px-5"}>
-                    I'm a developer early in his career, living in Colorado. Outside of my work, I have passions for
-                    hiking, backpacking, and photography, feel free to check out some of my favorite shots!
+                    As a Coloradan, I enjoy hiking, backpacking, and photography, feel free to check out some of my favorite shots!
                     I love the outdoors and I aspire to make a positive impact on the world the only way I know how,
                     with code!
                 </span>
                 <span className={"flex sm:px-5"}>
-                    I got my undergraduate degree at CU Boulder and I went from there to work on an API web logger
-                    written in the Go programming language, this project was open-source so
-                    check out my github if you're interested! I moved on to a front-end environment that uses
-                    React and Node.js to visualize massive amounts of searchable, detailed
-                    API request and response data collected by loggers like the Go logger I mentioned earlier.
-                </span>
-                <span className={"flex sm:px-5"}>
-                    I really enjoy doing personal projects like making Python web bots and computer vision scanners for scanning board game pieces.
-                    Recently, I have been trying my hand in the vast world of game development using C++ and SFML to recreate some of the classics.
+                    I completed my undergraduate degree at CU Boulder. For two years now I've worked at Resurface Labs, a small startup in API security.
+                    Resurface has been a great place for me to grow my knowledge and to learn new skills, I'm still learning something new every day!
                 </span>
             </div>
             <div className={"flex lg:w-1/2 w-full h-96 mt-6 2xl:mt-0 2xl:h-auto 2xl:pr-10"}>

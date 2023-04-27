@@ -73,7 +73,7 @@ export default function Contact() {
                         ))}
                     </span>
                 <span className={"flex lg:text-2xl text-lg w-2/3 items-center text-center justify-center"}>
-                    I'm open to freelance opportunities! If you have any questions or ideas please feel free to reach out.
+                    I'm open to any opportunities that may come my way, feel free to reach out!
                 </span>
                 <span className={"flex lg:text-2xl text-lg w-1/2 items-center justify-center font-bold bg-clip-text bg-gradient-to-r " +
                     "from-theme-light-1 to-theme-light-2 text-transparent text-center"}>

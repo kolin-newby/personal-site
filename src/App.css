@@ -63,11 +63,6 @@ a {
   padding-right: 2.00rem; /* 4px */
 }
 
-#home-canvas{
-  width: 50%;
-  height: 100%;
-}
-
 .carousel > div{
   /*transition-property: transform;*/
   /*transition-duration: 300ms;*/

@@ -6,6 +6,7 @@ import useScript from "./components/script-loader";
 import Experience from "./components/exp";
 import About from "./components/about";
 import Contact from "./components/contact";
+import Portfolio from './components/portfolio';
 
 loadIcons();
 export default function App() {
@@ -26,7 +27,7 @@ export default function App() {
                     <div className={"w-full overflow-y-auto overflow-x-hidden"}>
                         <div id={"home"} className={"relative w-full h-screen"}>
                             <div id={"wrapper relative h-full"}>
-                                <canvas id={"canvas"} className={"absolute inset-0 z-10"}></canvas>
+                                <canvas id={"homePage"} className={"absolute inset-0 z-10"}></canvas>
                                 <div className={"absolute inset-0 z-20 flex flex-col text-5xl lg:text-6xl 2xl:text-7xl font-bold bg-clip-text bg-transparent pointer-events-none " +
                                     "items-center justify-center"}>
                                     <span className={"flex text-center"}>Hey, I'm Kolin.</span>
@@ -36,6 +37,7 @@ export default function App() {
                         </div>
                         <About/>
                         <Experience/>
+                        <Portfolio/>
                         <Contact/>
                     </div>
                 </div>

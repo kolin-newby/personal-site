@@ -9,6 +9,7 @@ export default function Navbar({darkMode, setDarkMode}) {
     const navbarItems = [
         {id: "about", title: "About"},
         {id: "xp", title: "Experience"},
+        {id: "port", title: "Portfolio"},
         {id: "contact", title: "Contact"}
     ];
 

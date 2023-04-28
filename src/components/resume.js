@@ -6,7 +6,9 @@ export default function Resume({ open, setOpen }) {
   return (
     <Transition
       show={open}
-      className={"absolute inset-0 z-50 overflow-y-auto bg-gray-800/80"}
+      className={
+        "absolute inset-0 z-50 overflow-y-auto bg-gray-800/80 print:overflow-hidden"
+      }
       enter={"transition-opacity duration-500"}
       enterFrom={"opacity-0"}
       enterTo={"opacity-100"}
@@ -16,12 +18,9 @@ export default function Resume({ open, setOpen }) {
     >
       <div
         id="resume-html"
-        className="flex flex-col m-16 p-8 bg-white text-black printable"
+        className="flex flex-col m-16 print:m-0 p-8 bg-white text-black"
       >
-        <div
-          className="fixed z-50 right-24 top-20 space-x-4 flex pb-12 pl-8 rounded-bl-5xl no-print"
-          data-html2canvas-ignore
-        >
+        <div className="fixed z-50 right-24 top-20 space-x-4 flex pb-12 pl-8 rounded-bl-5xl print:hidden">
           <a
             id="pdf_btn"
             className="flex py-2 px-4 cursor-pointer items-center rounded-sm transition-all bg-gradient-to-tl from-theme-light-1 to-theme-light-2 shadow-lg hover:shadow-xl transform hover:-translate-y-1"

@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;900&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Nunito:wght@400;900&display=swap");
 
 @tailwind base;
 @tailwind components;
@@ -11,45 +11,45 @@ a {
 
 * {
   box-sizing: border-box;
-  font-family: 'Nunito', sans-serif;
+  font-family: "Nunito", sans-serif;
 }
 
 .shadow-light {
   /*border-radius: 50px;*/
-  box-shadow:  5px 5px 10px rgba(153, 27, 27, .4),
-  -5px -5px 10px rgba(254, 202, 202, .6);
+  box-shadow: 5px 5px 10px rgba(153, 27, 27, 0.4),
+    -5px -5px 10px rgba(254, 202, 202, 0.6);
 }
 
 .shadow-light:hover {
   /*border-radius: 50px;*/
-  box-shadow: inset 5px 5px 10px rgba(153, 27, 27, .4),
-  inset -5px -5px 10px rgba(254, 202, 202, .6);
+  box-shadow: inset 5px 5px 10px rgba(153, 27, 27, 0.4),
+    inset -5px -5px 10px rgba(254, 202, 202, 0.6);
 }
 
 .shadow-light:active {
   /*border-radius: 50px;*/
-  box-shadow: inset 5px 5px 10px rgba(153, 27, 27, .4),
-  inset -5px -5px 10px rgba(254, 202, 202, .6);
+  box-shadow: inset 5px 5px 10px rgba(153, 27, 27, 0.4),
+    inset -5px -5px 10px rgba(254, 202, 202, 0.6);
 }
 
 /*------------------------------------------------------------*/
 
 .shadow-dark {
   /*border-radius: 50px;*/
-  box-shadow:  5px 5px 10px rgba(153, 27, 27, .4),
-  -5px -5px 10px rgba(254, 202, 202, .6);
+  box-shadow: 5px 5px 10px rgba(153, 27, 27, 0.4),
+    -5px -5px 10px rgba(254, 202, 202, 0.6);
 }
 
 .shadow-dark:hover {
   /*border-radius: 50px;*/
-  box-shadow: inset 5px 5px 10px rgba(153, 27, 27, .4),
-  inset -5px -5px 10px rgba(254, 202, 202, .6);
+  box-shadow: inset 5px 5px 10px rgba(153, 27, 27, 0.4),
+    inset -5px -5px 10px rgba(254, 202, 202, 0.6);
 }
 
 .shadow-dark:active {
   /*border-radius: 50px;*/
-  box-shadow: inset 5px 5px 10px rgba(153, 27, 27, .4),
-  inset -5px -5px 10px rgba(254, 202, 202, .6);
+  box-shadow: inset 5px 5px 10px rgba(153, 27, 27, 0.4),
+    inset -5px -5px 10px rgba(254, 202, 202, 0.6);
 }
 
 .nav-item {
@@ -59,43 +59,43 @@ a {
   height: 100%;
   font-size: 1.875rem; /* 30px */
   line-height: 2.25rem; /* 36px */
-  padding-left: 2.00rem; /* 4px */
-  padding-right: 2.00rem; /* 4px */
+  padding-left: 2rem; /* 4px */
+  padding-right: 2rem; /* 4px */
 }
 
-.carousel > div{
+.carousel > div {
   /*transition-property: transform;*/
   /*transition-duration: 300ms;*/
   transform-origin: top left;
 }
 
-.carousel > div:nth-child(1).inactive{
+.carousel > div:nth-child(1).inactive {
   border-radius: 0.75rem;
   background-color: black;
   transform: scale(80%) translateX(-70%) translateY(-50%);
   z-index: 20;
 }
 
-.carousel > div:nth-child(2).inactive{
+.carousel > div:nth-child(2).inactive {
   border-radius: 0.75rem;
   background-color: black;
   transform: scale(60%) translateX(-125%) translateY(-50%);
   z-index: 10;
 }
 
-.carousel > div:nth-child(3).inactive{
+.carousel > div:nth-child(3).inactive {
   border-radius: 0.75rem;
   background-color: black;
   transform: scale(40%) translateX(-215%) translateY(-50%);
   z-index: 0;
 }
 
-.carousel > div.active:hover{
+.carousel > div.active:hover {
   z-index: 30;
   transform: translateX(-30%) translateY(-52%);
 }
 
-.carousel > div.active{
+.carousel > div.active {
   z-index: 30;
   border-radius: 0.75rem;
   transition-property: all;
@@ -121,11 +121,13 @@ a {
 /*}*/
 
 @media print {
-  .no-print, .no-print * {
+  .no-print,
+  .no-print * {
     display: none !important;
   }
 
-  .printable, .printable * {
+  .printable,
+  .printable * {
     display: block !important;
   }
 }

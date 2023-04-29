@@ -18,7 +18,7 @@ export default function Resume({ open, setOpen }) {
     >
       <div
         id="resume-html"
-        className="flex flex-col m-16 print:m-0 p-8 bg-white text-black"
+        className="flex flex-col m-16 print:m-0 p-8 bg-white text-black rounded-lg print:rounded-none"
       >
         <div className="fixed z-50 right-24 top-20 space-x-4 flex pb-12 pl-8 rounded-bl-5xl print:hidden">
           <a
@@ -83,21 +83,19 @@ export default function Resume({ open, setOpen }) {
                       <span className="font-bold"> JavaScript</span>
                     </li>
                     <li>
-                      Work with backend components to optimize
+                      Work with backend components to optimize large
                       <span className="font-bold"> SQL</span> queries, system
-                      latency, and overall performance given large data sets
+                      latency, and overall performance
                     </li>
                     <li>
-                      Assist in the development and maintenance of open-source
-                      logging software in the
-                      <span className="font-bold"> Go</span> programming
-                      language, which utilizes go routines for
-                      <span className="font-bold"> asynchronous</span>,
-                      background http submission
+                      Assist in the development and maintenance of an open-source, 
+                      <span className="font-bold"> asynchronous</span>
+                      &nbsp;web logger in
+                      <span className="font-bold"> Go</span>
                     </li>
                     <li>
-                      Assist in development of integrated unit tests for the Go
-                      logger mentioned above
+                      Assist in development of integrated unit tests for Go web
+                      logger
                     </li>
                     <li>
                       Develop and maintain a test
@@ -106,9 +104,9 @@ export default function Resume({ open, setOpen }) {
                       <span className="font-bold"> GraphQL</span>
                     </li>
                     <li>
-                      Coordinate efforts with fellow engineers to develop
-                      supporting software for{" "}
-                      <span className="font-bold">AWS</span> logging
+                      Coordinate with fellow engineers to develop
+                      logging software for{" "}
+                      <span className="font-bold">cloud</span> environments
                     </li>
                   </ul>
                 </div>
@@ -292,7 +290,7 @@ export default function Resume({ open, setOpen }) {
                 </span>
                 <hr className="h-0.5 w-5/6 bg-gray-300 rounded-sm" />
                 <div className="flex w-full justify-center items-center">
-                  <ul className="flex flex-col text-xl list-inside items-start">
+                  <ul className="flex flex-col text-xl list-inside items-start space-y-1">
                     <li className="flex items-center">
                       <FontAwesomeIcon
                         className={"mr-1.5"}
@@ -393,15 +391,15 @@ export default function Resume({ open, setOpen }) {
                   <li className="">Node.JS</li>
                   <li className="">HTML/CSS</li>
                   <li className="">Tailwind CSS</li>
+                  <li className="">Golang</li>
+                  <li className="">Python</li>
                   <li className="">GraphQL</li>
                   <li className="">REST APIs</li>
                   <li className="">Agile Development</li>
                   <li className="">Docker</li>
                   <li className="">Git</li>
-                  <li className="">Golang</li>
                   <li className="">OOP</li>
                   <li className="">AWS</li>
-                  <li className="">Python</li>
                 </ul>
               </div>
             </section>

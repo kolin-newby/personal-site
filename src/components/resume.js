@@ -296,7 +296,7 @@ export default function Resume({ open, setOpen }) {
                         className={"mr-1.5"}
                         icon="earth-americas"
                       />
-                      <span>Boulder, Colorado</span>
+                      <span>Centennial, Colorado</span>
                     </li>
                     <li className="flex items-center">
                       <FontAwesomeIcon

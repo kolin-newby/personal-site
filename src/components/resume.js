@@ -70,7 +70,7 @@ export default function Resume({ open, setOpen }) {
                           icon="play"
                         />
                       </div>
-                      June 2021 - Currently Employed
+                      June 2021 - May 2023
                     </span>
                   </div>
                   <ul className="list-disc list-inside ml-8 text-lg mt-3 space-y-1.5">

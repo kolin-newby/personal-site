@@ -6,7 +6,6 @@ import useScript from "./components/script-loader";
 import Experience from "./components/exp";
 import About from "./components/about";
 import Contact from "./components/contact";
-// import Portfolio from "./components/portfolio";
 
 loadIcons();
 export default function App() {

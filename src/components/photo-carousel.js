@@ -22,9 +22,7 @@ export default function PhotoCarousel() {
         {
             src: "prof.jpg",
             info: {
-                name: "Kolin Newby",
-                location: "San Diego USA",
-                desc: ""
+                name: "Kolin Newby"
             }
         },
         {
@@ -67,21 +65,21 @@ export default function PhotoCarousel() {
                     <div
                         className={`2xl:flex hidden absolute justify-center items-end flex-col top-12 right-0 bg-bg-light dark:bg-bg-dark bg-opacity-70 dark:bg-opacity-70 rounded-l pl-3 py-2 pr-4 ${returnPhotoClass(photo.src) === "active" ? "visible" : "invisible"}`}
                     >
-                        <span
+                        {photo.info.name && photo.info.name !== "" && (<span
                             className={`${returnPhotoClass(photo.src) === "active" ? "visible" : "invisible"} flex 2xl:text-3xl font-bold`}
                         >
                             {photo.info.name}
-                        </span>
-                        <span
+                        </span>)}
+                        {photo.info.location && photo.info.location !== "" && (<span
                             className={`${returnPhotoClass(photo.src) === "active" ? "visible" : "invisible"} flex 2xl:text-2xl border-b border-black dark:border-white w-max pb-2 mb-2`}
                         >
                             {photo.info.location}
-                        </span>
-                        <span
+                        </span>)}
+                        {photo.info.desc && photo.info.desc !== "" && (<span
                             className={`${returnPhotoClass(photo.src) === "active" ? "visible" : "invisible"} flex 2xl:text-xl`}
                         >
                             {photo.info.desc}
-                        </span>
+                        </span>)}
                     </div>
                     <img
                         key={"key-" + photo.src}

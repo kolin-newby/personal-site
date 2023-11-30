@@ -6,8 +6,7 @@ import {
   ResponsiveContainer,
 } from "recharts";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import React, { useState } from "react";
-import Resume from "./resume";
+import React from "react";
 
 export default function Experience({ darkMode }) {
   const skills = [
@@ -18,8 +17,6 @@ export default function Experience({ darkMode }) {
     { name: "Go", level: "65%", levelNum: 65 },
     { name: "Java", level: "55%", levelNum: 55 },
   ];
-
-  const [resumeOpen, setResumeOpen] = useState(false);
 
   const title = `My_Experience...`;
 
@@ -58,9 +55,9 @@ export default function Experience({ darkMode }) {
           <span className={"text-lg lg:text-xl 2xl:text-2xl pb-8 sm:px-10"}>
             I am a full stack developer! I have experience maintaining and
             developing backend infrastructure in Java in conjunction with Trino
-            and SQL. I have developed an intuitive and efficient Frontend that
-            supports big data visualization. I've even taken on a QA role,
-            creating thourough stress tests for low latency API logging systems.
+            and SQL. I've designed and developed intuitive and responsive Frontends that
+            support big data visualization. I've even taken on a QA role,
+            creating and applying thorough stress tests for low latency API logging systems.
           </span>
           <span
             className={"text-lg lg:text-xl 2xl:text-2xl pb-0 sm:pb-8 sm:px-10"}
@@ -75,6 +72,15 @@ export default function Experience({ darkMode }) {
               }
             >
               &nbsp;Linkedin
+            </a> or see my<a
+              href={"/Kolin-Newby-resume.pdf"}
+              target={"_blank"}
+              rel={"noreferrer"}
+              className={
+                  "bg-clip-text text-transparent bg-gradient-to-r from-theme-light-1 to-theme-light-2 dark:from-theme-dark-1 dark:to-theme-dark-2"
+              }
+          >
+              &nbsp;Resume
             </a>
             !
           </span>
@@ -129,7 +135,7 @@ export default function Experience({ darkMode }) {
           <div className="hidden 2xl:flex h-1/6 items-center justify-evenly p-2 mt-8">
             <div className="flex flex-col items-center drop-shadow-2xl">
               <FontAwesomeIcon
-                className="flex"
+                className="flex hover:animate-wiggle"
                 size={"4x"}
                 icon={"square-check"}
               />
@@ -137,7 +143,7 @@ export default function Experience({ darkMode }) {
             </div>
             <div className="flex flex-col items-center drop-shadow-2xl">
               <FontAwesomeIcon
-                className="flex transition-all"
+                className="flex transition-all hover:animate-wiggle"
                 size={"4x"}
                 icon={"square-check"}
               />
@@ -145,7 +151,7 @@ export default function Experience({ darkMode }) {
             </div>
             <div className="flex flex-col items-center drop-shadow-2xl">
               <FontAwesomeIcon
-                className="flex transition-all"
+                className="flex transition-all hover:animate-wiggle"
                 size={"4x"}
                 icon={"square-check"}
               />
@@ -319,42 +325,43 @@ export default function Experience({ darkMode }) {
                   Resurface Labs
                 </span>
                 <span className={"flex text-center 2xl:text-lg pb-4"}>
-                  2021-Present
+                  2021-2023
                 </span>
                 <span className={"flex text-center 2xl:text-base"}>
                   A cyber security startup focused on data-driven API security
                 </span>
               </a>
+              <a
+                  href={"https://graylog.org/"}
+                  target={"_blank"}
+                  rel={"noreferrer"}
+                  className={
+                      "flex flex-col 2xl:h-1/3 " +
+                      "p-5 justify-center items-center rounded-lg transition-all transform hover:-translate-y-1 " +
+                      "shadow-lg dark:shadow-blue-900 hover:shadow-2xl bg-gradient-to-r " +
+                      "from-theme-light-1/50 to-theme-light-2/70 dark:from-theme-dark-1/50 " +
+                      "dark:to-theme-dark-2/70 w-5/6 sm:w-full"
+                  }
+              >
+                <span
+                    className={"flex text-center 2xl:text-2xl font-bold pb-4"}
+                >
+                  Software Engineer
+                </span>
+                <span className={"flex text-center 2xl:text-xl"}>
+                  Graylog
+                </span>
+                <span className={"flex text-center 2xl:text-lg pb-4"}>
+                  2023-Present
+                </span>
+                <span className={"flex text-center 2xl:text-base"}>
+                  A startup that provides empowering threat detection & incident response solutions with cutting-edge technology
+                </span>
+              </a>
             </div>
-          </div>
-          <div
-            className={
-              "flex flex-col 2xl:h-1/3 p-5 justify-center " +
-              "items-center rounded-lg transition-all transform hover:-translate-y-1 " +
-              "shadow-lg dark:shadow-blue-900 hover:shadow-2xl bg-gradient-to-r " +
-              "from-theme-light-1/50 to-theme-light-2/70 dark:from-theme-dark-1/50 " +
-              "dark:to-theme-dark-2/70 w-5/6 sm:w-full self-center sm:self-auto"
-            }
-          >
-            <span className={"flex text-center 2xl:text-2xl font-bold"}>
-              Interested in learning more?
-            </span>
-            <button
-              onClick={() => setResumeOpen(true)}
-              className={"group flex text-center 2xl:text-xl cursor-pointer"}
-            >
-              View my full resume
-              <span className={"px-2 group-hover:animate-pulse"}>
-                <FontAwesomeIcon
-                  icon={"file-lines"}
-                  className={"drop-shadow-lg"}
-                />
-              </span>
-            </button>
           </div>
         </div>
       </div>
-      <Resume open={resumeOpen} setOpen={setResumeOpen} />
     </div>
   );
 }

@@ -15,19 +15,27 @@ export default function Navbar({ darkMode, setDarkMode }) {
 
   const mediaLinks = [
     {
-      link: "https://www.linkedin.com/in/knewby/",
-      icon: ["fab", "linkedin"],
-      name: "linkedin",
-      title: "see my LinkedIn",
-      size: "xl",
+        link: "https://www.linkedin.com/in/knewby/",
+        icon: ["fab", "linkedin"],
+        name: "linkedin",
+        title: "see my LinkedIn",
+        size: "xl",
     },
     {
-      link: "https://github.com/kolin-newby",
-      icon: ["fab", "github"],
-      name: "github",
-      title: "see my Github",
-      size: "xl",
+        link: "https://github.com/kolin-newby",
+        icon: ["fab", "github"],
+        name: "github",
+        title: "see my Github",
+        size: "xl",
     },
+    {
+        link: "/Kolin-Newby-resume.pdf",
+        icon: "file-lines",
+        name: "resume",
+        title: "See my resume",
+        size: "xl",
+
+    }
   ];
 
   function scrollTo(key) {

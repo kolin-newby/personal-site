@@ -118,7 +118,7 @@ export default function Contact() {
             sent ? "opacity-100" : "opacity-0"
           } transition-opacity duration-500 pointer-events-none absolute flex z-10 inset-0 bg-bg-light dark:bg-bg-dark bg-opacity-80 dark:bg-opacity-60 text-3xl font-bold justify-center items-center`}
         >
-          Message Sent!
+          Your message was sent!
         </div>
         <div
           className={
@@ -217,7 +217,7 @@ export default function Contact() {
         >
           Submit
           <Transition
-            show={showErrors && sendButtonErrs().length > 0}
+            show={showErrors && sendButtonErrs().length > 0 && !sent}
             className={
               "absolute bottom-full left-1/2 mt-8 flex text-sm w-max transform -translate-x-1/2 -translate-y-1/2 rounded-lg bg-gradient-to-r from-theme-dark-1 via-theme-dark-2 to-theme-dark-3"
             }

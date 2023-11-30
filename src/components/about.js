@@ -22,8 +22,9 @@ export default function About() {
                     with code!
                 </span>
                 <span className={"flex sm:px-5"}>
-                    I completed my undergraduate degree at CU Boulder. For two years now I've worked at Resurface Labs, a small startup in API security.
-                    Resurface has been a great place for me to grow my knowledge and to learn new skills, I'm still learning something new every day!
+                    I completed my undergraduate degree at CU Boulder and for three years now I've worked in API security under multiple companies.
+                    Right now I'm working at Graylog, a promising startup with multi-faceted security offerings across cyber space.
+                    So far, my career has been a wild and exciting ride and I'm still learning something new every day!
                 </span>
             </div>
             <div className={"flex lg:w-1/2 w-full h-96 mt-6 2xl:mt-0 2xl:h-auto 2xl:pr-10"}>

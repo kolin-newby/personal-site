@@ -55,9 +55,9 @@ export default function Experience({ darkMode }) {
           <span className={"text-lg lg:text-xl 2xl:text-2xl pb-8 sm:px-10"}>
             I am a full stack developer! I have experience maintaining and
             developing backend infrastructure in Java in conjunction with Trino
-            and SQL. I've designed and developed intuitive and responsive Frontends that
+            and SQL. I've designed and developed intuitive and responsive frontends that
             support big data visualization. I've even taken on a QA role,
-            creating and applying thorough stress tests for low latency API logging systems.
+            creating and applying thorough stress tests for low-latency API logging systems.
           </span>
           <span
             className={"text-lg lg:text-xl 2xl:text-2xl pb-0 sm:pb-8 sm:px-10"}

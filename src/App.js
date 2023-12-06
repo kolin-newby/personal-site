@@ -41,7 +41,7 @@ export default function App() {
                     "items-center justify-center"
                   }
                 >
-                  <span className={"flex text-center"}>Hey, I'm Kolin.</span>
+                  <span className={"flex text-center"}>I'm Kolin,</span>
                   <span className={"flex text-center"}>Software Developer</span>
                 </div>
               </div>

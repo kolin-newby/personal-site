@@ -2,8 +2,8 @@ const canvas = document.getElementById("canvas");
 const ctx = canvas.getContext("2d");
 
 let hueIncrease = true;
-const hueTop = 345;
-const hueBottom = 262;
+const hueTop = 0;
+const hueBottom = 0;
 
 canvas.width = window.innerWidth;
 canvas.height = window.innerHeight;
@@ -24,20 +24,21 @@ canvas.addEventListener("mousemove", function (event) {
 })
 
 class Particle {
-    constructor() {
-        const mobile = window.innerWidth < 1024;
-        this.x = mobile ? (mouse.x) : (mouse.x - 150);
-        this.y = mobile ? (mouse.y-80) : (mouse.y);
-        this.size = Math.random() * 2 + 0.1;
-        this.speedX = Math.random() * 2;
-        this.speedY = Math.random() * 2;
-        this.color = "hsl(" + hue + ", 100%, 40%)";
-    }
-    update() {
-        this.x += this.speedX;
-        this.y += this.speedY;
-        if (this.size > 0.1) this.size -= 0.008;
-    }
+  constructor() {
+    const mobile = window.innerWidth < 1024;
+    //adjust x and y here for offsets from navbars and such
+    this.x = mobile ? mouse.x : mouse.x;
+    this.y = mobile ? mouse.y : mouse.y;
+    this.size = Math.random() * 2.5 + 0.1;
+    this.speedX = Math.random() * 2;
+    this.speedY = Math.random() * 2;
+    this.color = "hsl(" + hue + ", 0%, 0%)";
+  }
+  update() {
+    this.x += this.speedX;
+    this.y += this.speedY;
+    if (this.size > 0.1) this.size -= 0.008;
+  }
 
     draw() {
         ctx.fillStyle = this.color;

@@ -11,8 +11,21 @@ import {
     faSun,
     faDownload,
     faTimesCircle,
-    faBars
+    faBars,
+    faFileLines,
+    faTerminal,
+    faCircleExclamation,
+    faEarthAmericas,
+    faPhone,
+    faGlobe,
+    faPaperPlane,
+    faPlay,
+    faSquareCheck,
 } from "@fortawesome/free-solid-svg-icons";
+
+import {
+    faNodeJs as node
+} from "@fortawesome/free-brands-svg-icons";
 
 // Branded icon imports
 import { faInstagram, faFacebook, faTwitter, faSnapchatGhost, faLinkedin, faGithub } from "@fortawesome/free-brands-svg-icons";
@@ -34,6 +47,16 @@ export const loadIcons = () => {
         faSun,
         faDownload,
         faTimesCircle,
-        faBars
+        faBars,
+        faFileLines,
+        faTerminal,
+        faCircleExclamation,
+        faEarthAmericas,
+        faPhone,
+        faGlobe,
+        faPaperPlane,
+        faPlay,
+        faSquareCheck,
+        node,
     );
 };

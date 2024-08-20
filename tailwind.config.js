@@ -8,6 +8,9 @@ module.exports = {
   ],
   theme: {
     extend: {
+      backgroundImage: {
+        'light-bg-image': "url(/public/img/bg.svg)"
+      },
       keyframes: {
         wiggle: {
           '0%, 100%': {transform: 'rotate(-2deg)'},
@@ -22,15 +25,22 @@ module.exports = {
         wiggle: 'wiggle 0.5s ease-in-out infinite',
       },
       colors: {
-        'theme-light-1': '#f5154e',
-        'theme-light-2': '#4e0dbd',
-        'theme-light-3': '#3daf94',
-        'theme-dark-1': '#f5154e',
-        'theme-dark-2': '#420b9f',
-        'theme-dark-3': '#3daf94',
-        'bg-dark': 'rgb(3,1,24)',
-        // 'bg-dark-accent': 'rgb(8,3,65)',
-        'bg-light': '#eeeeee',
+        // 41 h
+        'theme-light-1': '#fd1d1d',
+        // 9 h
+        'theme-light-2': '#ff5a95',
+        // 341 h
+        'theme-light-3': '#ffa600',
+
+        'theme-dark-1': '#26513f',
+        'theme-dark-2': '#513f26',
+        'theme-dark-3': 'rgb(5 150 105)',
+
+        'bg-light': '#efefef',
+        'light-accent': '#95c2c6',
+
+        'bg-dark': '#383632',
+        'dark-accent': '#19593a',
       }
     },
   },

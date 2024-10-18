@@ -1,91 +1,52 @@
-import {useState} from "react";
+import {useEffect, useState} from "react";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 
-export default function PhotoCarousel() {
+export default function PhotoCarousel({open, setOpen}) {
 
-    const photoFiles = [
-        {
-            src: "KBN02251.jpg",
-            info: {
-                name: "Clyfford Still Museum",
-                location: "Denver USA",
-                desc: "Architecture in Denver"
-                }
-        },
-        {
-            src: "KBN04765.jpg",
-            info: {
-                name: "Catalina Island",
-                location: "California USA",
-                desc: "Backpacking 2022"
-            }
-        },
-        {
-            src: "prof.jpg",
-            info: {
-                name: "Grays & Torreys Peak",
-                location: "Georgetown USA",
-                desc: "Two 14ers, one day"
-            }
-        }
-    ]
+    const [spiderTime, setSpiderTime] = useState(false);
+    const spiderImageUrl = "https://s2.darkroom.com/v1p83dyn7v6q5cqflum1c5wbb649";
 
-    const [activePhoto, setActivePhoto] = useState("KBN02251.jpg");
+    useEffect(() => {
+        const timeoutID = setTimeout(() => {
+            setSpiderTime(false);
+        }, 2000);
+        return () => clearTimeout(timeoutID);
+    }, [spiderTime])
 
-    function returnPhotoClass(photo) {
-        if (photo === activePhoto) return "active";
-        else return "inactive";
-    }
-
-    function handlePhotoClick(photo) {
-        if (photo.src === activePhoto) return;
-
-        setActivePhoto(photo.src);
-    }
-
-    return(
-        <div className={"relative w-full block carousel"}>
-            {photoFiles.sort((a, b) => {
-                if (a.src === activePhoto && b.src !== activePhoto) return 1;
-                if (b.src === activePhoto && a.src !== activePhoto) return -1;
-                return 0;
-            }).map((photo) => (
-                <div className={`${returnPhotoClass(photo.src)} absolute transition-all top-1/2 left-1/2 h-[20rem] w-[14rem] xs:h-[20rem] xs:w-[18rem] lg:h-[22rem] lg:w-[22rem] 2xl:h-[40rem] 2xl:w-[30rem] group object-cover ${
-                    returnPhotoClass(photo.src) === "active" ?
-                    "shadow-lg dark:shadow-blue-900 hover:shadow-2xl"
-                    :
-                    ""}`}>
-                    <div
-                        className={`small:flex hidden absolute justify-center items-end flex-col top-16 right-0 bg-bg-light dark:bg-bg-dark bg-opacity-70 dark:bg-opacity-70 rounded-l pl-3 py-2 pr-4 ${returnPhotoClass(photo.src) === "active" ? "visible" : "invisible"}`}
-                    >
-                        <span
-                            className={`${returnPhotoClass(photo.src) === "active" ? "visible" : "invisible"} flex 2xl:text-3xl font-bold`}
-                        >
-                            {photo.info.name}
-                        </span>
-                        <span
-                            className={`${returnPhotoClass(photo.src) === "active" ? "visible" : "invisible"} flex transition-opacity duration-300 2xl:text-2xl border-b border-black dark:border-white w-max pb-2 mb-2`}
-                        >
-                            {photo.info.location}
-                        </span>
-                        <span
-                            className={`${returnPhotoClass(photo.src) === "active" ? "visible" : "invisible"} flex transition-opacity duration-300 2xl:text-xl`}
-                        >
-                            {photo.info.desc}
-                        </span>
-                    </div>
-                    <img
-                        key={"key-" + photo.src}
-                        src={"/photos/" + photo.src}
-                        alt={photo.src}
-                        onClick={() => handlePhotoClick(photo)}
-                        className={`w-full h-full object-cover rounded-xl ${returnPhotoClass(photo.src) === "active" ?
-                            "opacity-100"
-                            :
-                            "opacity-40 hover:opacity-60 transition-opacity"}
-                            `}
-                    />
+    return (
+        <div className={`fixed flex inset-0 z-20 bg-black transform transition-transform duration-500 ${open ? "" : "translate-x-full"}`}>
+            <div className={"flex items-center justify-center relative w-full"}>
+                <div
+                    className={"group absolute transition-colors duration-300 top-10 left-10 hover:bg-white/10 rounded-lg px-4 py-2 cursor-pointer"}
+                    onClick={() => setOpen(false)}
+                >
+                    <FontAwesomeIcon icon={"times"}
+                                     className={"text-white/30 group-hover:text-white/60 transition-colors duration-300 text-4xl"}/>
                 </div>
-            ))}
+                <div className={"group absolute flex flex-col top-0 right-10 w-36"} onClick={() => setSpiderTime(!spiderTime)}>
+                    <div className={"flex flex-col items-center justify-center relative transform group-hover:translate-y-0 -translate-y-20 duration-1000 transition-transform"}>
+                        <div className={"bg-white/10 w-0.5 h-20"}/>
+                        <FontAwesomeIcon icon={"spider"} className={"flex text-white/50 text-lg transform rotate-180 -translate-y-1"}/>
+                    </div>
+                </div>
+                <div className={`absolute flex flex-col transform transition-transform duration-500 right-5 top-44 ${spiderTime ? "translate-x-0" : "translate-x-40"}`}>
+                    <img src={spiderImageUrl} alt={"friendly cat-faced spider"} className={"flex rounded-full object-right-top object-none self-end blur-sm w-10 mb-10"}/>
+                    <img src={spiderImageUrl} alt={"friendly cat-faced spider"} className={"flex rounded-xl object-center object-fill w-32"}/>
+                    <div className={"flex justify-between"}>
+                        <img src={spiderImageUrl} alt={"friendly cat-faced spider"} className={"flex rounded-full object-left-bottom object-none blur-sm w-8 mt-10"}/>
+                        <span className={"flex rounded-full bg-white/40 px-4 text-sm items-center mt-2 h-8"}>hi!</span>
+                    </div>
+                </div>
+                <div id={"shift-container"} className={"absolute inset-0 bg-black/10 -z-10"}/>
+                <div className={"flex w-4/5 h-3/4 items-center justify-center"}>
+                    <div className={"flex flex-col mr-2 hover:mr-10 bg-center bg-cover bg-no-repeat bg-photo-1 h-full transition-all duration-1000 basis-24 hover:basis-4/6 rounded-xl transform skew-x-6 hover:skew-x-0"}/>
+                    <div className={"flex flex-col mr-2 hover:mx-10 bg-center bg-cover bg-no-repeat bg-photo-2 h-full transition-all duration-1000 basis-24 hover:basis-4/6 rounded-xl transform skew-x-6 hover:skew-x-0"}/>
+                    <div className={"flex flex-col mr-2 hover:mx-10 bg-center bg-cover bg-no-repeat bg-photo-3 h-full transition-all duration-1000 basis-24 hover:basis-4/6 rounded-xl transform skew-x-6 hover:skew-x-0"}/>
+                    <div className={"flex flex-col mr-2 hover:mx-10 bg-center bg-cover bg-no-repeat bg-photo-4 h-full transition-all duration-1000 basis-24 hover:basis-4/6 rounded-xl transform skew-x-6 hover:skew-x-0"}/>
+                    <div className={"flex flex-col mr-2 hover:mx-10 bg-center bg-cover bg-no-repeat bg-photo-5 h-full transition-all duration-1000 basis-24 hover:basis-4/6 rounded-xl transform skew-x-6 hover:skew-x-0"}/>
+                    <div className={"flex flex-col hover:ml-10 bg-center bg-cover bg-no-repeat bg-photo-6 h-full transition-all duration-1000 basis-24 hover:basis-4/6 rounded-xl transform skew-x-6 hover:skew-x-0"}/>
+                </div>
+            </div>
         </div>
     )
 }

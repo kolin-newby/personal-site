@@ -1,32 +1,44 @@
 import PhotoCarousel from "./photo-carousel";
-import React from "react";
+import React, {useState} from "react";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 
 export default function About() {
-    const title = "About_Me..."
+
+    const [photosOpen, setPhotosOpen] = useState(false);
 
     return(
-        <div id={"about"} className={"flex flex-col 2xl:flex-row flex-grow min-h-screen items-center"}>
-            <div className={"flex flex-col text-lg lg:text-xl 2xl:text-2xl space-y-6 2xl:w-1/2 pt-5 mx-20"}>
-                <span
-                    className={"flex 2xl:text-6xl text-5xl mt-5 2xl:mt-0 justify-center font-extrabold lg:pb-20 pb-5"}
-                >
-                        {title.split("").map((letter) => (
-                            <span className={"cursor-default hover:text-transparent transition-all duration-75 " +
-                                "hover:transform hover:-translate-y-3 bg-clip-text bg-gradient-to-r " +
-                                `from-theme-light-1 to-theme-light-2 dark:from-theme-dark-1 dark:to-theme-dark-2 ${letter === "_" ? "invisible" : "visible"}`}>{letter}</span>
-                        ))}
-                </span>
-                <span className={"flex"}>I'm a developer early in his career, living in Colorado, USA. I have a passion for hiking, backpacking, and photography; feel free to check out some of my favorite photos!
-                                I love the outdoors and I aspire to make a positive impact on our planet's current climate crisis the only way I know how, with code.</span>
-                <span className={"flex"}>I got my undergraduate degree in Computer Science at CU Boulder and I went from there to working on a web logger written in the Go programming language, this project was open-source so
-                                check out my github if you're interested! I moved on to a front-end environment that uses React and Node.js to display massive amounts of searchable, detailed
-                                API request and response data collected by loggers like the Go logger I mentioned earlier. </span>
-                <span className={"flex"}>I really enjoy doing personal projects like making Python web bots and computer vision scanners for scanning board game pieces.
-                                Recently, I have been trying my hand in the vast world of game development using C++ and SFML to recreate some classics.</span>
+        <div id={"about"} className={"relative flex flex-col h-[calc(100vh-5rem)] items-center"}>
+            <div className={"flex flex-col h-full items-center justify-center"}>
+                <div className={"flex justify-start px-12 pt-10"}>
+                    <span className={"flex w-1/2"}>I have a passion for hiking, backpacking, and photography. Please feel free to check out some of my favorite shots to the right!
+                                I love the outdoors and I aspire to be able to use my skills as a developer to make exploring our world easier!</span><br/>
+                </div>
+                <div className={"flex  justify-center items-center my-10 w-1/4 relative rounded-full group"}>
+                    <img
+                        className={"flex object-contain rounded-full w-full"}
+                        src={"photos/me.jpg"}
+                        alt={"Kolin"}
+                    />
+                    <div
+                        className={"absolute blur object-contain rounded-full -inset-3 -z-10 animate-spin opacity-0 group-hover:opacity-100 bg-gradient-to-br from-white/10 via-white/80 to-white/10 transition-opacity duration-700"}
+                    />
+                </div>
+                <div className={"flex justify-end px-12 pb-10"}>
+                   <span className={"flex w-1/2"}>I have my BS in Computer Science from CU Boulder and I went from there to building an open source API logger written in Go,
+                                check out my Github if that project piques your interest! Since then I've moved into other areas of development.
+                                At Graylog, I lead development of a robust, data-driven web UI built with React.js and Node and I look forward to
+                                continuing to grow my skills and knowledge into other areas!
+                    </span>
+                </div>
             </div>
-            <div className={"flex lg:w-1/2 w-full h-96 mt-6 2xl:mt-0 2xl:h-auto 2xl:pr-10"}>
-                <PhotoCarousel/>
+            <div
+                className={"absolute right-0 top-1/2 transform -translate-y-1/2 rounded-l-xl w-8 bg-black/60 h-1/3" +
+                    " flex items-center justify-center"}
+                onClick={() => setPhotosOpen(!photosOpen)}
+            >
+                <FontAwesomeIcon icon={"images"} className={"flex"}/>
             </div>
+            <PhotoCarousel open={photosOpen} setOpen={setPhotosOpen}/>
         </div>
     )
 }

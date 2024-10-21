@@ -68,7 +68,7 @@ export default function App() {
             <About/>
             {/* <Experience /> */}
             {/* <Portfolio /> */}
-            {/* <Contact /> */}
+             <Contact />
           </div>
         </div>
       </div>

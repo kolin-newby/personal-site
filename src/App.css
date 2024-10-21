@@ -1,4 +1,4 @@
-@import url("https://fonts.googleapis.com/css2?family=Nunito:wght@400;900&display=swap");
+@import url('https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400;1,700&display=swap');
 
 @tailwind base;
 @tailwind components;
@@ -11,7 +11,7 @@ a {
 
 * {
   box-sizing: border-box;
-  font-family: "Nunito", sans-serif;
+  font-family: "Space Mono", monospace;
 }
 
 .shadow-light {
@@ -130,4 +130,12 @@ a {
   .printable * {
     display: block !important;
   }
+}
+
+@keyframes cursor {
+  50% {border-color: transparent}
+}
+
+#shift-container {
+  perspective: 40px;
 }

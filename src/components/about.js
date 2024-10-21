@@ -1,35 +1,43 @@
 import PhotoCarousel from "./photo-carousel";
-import React from "react";
+import React, {useState} from "react";
 
 export default function About() {
-    const title = "About_Me..."
+
+    const [photosOpen, setPhotosOpen] = useState(false);
 
     return(
-        <div id={"about"} className={"flex flex-col 2xl:flex-row flex-grow min-h-screen items-center justify-center"}>
-            <div className={"flex flex-col text-lg lg:text-xl 2xl:text-2xl space-y-6 2xl:w-1/2 pt-5 px-10"}>
-                <span
-                    className={"flex 2xl:text-6xl sm:text-5xl text-4xl mt-5 2xl:mt-0 justify-center font-extrabold lg:pb-14 pb-5"}
-                >
-                        {title.split("").map((letter, index) => (
-                            <span key={"about-title-" + letter + index} className={"cursor-default hover:text-transparent transition-all duration-75 " +
-                                "hover:transform hover:-translate-y-3 bg-clip-text bg-gradient-to-r " +
-                                `from-theme-light-1 to-theme-light-2 dark:from-theme-dark-1 dark:to-theme-dark-2 ${letter === "_" ? "invisible" : "visible"}`}>{letter}</span>
-                        ))}
-                </span>
-                <span className={"flex sm:px-5"}>
-                    As a Coloradan, I enjoy hiking, backpacking, and photography, feel free to check out some of my favorite shots!
-                    I love the outdoors and I aspire to make a positive impact on the world the only way I know how,
-                    with code!
-                </span>
-                <span className={"flex sm:px-5"}>
-                    I completed my undergraduate degree at CU Boulder and for three years now I've worked in API security under multiple companies.
-                    Right now I'm working at Graylog, a promising startup with multi-faceted security offerings across cyber space.
-                    So far, my career has been a wild and exciting ride and I'm still learning something new every day!
-                </span>
+        <div id={"about"} className={"relative flex h-[calc(100vh-5rem)] mt-20 items-center"}>
+            <div className={"flex flex-row items-center h-full w-full"}>
+                <div className={"flex justify-center items-end h-full w-full pb-16"}>
+                    <span className={"group flex relative w-3/4 bg-white/60 rounded-lg p-6"}>I have a passion for hiking, backpacking, and photography. Please feel free to check out some of my favorite shots by clicking on my photo in the center of the screen!
+                                I love the outdoors and I aspire to be able to use my skills as a developer to make exploring our world easier!
+                        <div className={"absolute w-full h-full inset-0 transition-transform transform translate-y-3 translate-x-3 group-hover:translate-y-3.5 group-hover:translate-x-3.5 rounded-lg border border-white/40 -z-10"}/>
+                    </span>
+                </div>
+                <div className={"flex justify-center items-center w-4/5 bg-red-500 relative rounded-full group"}>
+                    <img
+                        className={"flex object-contain rounded-full inset-y-0 cursor-pointer"}
+                        src={"photos/me.jpg"}
+                        alt={"Kolin"}
+                        onClick={() => {
+                            setPhotosOpen(true);
+                        }}
+                    />
+                    <div
+                        className={"absolute blur object-contain rounded-full -inset-3 -z-10 animate-spin opacity-0 group-hover:opacity-100 bg-gradient-to-br from-white/10 via-white/80 to-white/10 transition-opacity duration-700"}
+                    />
+                </div>
+                <div className={"flex justify-center items-start h-full pt-16 w-full"}>
+                   <span className={"group flex relative w-3/4 bg-white/60 rounded-lg p-6"}>I have my BS in Computer Science from CU Boulder and I went from there to building an open source API logger written in Go,
+                                check out my Github if that project piques your interest! Since then I've moved into other areas of development.
+                                At Graylog, I lead development of a robust, data-driven web UI built with React.js and Node and I look forward to
+                                continuing to grow my skills and knowledge into other areas!
+                       <div
+                           className={"absolute w-full h-full inset-0 transition-transform transform -translate-y-3 -translate-x-3 group-hover:-translate-y-3.5 group-hover:-translate-x-3.5 rounded-lg border border-white/40 -z-10"}/>
+                    </span>
+                </div>
             </div>
-            <div className={"flex lg:w-1/2 w-full h-96 mt-6 2xl:mt-0 2xl:h-auto 2xl:pr-10"}>
-                <PhotoCarousel/>
-            </div>
+            <PhotoCarousel open={photosOpen} setOpen={setPhotosOpen}/>
         </div>
     )
 }

@@ -117,7 +117,7 @@ export default function Experience({ darkMode }) {
                       }
                     >
                       <div
-                        className={`flex rounded-full w-5 bg-theme-light-2/90 dark:bg-theme-light-1/80`}
+                        className={`flex rounded-full w-5 bg-theme-light-2/90 dark:bg-theme-dark-2/80`}
                         style={{ height: skill.level }}
                       />
                     </div>
@@ -200,8 +200,8 @@ export default function Experience({ darkMode }) {
                     <Radar
                       name="skills"
                       dataKey="levelNum"
-                      stroke={"#88a9ed"}
-                      fill={"#4cc7dc"}
+                      stroke={darkMode ? "#88a9ed" : "#fa6996"}
+                      fill={darkMode ? "#4cc7dc" : "#f9492b"}
                       fillOpacity={0.65}
                     />
                   </RadarChart>

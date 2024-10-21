@@ -20,8 +20,14 @@ import {
     faGlobe,
     faPaperPlane,
     faPlay,
-    faSquareCheck
+    faSquareCheck,
+    faImages,
+    faSpider,
 } from "@fortawesome/free-solid-svg-icons";
+
+import {
+    faNodeJs
+} from "@fortawesome/free-brands-svg-icons";
 
 // Branded icon imports
 import { faInstagram, faFacebook, faTwitter, faSnapchatGhost, faLinkedin, faGithub } from "@fortawesome/free-brands-svg-icons";
@@ -52,6 +58,9 @@ export const loadIcons = () => {
         faGlobe,
         faPaperPlane,
         faPlay,
-        faSquareCheck
+        faSquareCheck,
+        faNodeJs,
+        faImages,
+        faSpider,
     );
 };

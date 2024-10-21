@@ -2,12 +2,9 @@ import "./App.css";
 import React, { useEffect, useState } from "react";
 import Navbar from "./components/navbar";
 import { loadIcons } from "./config/iconLoader";
-import Experience from "./components/exp";
 import About from "./components/about";
 import Contact from "./components/contact";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Social from "./components/social";
-import useScript from "./components/script-loader";
 
 loadIcons();
 
@@ -57,10 +54,10 @@ export default function App() {
                 >
                   <span className={"flex text-center"}>Hi, I'm Kolin</span>
                   <span>
-                    <a className="typewrite " data-period="2000"
+                    <div className="typewrite " data-period="2000"
                        data-store = '[ "Developer", "Climber", "Designer", "Backpacker", "Outdoor Enthusiast", "Software Engineer", "Amateur Photographer" ]'>
                       <span className="wrap"></span>
-                    </a>
+                    </div>
                   </span>
                 </div>
               </div>

@@ -1,9 +1,7 @@
 import React, { useState } from "react";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import ThemeSlider from "./theme-slider";
 
 export default function Navbar({ darkMode, setDarkMode }) {
-  const [open, setOpen] = useState(false);
+  // const [open, setOpen] = useState(false);
 
   const navbarItems = [
     { id: "about", title: "About" },

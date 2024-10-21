@@ -3,7 +3,6 @@ import { Transition } from "@headlessui/react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 export default function Contact() {
-  const title = "Contact_Me...";
   const slackWebHook = process.env.REACT_APP_SLACKHOOK;
 
   const [name, setName] = useState("");

@@ -1,6 +1,5 @@
-import React, { useState } from "react";
+import React from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import ThemeSlider from "./theme-slider";
 
 export default function Social({ darkMode, setDarkMode }) {
     const mediaLinks = [

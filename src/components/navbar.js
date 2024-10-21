@@ -13,7 +13,7 @@ export default function Navbar({ darkMode, setDarkMode }) {
   function scrollTo(key) {
     let el = document.getElementById(key);
     el.scrollIntoView({ behavior: "smooth" });
-    setOpen(false);
+    // setOpen(false);
   }
   return (
     <div className="absolute flex top-0 z-20 w-full justify-between items-center h-20">

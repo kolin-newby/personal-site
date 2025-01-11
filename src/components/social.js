@@ -18,7 +18,7 @@ export default function Social({ darkMode, setDarkMode }) {
             size: "xl",
         },
         {
-            link: "/Kolin-Newby-resume.pdf",
+            link: "/resume.pdf",
             icon: "file-lines",
             name: "resume",
             title: "See my resume",

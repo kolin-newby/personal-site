@@ -1,40 +1,16 @@
-
 const canvas = document.getElementById("homePage");
 const ctx = canvas.getContext("2d");
 const maxParticlesFollowMode = 200;
-
-let followMode = false;
-let lum = "0%";
-
-canvas.width = window.innerWidth;
-canvas.height = window.innerHeight;
-let spots = [];
-
+var followMode = false;
+var lum = "0%";
+var spots = [];
 const mouse = {
     x: undefined,
     y: undefined
 }
 
-canvas.addEventListener("mousemove", function (event) {
-    if (!followMode) return;
-    mouse.x = event.x;
-    mouse.y = event.y;
-    for (let i = 0; i < 2; i++) {
-        spots.push(new Particle());
-    }
-});
-
-function mobileEffect (event) {
-    if (followMode) return;
-    for (let i = 0; i < maxParticlesFollowMode; i++) {
-        spots.push(new Particle());
-    }
-}
-
-
-function getRandomInt(min, max) {
-    return Math.random() * (max - min) + min;
-}
+canvas.width = window.innerWidth;
+canvas.height = window.innerHeight;
 
 class Particle {
     constructor() {
@@ -52,13 +28,13 @@ class Particle {
             this.y += this.speedY;
             if (this.size > 0.1) this.size -= 0.006;
         } else {
-            let changeProbX = Math.random();
-            let changeProbY = Math.random();
-            let directionProbX = Math.random();
-            let directionProbY = Math.random();
+            var changeProbX = Math.random();
+            var changeProbY = Math.random();
+            var directionProbX = Math.random();
+            var directionProbY = Math.random();
 
-            let adjustmentX = 0;
-            let adjustmentY = 0;
+            var adjustmentX = 0;
+            var adjustmentY = 0;
 
             if (changeProbX > 0.1) {
                 adjustmentX = Math.random()/3;
@@ -69,15 +45,13 @@ class Particle {
                 if (directionProbY > 0.5) adjustmentY = adjustmentY / -1;
             }
 
-            let speedX = this.speedX + adjustmentX;
-            let speedY = this.speedY + adjustmentY;
+            var speedX = this.speedX + adjustmentX;
+            var speedY = this.speedY + adjustmentY;
 
             this.x = (this.x + speedX) % window.innerWidth;
             this.y = (this.y + speedY) % window.innerHeight;
-            // if (this.size > 0.1) this.size -= 0.006;
         }
     }
-
     draw() {
         ctx.fillStyle = this.color;
         ctx.beginPath();
@@ -86,11 +60,23 @@ class Particle {
     }
 }
 
+// Functions =================================================================================
+
+function mobileEffect (event) {
+    for (var i = 0; i < maxParticlesFollowMode; i++) {
+        spots.push(new Particle());
+    }
+}
+
+function getRandomInt(min, max) {
+    return Math.random() * (max - min) + min;
+}
+
 function handleParticle() {
-    for (let i = 0; i < spots.length; i++) {
+    for (var i = 0; i < spots.length; i++) {
         spots[i].update();
         spots[i].draw();
-        for (let j = i; j < spots.length; j++) {
+        for (var j = i; j < spots.length; j++) {
             const dx = spots[i].x - spots[j].x;
             const dy = spots[i].y - spots[j].y;
             const distance = Math.sqrt(dx * dx + dy * dy);
@@ -115,6 +101,18 @@ function animate() {
     requestAnimationFrame(animate);
 }
 
+// Event Listeners ============================================================================
+
+if (followMode) {
+    canvas.addEventListener("mousemove", function (event) {
+        mouse.x = event.x;
+        mouse.y = event.y;
+        for (var i = 0; i < 2; i++) {
+            spots.push(new Particle());
+        }
+    });
+}
+
 window.addEventListener('resize', function () {
     canvas.width = window.innerWidth;
     canvas.height = window.innerHeight;
@@ -125,5 +123,7 @@ window.addEventListener('mouseout', function () {
     mouse.y = undefined;
 })
 
+// ============================================================================================
+
 animate();
-mobileEffect();
+if (!followMode) mobileEffect();

@@ -73,7 +73,7 @@ export default function Experience({ darkMode }) {
             >
               &nbsp;Linkedin
             </a> or see my<a
-              href={"/Kolin-Newby-resume.pdf"}
+              href={"/resume.pdf"}
               target={"_blank"}
               rel={"noreferrer"}
               className={

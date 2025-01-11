@@ -3,13 +3,16 @@
 module.exports = {
   darkMode: 'class',
   content: [
-    "./src/**/*.{js,ts,jsx}",
-    "./src/components/**/*.{js,ts,jsx}",
+    "./src/**/*.{js,ts,jsx,tsx}",
+    "./src/components/**/*.{js,ts,jsx,tsx}",
   ],
   theme: {
     extend: {
       backgroundImage: {
         'light-bg-image': "url('/public/img/bg.svg')",
+        'portfolio-gray-1': "url('/public/photos/gray_api_sec_1.png')",
+        'portfolio-gray-2': "url('/public/photos/gray_api_sec_2.png')",
+        'portfolio-gray-3': "url('/public/photos/gray_api_sec_3.png')",
         'photo-1': "url('https://s1.darkroom.com/xrldcnuprphtrdvppvs6frqjpgok')",
         'photo-2': "url('https://s2.darkroom.com/6fbpp12cfffsuaq8brn5mvk5dct3')",
         'photo-3': "url('https://s2.darkroom.com/j62muwmn0qscmt0vrdlizmtod0nc')",
@@ -29,24 +32,7 @@ module.exports = {
       },
       animation: {
         wiggle: 'wiggle 0.5s ease-in-out infinite',
-      },
-      colors: {
-        // 41 h
-        'theme-light-1': '#fd1d1d',
-        // 9 h
-        'theme-light-2': '#ff5a95',
-        // 341 h
-        'theme-light-3': '#ffa600',
-
-        'theme-dark-1': '#26513f',
-        'theme-dark-2': '#513f26',
-        'theme-dark-3': 'rgb(5 150 105)',
-
-        'bg-light': '#efefef',
-        'light-accent': '#95c2c6',
-
-        'bg-dark': '#383632',
-        'dark-accent': '#19593a',
+        'spin-slow': 'spin 3s linear infinite',
       }
     },
   },

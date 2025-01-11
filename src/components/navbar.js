@@ -1,53 +1,45 @@
-import React, { useState } from "react";
+import React, {useEffect} from "react";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 
-export default function Navbar({ darkMode, setDarkMode }) {
-  // const [open, setOpen] = useState(false);
+export default function Navbar({ darkMode, setDarkMode, scrollPosition }) {
+  const [active, setActive] = React.useState("home");
 
   const navbarItems = [
-    { id: "about", title: "About" },
-    // { id: "xp", title: "Experience" },
-    // {id: "port", title: "Portfolio"},
-    { id: "contact", title: "Contact" },
+    {id: "home", title: "Home", icon:"home"},
+    {id: "about", title: "About", icon:"user"},
+    {id: "work", title: "Work", icon:"briefcase"},
+    {id: "contact", title: "Contact", icon:"walkie-talkie"},
   ];
 
   function scrollTo(key) {
     let el = document.getElementById(key);
     el.scrollIntoView({ behavior: "smooth" });
-    // setOpen(false);
   }
+
+  useEffect(() => {
+    if (active && ["home", "about", "work", "contact"].includes(active)) {
+      scrollTo(active);
+    }
+  }, [active]);
+
   return (
-    <div className="absolute flex top-0 z-20 w-full justify-between items-center h-20">
-        <button
-          className={
-            "group flex items-center cursor-pointer h-max justify-center"
-          }
-          onClick={() => scrollTo("home")}
-        >
-          <span
-            className={
-              "text-6xl font-extrabold bg-clip-text py-2"
-            }
+    <div className={"group/bar fixed z-20 items-start justify-start flex top-0 left-0 right-0 h-14 bg-transparent"}>
+      <div
+        className={"absolute top-0 w-1/4 bg-black/90 h-3 z-10"}
+        style={{
+          left: `${scrollPosition}%`,
+        }}
+      />
+      {navbarItems.map((item) => (
+          <div
+              className={"group/item relative flex w-1/4 items-center h-full bg-transparent backdrop-blur-3xl space-x-4 transform transition-transform duration-500 -translate-y-full cursor-pointer group-hover/bar:translate-y-0"}
+              onClick={() => setActive(item.id)}
           >
-            {"{kn}"}
-          </span>
-        </button>
-        <div className={"flex items-center h-max justify-center space-x-14"}>
-          {navbarItems.map((item) => (
-            <button
-              key={item.id + "-link"}
-              onClick={() => scrollTo(item.id)}
-              className={
-                "group relative flex cursor-pointer text-xl font-bold justify-center items-center py-3 my-3 px-4 " +
-                "rounded-xl transition-all transform hover:-translate-y-1 hover:shadow-xl hover:bg-white/10"
-              }
-            >
-              {item.title}
-            </button>
-          ))}
-        </div>
-        <div className={"flex justify-center items-center mx-4"}>
-          {/*<ThemeSlider darkMode={darkMode} setDarkMode={setDarkMode} />*/}
-        </div>
-      </div>
+            <div className={"absolute top-0 h-3 w-full bg-black/30 transform transition-transform -translate-y-full group-hover/item:translate-y-0"}/>
+            <FontAwesomeIcon icon={item.icon} size={"xl"}/>
+            <span className={"flex"}>{item.title}</span>
+          </div>
+      ))}
+    </div>
   );
 }

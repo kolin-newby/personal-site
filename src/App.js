@@ -1,73 +1,76 @@
 import "./App.css";
 import React, { useEffect, useState } from "react";
-import Navbar from "./components/navbar";
 import { loadIcons } from "./config/iconLoader";
-import About from "./components/about";
-import Contact from "./components/contact";
-import Social from "./components/social";
 
-loadIcons();
+const Navbar = React.lazy(() => import("./components/navbar"));
+const About = React.lazy(() => import("./components/about"));
+const Contact = React.lazy(() => import("./components/contact"));
+const Home = React.lazy(() => import("./components/home"));
+const Portfolio = React.lazy(() => import("./components/portfolio"));
 
 export default function App() {
     const [darkMode, setDarkMode] = useState(false);
+    const [scrollPosition, setScrollPosition] = useState(0);
 
-    // function componentDidMount() {
-    //     const script = document.createElement("script");
-    //
-    //     script.src = "/scripts/cursor-effect.js";
-    //     script.async = true;
-    //
-    //     document.body.appendChild(script);
-    // }
-    //
-    // componentDidMount();
+    // useEffect(() => {
+    //     let mode = document.cookie.split("=")[1] === "true";
+    //     setDarkMode(mode);
+    // }, []);
+
+    function handleScroll(event) {
+        let container = event.target;
+        let scrollPositionTemp = (Number((container.scrollTop / container.scrollHeight).toFixed(5)) * 100);
+        setScrollPosition(scrollPositionTemp);
+    }
 
     useEffect(() => {
-        let mode = document.cookie.split("=")[1] === "true";
-        setDarkMode(mode);
+        try {
+            loadIcons();
+        } catch (error) {
+            console.error("Failed to load icons:", error);
+        }
+    }, []);
+
+    useEffect(() => {
+        const cursorScript = document.createElement('script');
+        cursorScript.src = "/scripts/cursor-effect.js";
+        cursorScript.async = true;
+
+        const typingScript = document.createElement('script');
+        typingScript.src = "/scripts/typewriter.js";
+        typingScript.async = true;
+
+        cursorScript.onerror = () => console.error("Failed to load cursor-effect.js");
+        typingScript.onerror = () => console.error("Failed to load typewriter.js");
+
+        document.body.appendChild(typingScript);
+        document.body.appendChild(cursorScript);
+
+        return () => {
+            if(typingScript.parentNode) document.body.removeChild(typingScript);
+            if(cursorScript.parentNode) document.body.removeChild(cursorScript);
+        }
     }, []);
 
   return (
-      <div className={`${darkMode ? "dark" : ""}`}>
-        <div className={"absolute inset-0 -z-10 bg-light-bg-image"}/>
-        <div className={"absolute inset-0 -z-20 bg-gradient-to-br from-[#0059ff]/70 via-[#00a56a]/70 to-[#02e2e2]/70"}/>
-        <div
-            id={"topDiv"}
-            className={
-              "flex lg:flex-row flex-col overflow-hidden h-screen dark:text-white dark:bg-bg-dark"
-            }
-        >
-          <Navbar id={"nav"} darkMode={darkMode} setDarkMode={setDarkMode}/>
-          <Social/>
-          <div className={"w-full overflow-y-auto overflow-x-hidden"}>
-            <div id={"home"} className={"relative w-full h-screen"}>
-              <div id={"wrapper relative h-full"}>
-                <canvas
-                    id={"homePage"}
-                    className={"absolute inset-0 z-10 dark:effect-color-light"}
-                />
-                <div
-                    className={
-                        "absolute inset-0 z-20 flex flex-col text-5xl lg:text-6xl 2xl:text-7xl font-bold bg-clip-text bg-transparent pointer-events-none " +
-                        "items-center justify-center space-y-1"
-                    }
-                >
-                  <span className={"flex text-center"}>Hi, I'm Kolin</span>
-                  <span>
-                    <div className="typewrite " data-period="2000"
-                       data-store = '[ "Developer", "Climber", "Designer", "Backpacker", "Outdoor Enthusiast", "Software Engineer", "Amateur Photographer" ]'>
-                      <span className="wrap"></span>
-                    </div>
-                  </span>
-                </div>
-              </div>
-            </div>
-            <About/>
-            {/* <Experience /> */}
-            {/* <Portfolio /> */}
-             <Contact />
-          </div>
-        </div>
+      <div
+          className={`${darkMode ? "dark" : ""} bg-gradient-to-br from-gray-100 via-gray-200 to-gray-100 h-screen snap-y 
+          snap-mandatory snap overflow-y-scroll scroll-smooth scrollbar-display-none`}
+        onScroll={handleScroll}
+      >
+          <Navbar id={"navbar"} darkMode={darkMode} setDarkMode={setDarkMode} scrollPosition={scrollPosition} />
+          <Home className={"snap-start"}/>
+          <About className={"snap-start"}/>
+          <Portfolio className={"snap-start"}/>
+          <Contact className={"snap-start"}/>
       </div>
   );
+}
+
+function cursorScript() {
+    return (
+        <script>
+            alert("hi");
+        </script>
+    )
 }

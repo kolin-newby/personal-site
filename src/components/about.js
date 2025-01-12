@@ -37,7 +37,7 @@ export default function About({className=""}) {
                         </span>
                     </div>
                 </div>
-                <div className={"flex w-full items-center justify-center  laptop:h-1/2"}>
+                <div className={"flex w-full items-center justify-center laptop:h-1/2"}>
                     <div className={"grid grid-rows-3 gap-8 laptop:w-2/3 w-full laptop:h-3/4 text-black/40"}>
                         <div key={"skills-row-1"} className={"flex row-span-1 w-full h-full overflow-hidden"}>
                             <div key={"skills-r1-1"} className={"scroll-left-container-start-1"}>
@@ -48,7 +48,7 @@ export default function About({className=""}) {
                                                 className={"absolute inset-0 w-full h-full"}
                                                 icon={skill.icon}
                                             />
-                                            <div className={"rounded-full  text-transparent"}>{skill.title}</div>
+                                            <div className={"text-transparent"}>{skill.title}</div>
                                         </div>
                                         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                                     </>

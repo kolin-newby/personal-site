@@ -16,6 +16,7 @@ export default function ContactModal({open, setOpen}) {
         if (sent) {
             setTimeout(() => {
                 setSent(false);
+                setOpen(false);
             }, 3000);
         }
     }, [sent]);

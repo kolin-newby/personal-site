@@ -56,7 +56,7 @@ function SocialLinks({}) {
 
     return (
         <div
-            className={"flex w-full bg-black/90 laptop:h-44 h-20 text-white laptop:pl-20 px-8 laptop:pr-0 laptop:space-x-8 items-center justify-between laptop:justify-center"}
+            className={"flex w-full bg-black/90 laptop:h-44 h-20 text-white laptop:pl-20 px-8 laptop:pr-0 laptop:space-x-8 items-center justify-between laptop:justify-start"}
         >
             {socialLinks.map((link, index) => (
                 <a

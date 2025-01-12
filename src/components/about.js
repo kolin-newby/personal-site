@@ -29,7 +29,7 @@ export default function About({className=""}) {
     return(
         <div id={"about"} className={`relative flex laptop:h-screen h-full flex-col laptop:flex-row items-center ${className}`}>
             <div className={"flex flex-col items-center laptop:h-full laptop:w-1/2 w-full laptop:justify-center"}>
-                <div className={"flex items-center justify-center w-full laptop:h-1/2 py-6 laptop:py-0"}>
+                <div className={"flex items-center justify-center w-full laptop:h-1/2 pb-4 pt-10 laptop:py-0"}>
                     <div className={"flex laptop:w-3/5 w-4/5 rounded-sm bg-gradient-to-br from-orange-500 via-purple-400 to-red-400 shadow-lg transition-all duration-500 transform hover:scale-105 hover:shadow-xl"}>
                         <span className={"flex bg-gray-200 rounded-sm w-full h-full m-0.5 px-3 py-2 text-sm laptop:text-base"}>
                             I love creating things and seeing the world from new perspectives. Besides software development, my passion is in photography and the great outdoors!<br/><br/>
@@ -37,7 +37,7 @@ export default function About({className=""}) {
                         </span>
                     </div>
                 </div>
-                <div className={"flex w-full items-center justify-center laptop:h-1/2"}>
+                <div className={"flex w-full items-center justify-center laptop:h-1/2 bg-red-500"}>
                     <div className={"grid grid-rows-3 gap-8 laptop:w-2/3 w-full laptop:h-3/4 text-black/40"}>
                         <div key={"skills-row-1"} className={"flex row-span-1 w-full h-full overflow-hidden"}>
                             <div key={"skills-r1-1"} className={"scroll-left-container-start-1"}>

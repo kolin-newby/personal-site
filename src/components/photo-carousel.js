@@ -6,7 +6,7 @@ export default function PhotoCarousel() {
 
     return (
         <div className={`flex laptop:w-1/2 w-full h-5/6 laptop:h-full`}>
-            <div className={"flex laptop:items-center items-start pt-4 justify-center relative w-full bg-sky-800"}>
+            <div className={"flex laptop:items-center items-start pt-4 justify-center relative w-full"}>
                 <div className={"flex w-11/12 h-3/4 items-center justify-center relative space-x-1"}>
                     <div
                         className={`flex ${active === 1 ? "basis-full z-10 shadow-2xl" : active === null ? "flex-col overflow-hidden basis-24 hover:basis-3/12 shadow-xl z-0" : "basis-0"} bg-center bg-cover bg-no-repeat bg-photo-1 h-full transition-all duration-700 rounded-sm transform justify-end items-end`}

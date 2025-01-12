@@ -5,7 +5,7 @@ export default function PhotoCarousel() {
     const [active, setActive] = useState(null);
 
     return (
-        <div className={`flex basis-1/2 h-full`}>
+        <div className={`flex laptop:w-1/2 w-full h-3/4 laptop:h-full`}>
             <div className={"flex items-center justify-center relative w-full"}>
                 <div className={"flex w-11/12 h-3/4 items-center justify-center relative space-x-1"}>
                     <div

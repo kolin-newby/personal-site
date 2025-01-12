@@ -16,7 +16,7 @@ export default function Contact({className=""}) {
           >
               <Follower active={followerActive} setActive={setFollowerActive} modalOpen={contactOpen} setModalOpen={setContactOpen}/>
               <span
-                  className={"flex font-bold text-transparent text-8xl w-full h-full items-center bg-clip-text px-24 bg-gradient-to-tr from-gray-200 to-black/90 from-50% to-50%"}
+                  className={"flex font-bold text-transparent laptop:text-8xl text-4xl w-full h-full items-center text-center bg-clip-text laptop:px-24 bg-gradient-to-tr from-gray-200 to-black/90 from-50% to-50%"}
               >
                 Let's build<br/>&nbsp;&nbsp;&nbsp;something amazing<br/>&nbsp;together...
             </span>
@@ -56,7 +56,7 @@ function SocialLinks({}) {
 
     return (
         <div
-            className={"flex w-full bg-black/90 h-44 text-white pl-20 space-x-8 items-center"}
+            className={"flex w-full bg-black/90 laptop:h-44 h-20 text-white laptop:pl-20 px-8 laptop:pr-0 laptop:space-x-8 items-center justify-between laptop:justify-center"}
         >
             {socialLinks.map((link, index) => (
                 <a
@@ -64,13 +64,13 @@ function SocialLinks({}) {
                     rel={"noreferrer"}
                     download={link.title === "Resume" ? "resume_kolin_newby" : null}
                     target={link.title !== "Email" ? "_blank" : null}
-                    className={`flex w-56 items-center justify-start space-x-3 cursor-pointer`}
+                    className={`flex laptop:w-56 items-center justify-start laptop:space-x-3 cursor-pointer`}
                     onMouseEnter={() => setActiveLink(link.title)}
                     onMouseLeave={() => setActiveLink("")}
                 >
-                    <FontAwesomeIcon size={"2x"} icon={link.icon}/>
+                    <FontAwesomeIcon className={"text-3xl laptop:text-4xl"} icon={link.icon}/>
                     <span
-                        className={`flex transition-all duration-500 overflow-hidden text-lg ${activeLink === link.title ? "basis-48" : "basis-0"}`}>{link.title}</span>
+                        className={`laptop:flex hidden transition-all duration-500 overflow-hidden text-lg ${activeLink === link.title ? "basis-48" : "basis-0"}`}>{link.title}</span>
                 </a>
             ))}
         </div>

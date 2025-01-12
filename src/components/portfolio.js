@@ -22,7 +22,7 @@ export default function Portfolio({ darkMode, className="" }) {
   ]
 
     return (
-        <div className={`flex h-screen w-full items-center px-10 space-x-10 ${className}`} id={"work"}>
+        <div className={`flex laptop:flex-row flex-col laptop:h-screen w-full items-center laptop:px-10 px-4 laptop:space-x-10 space-y-4 laptop:space-y-0 pt-4 laptop:pt-0 ${className}`} id={"work"}>
             <div
                 className={"shadow-lg flex relative flex-col justify-center space-y-3 p-3 basis-1/2 text-sm bg-gradient-to-bl from-[#43e4ac] via-[#9368fe] to-[#16c5f5] overflow-hidden rounded-sm"}
                 onMouseEnter={() => setActive("gray")}

@@ -1,6 +1,6 @@
 const canvas = document.getElementById("homePage");
 const ctx = canvas.getContext("2d");
-const maxParticlesFollowMode = 200;
+const maxParticlesFollowMode = 100;
 var followMode = false;
 var lum = "0%";
 var spots = [];

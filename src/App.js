@@ -32,23 +32,23 @@ export default function App() {
     }, []);
 
     useEffect(() => {
-        const cursorScript = document.createElement('script');
-        cursorScript.src = "/scripts/cursor-effect.js";
-        cursorScript.async = true;
-
         const typingScript = document.createElement('script');
         typingScript.src = "/scripts/typewriter.js";
         typingScript.async = true;
 
-        cursorScript.onerror = () => console.error("Failed to load cursor-effect.js");
+        // const cursorScript = document.createElement('script');
+        // cursorScript.src = "/scripts/cursor-effect.js";
+        // cursorScript.async = true;
+
         typingScript.onerror = () => console.error("Failed to load typewriter.js");
+        // cursorScript.onerror = () => console.error("Failed to load cursor-effect.js");
 
         document.body.appendChild(typingScript);
-        document.body.appendChild(cursorScript);
+        // document.body.appendChild(cursorScript);
 
         return () => {
             if(typingScript.parentNode) document.body.removeChild(typingScript);
-            if(cursorScript.parentNode) document.body.removeChild(cursorScript);
+            // if(cursorScript.parentNode) document.body.removeChild(cursorScript);
         }
     }, []);
 

@@ -71,7 +71,7 @@ export default function ContactModal({open, setOpen}) {
             <div className={"absolute inset-0 w-full h-full"}>
                 <div
                     className={
-                        "absolute inset-1/2 w-1/2 h-3/4 border border-black transform -translate-x-1/2 -translate-y-1/2 flex flex-row " +
+                        "absolute inset-5 laptop:inset-20 border border-black flex flex-row " +
                         "items-center justify-center bg-gray-300 rounded-sm overflow-hidden"
                     }
                 >

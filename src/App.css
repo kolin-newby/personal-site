@@ -212,16 +212,6 @@ a {
   animation-iteration-count: infinite;
 }
 
-/*@keyframes carousel-active {*/
-/*  0%{*/
-/*    transform: rotateY(40deg) translateX(40%) scale(70%);*/
-/*  }*/
-
-/*  100%{*/
-/*    transform: rotateY(0deg) translateX(0%);*/
-/*  }*/
-/*}*/
-
 @keyframes tap-target-move-left {
   0%{
     transform: translateX(100%);

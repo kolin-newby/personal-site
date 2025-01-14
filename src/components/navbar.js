@@ -32,13 +32,22 @@ export default function Navbar({ darkMode, setDarkMode, scrollPosition, touch })
           }}
       >
         <div className={"absolute w-full top-0 h-10 flex items-end justify-center text-black/50"}>
-          <FontAwesomeIcon icon={barOpen ? "chevron-up" : "chevron-down"} size={"2x"} className={`flex laptop:hidden w-full transform transition-all duration-500 rounded-b-sm ${barOpen ? "translate-y-10 backdrop-blur-sm" : "translate-y-0"}`} onClick={() => setBarOpen(!barOpen)}/>
+          <FontAwesomeIcon
+              icon={barOpen ? "chevron-up" : "chevron-down"}
+              size={"2x"}
+              className={`flex laptop:hidden w-full transform transition-all duration-500 rounded-b-sm ${barOpen ? "translate-y-10 backdrop-blur-sm" : "translate-y-0"}`}
+              onClick={() => {
+                setBarOpen(!barOpen);
+              }}/>
         </div>
       </div>
       {navbarItems.map((item) => (
           <div
               className={`group/item relative flex w-1/4 items-center h-full bg-transparent backdrop-blur-2xl space-x-4 transform transition-transform duration-500 -translate-y-full cursor-pointer ${touch ? (barOpen ? "translate-y-0": "") : "group-hover/bar:translate-y-0"}`}
-              onClick={() => setActive(item.id)}
+              onClick={() => {
+                setActive(item.id);
+                setBarOpen(false);
+              }}
           >
             <div className={"absolute top-0 h-3 w-full bg-black/30 transform transition-transform -translate-y-full group-hover/item:translate-y-0"}/>
             <FontAwesomeIcon icon={item.icon} size={"xl"} className={"hidden laptop:flex"}/>

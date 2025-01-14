@@ -23,8 +23,6 @@ export default function App() {
     function handleScroll(event) {
         let container = event.target;
         let scrollPositionTemp = (Number((container.scrollTop / container.scrollHeight).toFixed(5)) * 100);
-        let scrollPositionDisplay = container.scrollTop / container.scrollHeight
-        console.log(scrollPositionDisplay);
         setScrollPosition(scrollPositionTemp);
     }
 

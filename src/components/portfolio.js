@@ -21,7 +21,32 @@ export default function Portfolio({ darkMode, className="" }) {
   ]
 
     return (
-        <div className={`flex h-screen w-full items-center laptop:px-10 laptop:space-x-10 laptop:space-y-0 pt-4 laptop:pt-0 ${className}`} id={"work"}>
+        <div className={`flex h-screen relative w-full items-center laptop:px-10 laptop:space-x-10 laptop:space-y-0 pt-4 laptop:pt-0 ${className}`} id={"work"}>
+            {/*{*/}
+            {/*    Array.from({length: 10}).map((_, indexY) => (*/}
+            {/*        <div className={`absolute flex flex-wrap top-[${indexY > 0 ? (indexY) : ""}0%] bottom-0 z-10 w-full h-full overflow-hidden`}>*/}
+            {/*            {*/}
+            {/*                Array.from({length: 7}).map((_, indexX) => (*/}
+            {/*                    <div*/}
+            {/*                        className={"flex flex-col h-[10%] aspect-square justify-between animate-spin-slow"}>*/}
+            {/*                        <div className={"flex flex-row h-1/3 w-full justify-between"}>*/}
+            {/*                            <div*/}
+            {/*                                className={"w-1/3 h-full bg-gradient-to-br from-orange-500/20 to-pink-600/20"}/>*/}
+            {/*                            <div*/}
+            {/*                                className={"w-1/3 h-full bg-gradient-to-br from-orange-500/20 to-pink-600/20"}/>*/}
+            {/*                        </div>*/}
+            {/*                        <div className={"flex flex-row h-1/3 w-full justify-between"}>*/}
+            {/*                            <div*/}
+            {/*                                className={"w-1/3 h-full bg-gradient-to-br from-orange-500/20 to-pink-600/20"}/>*/}
+            {/*                            <div*/}
+            {/*                                className={"w-1/3 h-full bg-gradient-to-br from-orange-500/20 to-pink-600/20"}/>*/}
+            {/*                        </div>*/}
+            {/*                    </div>*/}
+            {/*                ))*/}
+            {/*            }*/}
+            {/*        </div>*/}
+            {/*    ))*/}
+            {/*}*/}
             <div
                 className={"shadow-lg hidden laptop:flex relative laptop:flex-col justify-center space-y-3 p-3 basis-1/2 text-sm bg-gradient-to-bl from-[#43e4ac] via-[#9368fe] to-[#16c5f5] overflow-hidden rounded-sm"}
             >

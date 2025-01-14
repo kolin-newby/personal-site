@@ -32,7 +32,7 @@ export default function Navbar({ darkMode, setDarkMode, scrollPosition, touch })
           }}
       >
         <div className={"absolute w-full top-0 h-10 flex items-end justify-center text-black/50"}>
-          <FontAwesomeIcon icon={barOpen ? "chevron-up" : "chevron-down"} size={"2x"} className={`flex laptop:hidden w-full transform transition-all duration-500 ${barOpen ? "translate-y-10 backdrop-blur-sm" : "translate-y-0"}`} onClick={() => setBarOpen(!barOpen)}/>
+          <FontAwesomeIcon icon={barOpen ? "chevron-up" : "chevron-down"} size={"2x"} className={`flex laptop:hidden w-full transform transition-all duration-500 rounded-b-sm ${barOpen ? "translate-y-10 backdrop-blur-sm" : "translate-y-0"}`} onClick={() => setBarOpen(!barOpen)}/>
         </div>
       </div>
       {navbarItems.map((item) => (

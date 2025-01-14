@@ -3,7 +3,7 @@ import Follower from "./follower"
 import ContactModal from "./contact-modal"
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 
-export default function Contact({className=""}) {
+export default function Contact({className="", touch}) {
     const [contactOpen, setContactOpen] = useState(false);
     const [followerActive, setFollowerActive] = useState(false);
 
@@ -14,12 +14,21 @@ export default function Contact({className=""}) {
               onMouseEnter={() => setFollowerActive(true)}
               onMouseLeave={() => setFollowerActive(false)}
           >
-              <Follower active={followerActive} setActive={setFollowerActive} modalOpen={contactOpen} setModalOpen={setContactOpen}/>
+              <Follower active={followerActive} setActive={setFollowerActive} modalOpen={contactOpen}
+                        setModalOpen={setContactOpen}/>
               <span
-                  className={"flex font-bold text-transparent laptop:text-8xl text-4xl w-full h-full items-center text-center bg-clip-text laptop:px-24 bg-gradient-to-tr from-gray-200 to-black/90 from-50% to-50%"}
+                  className={"flex font-bold text-transparent laptop:text-8xl text-5xl w-full h-full items-center text-center bg-clip-text laptop:px-24 bg-gradient-to-tr from-gray-200 to-black/90 from-50% to-50%"}
               >
                 Let's build<br/>&nbsp;&nbsp;&nbsp;something amazing<br/>&nbsp;together...
-            </span>
+              </span>
+              <button
+                  className={`absolute ${touch ? "flex" : "hidden"} bottom-28 left-0 w-full bg-transparent tap-target-bottom items-center transform -translate-x-1/2 justify-center text-white/20 text-3xl rounded-sm p-3 border-2 border-transparent font-bold`}>
+                  tap
+              </button>
+              <button
+                  className={`absolute ${touch ? "flex" : "hidden"} laptop:hidden top-28 right-0 w-full bg-transparent tap-target-top items-center transform -translate-x-1/2 justify-center text-gray-900/20 text-3xl rounded-sm p-3 border-2 border-transparent font-bold`}>
+                  tap
+              </button>
               <ContactModal open={contactOpen} setOpen={setContactOpen}/>
           </div>
           <SocialLinks/>
@@ -27,7 +36,7 @@ export default function Contact({className=""}) {
   );
 }
 
-function SocialLinks({}) {
+function SocialLinks() {
 
     const [activeLink, setActiveLink] = useState("");
 

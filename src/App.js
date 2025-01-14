@@ -12,6 +12,9 @@ export default function App() {
     const [darkMode, setDarkMode] = useState(false);
     const [scrollPosition, setScrollPosition] = useState(0);
 
+    const [hasTouch, setHasTouch] = useState(false);
+
+
     // useEffect(() => {
     //     let mode = document.cookie.split("=")[1] === "true";
     //     setDarkMode(mode);
@@ -20,16 +23,27 @@ export default function App() {
     function handleScroll(event) {
         let container = event.target;
         let scrollPositionTemp = (Number((container.scrollTop / container.scrollHeight).toFixed(5)) * 100);
+        let scrollPositionDisplay = container.scrollTop / container.scrollHeight
+        console.log(scrollPositionDisplay);
         setScrollPosition(scrollPositionTemp);
+    }
+
+    function detectTouch() {
+        setHasTouch(('ontouchstart' in window) || (navigator.maxTouchPoints > 0));
     }
 
     useEffect(() => {
         try {
             loadIcons();
         } catch (error) {
-            console.error("Failed to load icons:", error);
+            console.error("Failed to load icons: ", error);
         }
-    }, []);
+        try {
+            detectTouch();
+        } catch (error) {
+            console.error("Failed to detect touchscreen: ", error);
+        }
+    }, [hasTouch, scrollPosition]);
 
     useEffect(() => {
         const typingScript = document.createElement('script');
@@ -47,30 +61,22 @@ export default function App() {
         // document.body.appendChild(cursorScript);
 
         return () => {
-            if(typingScript.parentNode) document.body.removeChild(typingScript);
+            if (typingScript.parentNode) document.body.removeChild(typingScript);
             // if(cursorScript.parentNode) document.body.removeChild(cursorScript);
         }
     }, []);
 
-  return (
-      <div
-          className={`${darkMode ? "dark" : ""} bg-gradient-to-br from-gray-100 via-gray-200 to-gray-100 h-screen snap-y 
-          snap-mandatory snap overflow-y-scroll scroll-smooth scrollbar-display-none`}
-        onScroll={handleScroll}
-      >
-          <Navbar id={"navbar"} darkMode={darkMode} setDarkMode={setDarkMode} scrollPosition={scrollPosition} />
-          <Home className={"snap-start"}/>
-          <About className={"snap-start"}/>
-          <Portfolio className={"snap-start"}/>
-          <Contact className={"snap-start"}/>
-      </div>
-  );
-}
-
-function cursorScript() {
     return (
-        <script>
-            alert("hi");
-        </script>
-    )
+        <div
+            className={`${darkMode ? "dark" : ""} bg-gradient-to-br from-gray-100 via-gray-200 to-gray-100 h-screen snap-y 
+          snap-mandatory snap overflow-y-scroll scroll-smooth scrollbar-display-none`}
+            onScroll={handleScroll}
+        >
+            <Navbar id={"navbar"} darkMode={darkMode} setDarkMode={setDarkMode} scrollPosition={scrollPosition} touch={hasTouch}/>
+            <Home className={"snap-start"}/>
+            <About className={"snap-start"}/>
+            <Portfolio className={"snap-start"}/>
+            <Contact className={"snap-start"} touch={hasTouch}/>
+        </div>
+    );
 }

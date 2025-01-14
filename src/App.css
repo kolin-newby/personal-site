@@ -197,6 +197,21 @@ a {
   animation-iteration-count: infinite;
 }
 
+.tap-target-top {
+  animation-name: tap-target-move-left;
+  animation-duration: 4s;
+  animation-delay: 2s;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+}
+
+.tap-target-bottom {
+  animation-name: tap-target-move-right;
+  animation-duration: 4s;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+}
+
 /*@keyframes carousel-active {*/
 /*  0%{*/
 /*    transform: rotateY(40deg) translateX(40%) scale(70%);*/
@@ -206,6 +221,24 @@ a {
 /*    transform: rotateY(0deg) translateX(0%);*/
 /*  }*/
 /*}*/
+
+@keyframes tap-target-move-left {
+  0%{
+    transform: translateX(100%);
+  }
+  100%{
+    transform: translateX(-100%);
+  }
+}
+
+@keyframes tap-target-move-right {
+  0%{
+    transform: translateX(-100%);
+  }
+  100%{
+    transform: translateX(100%);
+  }
+}
 
 @keyframes portfolio-scroll {
   0%{

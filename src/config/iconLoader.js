@@ -30,14 +30,8 @@ import {
     faUser,
     faWalkieTalkie,
     faBriefcase,
-    faArrowDown,
-    faArrowUp,
-    faArrowLeft,
-    faArrowRight,
-    faArrowDownLong,
-    faArrowUpLong,
-    faArrowLeftLong,
-    faArrowRightLong,
+    faChevronDown,
+    faChevronUp,
 } from "@fortawesome/free-solid-svg-icons";
 
 import {
@@ -110,13 +104,7 @@ export function loadIcons(){
         faBriefcase,
         faUser,
         faHome,
-        faArrowDown,
-        faArrowUp,
-        faArrowLeft,
-        faArrowRight,
-        faArrowDownLong,
-        faArrowUpLong,
-        faArrowLeftLong,
-        faArrowRightLong,
+        faChevronDown,
+        faChevronUp,
     );
 }

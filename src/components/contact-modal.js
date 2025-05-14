@@ -19,11 +19,11 @@ export default function ContactModal({open, setOpen}) {
                 setOpen(false);
             }, 3000);
         }
-    }, [sent]);
+    }, [sent, setOpen, setSent]);
 
     useEffect(() => {
         checkForErrors();
-    }, [name, email, message])
+    }, [name, email, message, checkForErrors])
 
     function checkForErrors() {
         let tmp = [];

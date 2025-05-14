@@ -21,10 +21,6 @@ export default function ContactModal({open, setOpen}) {
         }
     }, [sent, setOpen, setSent]);
 
-    useEffect(() => {
-        checkForErrors();
-    }, [name, email, message, checkForErrors])
-
     function checkForErrors() {
         let tmp = [];
 
@@ -95,7 +91,10 @@ export default function ContactModal({open, setOpen}) {
                                 placeholder={"name/company"}
                                 maxLength={40}
                                 value={name}
-                                onChange={(input) => setName(input.target.value)}
+                                onChange={(input) => {
+                                    setName(input.target.value);
+                                    checkForErrors();
+                                }}
                             />
                             {showErrors && errors.includes("name") && (<FontAwesomeIcon icon={"exclamation-circle"} className={"flex text-base text-red-600"}/>)}
                         </div>
@@ -107,7 +106,10 @@ export default function ContactModal({open, setOpen}) {
                                 placeholder={"email"}
                                 maxLength={40}
                                 value={email}
-                                onChange={(input) => setEmail(input.target.value)}
+                                onChange={(input) => {
+                                    setEmail(input.target.value);
+                                    checkForErrors();
+                                }}
                             />
                             {showErrors && errors.includes("email") && (<FontAwesomeIcon icon={"exclamation-circle"} className={"flex text-base text-red-600"}/>)}
                             {showErrors && errors.includes("valid_email") && (<FontAwesomeIcon icon={"exclamation-circle"} className={"flex text-base text-amber-500"}/>)}
@@ -120,7 +122,10 @@ export default function ContactModal({open, setOpen}) {
                                 placeholder={"your message"}
                                 value={message}
                                 maxLength={600}
-                                onChange={(input) => setMessage(input.target.value)}
+                                onChange={(input) => {
+                                    setMessage(input.target.value);
+                                    checkForErrors();
+                                }}
                             />
                             {showErrors && errors.includes("message") && (<FontAwesomeIcon icon={"exclamation-circle"} className={"flex text-base text-red-600"}/>)}
                         </div>

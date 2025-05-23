@@ -1,0 +1,10 @@
+<svg id="Layer_1" xmlns="http://www.w3.org/2000/svg" viewBox="-26 28 10 10" preserveAspectRatio="none" fill="url(#gradient)">
+	<defs>
+	    <linearGradient id="gradient" gradientTransform="rotate(45)">
+	      <stop offset="0%" stop-color="#fd1d1d" stop-opacity="50"/>
+	      <stop offset="50%" stop-color="#ff5a95" stop-opacity="50"/>
+	      <stop offset="100%" stop-color="#ffa600" stop-opacity="50"/>
+	    </linearGradient>
+	</defs>
+	<path class="st0" d="M-26 28h10v10z"/>
+</svg>

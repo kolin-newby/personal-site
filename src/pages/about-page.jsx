@@ -1,8 +1,8 @@
-import PhotoCarousel from "./photo-carousel";
+import PhotoCarousel from "../components/photo-carousel";
 import React from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
-const About = ({ className = "" }) => {
+const AboutPage = ({ className = "" }) => {
   const skills1 = [
     { title: "Golang", icon: "fa-brands fa-golang" },
     { title: "JavaScript", icon: "fa-brands fa-js" },
@@ -42,12 +42,12 @@ const About = ({ className = "" }) => {
         >
           <div
             className={
-              "flex laptop:w-3/5 w-4/5 rounded-sm bg-gradient-to-br from-orange-500 via-purple-400 to-red-400 shadow-lg transition-all duration-500 transform hover:scale-105 hover:shadow-xl"
+              "flex laptop:w-3/5 w-4/5 rounded-lg bg-gradient-to-br from-orange-500 via-purple-400 to-red-400 shadow-lg transition-all duration-500 transform hover:scale-105 hover:shadow-xl"
             }
           >
             <span
               className={
-                "flex bg-gray-200 rounded-sm w-full h-full m-0.5 px-3 py-2 text-sm laptop:text-base"
+                "flex bg-gray-200 rounded-lg w-full h-full m-0.5 px-3 py-2 text-sm laptop:text-base"
               }
             >
               I love creating things and seeing the world from new perspectives.
@@ -221,4 +221,4 @@ const About = ({ className = "" }) => {
   );
 };
 
-export default About;
+export default AboutPage;

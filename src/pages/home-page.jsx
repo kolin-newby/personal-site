@@ -1,4 +1,4 @@
-const Home = ({ className = "" }) => {
+const HomePage = ({ className = "" }) => {
   return (
     <div
       className={`w-full h-screen overflow-y-auto overflow-x-hidden relative ${className}`}
@@ -43,4 +43,4 @@ const Home = ({ className = "" }) => {
   );
 };
 
-export default Home;
+export default HomePage;

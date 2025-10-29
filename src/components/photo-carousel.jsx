@@ -22,7 +22,7 @@ const PhotoCarousel = () => {
                 : active === null
                 ? "flex-col overflow-hidden basis-24 hover:basis-3/12 shadow-xl z-0"
                 : "basis-0"
-            } bg-center bg-cover bg-no-repeat bg-photo-1 h-full transition-all duration-700 rounded-sm transform justify-end items-end`}
+            } bg-center bg-cover bg-no-repeat bg-photo-1 h-full transition-all duration-700 rounded-lg transform justify-end items-end`}
             onClick={() => setActive(1)}
             onMouseOut={() => setActive(null)}
           ></div>
@@ -33,7 +33,7 @@ const PhotoCarousel = () => {
                 : active === null
                 ? "flex-col basis-24 hover:basis-3/12 shadow-xl z-0"
                 : "basis-0"
-            } bg-center bg-cover bg-no-repeat bg-photo-3 h-full transition-all duration-500 rounded-sm transform`}
+            } bg-center bg-cover bg-no-repeat bg-photo-3 h-full transition-all duration-500 rounded-lg transform`}
             onClick={() => setActive(2)}
             onMouseOut={() => setActive(null)}
           />
@@ -44,7 +44,7 @@ const PhotoCarousel = () => {
                 : active === null
                 ? "flex-col basis-24 hover:basis-3/12 shadow-xl z-0"
                 : "basis-0"
-            } bg-center bg-cover bg-no-repeat bg-photo-4 h-full transition-all duration-500 rounded-sm transform`}
+            } bg-center bg-cover bg-no-repeat bg-photo-4 h-full transition-all duration-500 rounded-lg transform`}
             onClick={() => setActive(3)}
             onMouseOut={() => setActive(null)}
           />
@@ -55,7 +55,7 @@ const PhotoCarousel = () => {
                 : active === null
                 ? "flex-col basis-24 hover:basis-3/12 shadow-xl z-0"
                 : "basis-0"
-            } bg-center bg-cover bg-no-repeat bg-photo-5 h-full transition-all duration-500 rounded-sm transform`}
+            } bg-center bg-cover bg-no-repeat bg-photo-5 h-full transition-all duration-500 rounded-lg transform`}
             onClick={() => setActive(4)}
             onMouseOut={() => setActive(null)}
           />
@@ -66,7 +66,7 @@ const PhotoCarousel = () => {
                 : active === null
                 ? "flex-col basis-24 hover:basis-3/12 shadow-xl z-0"
                 : "basis-0"
-            } bg-center bg-cover bg-no-repeat bg-photo-6 h-full transition-all duration-500 rounded-sm transform`}
+            } bg-center bg-cover bg-no-repeat bg-photo-6 h-full transition-all duration-500 rounded-lg transform`}
             onClick={() => setActive(5)}
             onMouseOut={() => setActive(null)}
           />

@@ -1,9 +1,9 @@
 import React, { useState } from "react";
-import Follower from "./follower";
-import ContactModal from "./contact-modal";
+import Follower from "../components/follower";
+import ContactModal from "../components/contact-modal";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
-const Contact = ({ className = "", touch }) => {
+const ContactPage = ({ className = "", touch }) => {
   const [contactOpen, setContactOpen] = useState(false);
   const [followerActive, setFollowerActive] = useState(false);
 
@@ -37,7 +37,7 @@ const Contact = ({ className = "", touch }) => {
           onClick={() => setContactOpen(true)}
           className={`absolute ${
             touch ? "flex" : "hidden"
-          } bottom-28 left-0 w-full bg-transparent tap-target-bottom items-center transform -translate-x-1/2 justify-center text-white/20 text-3xl rounded-sm p-3 border-2 border-transparent font-bold`}
+          } bottom-28 left-0 w-full bg-transparent tap-target-bottom items-center transform -translate-x-1/2 justify-center text-white/20 text-3xl rounded-lg p-3 border-2 border-transparent font-bold`}
         >
           tap
         </button>
@@ -45,7 +45,7 @@ const Contact = ({ className = "", touch }) => {
           onClick={() => setContactOpen(true)}
           className={`absolute ${
             touch ? "flex" : "hidden"
-          } laptop:hidden top-28 right-0 w-full bg-transparent tap-target-top items-center transform -translate-x-1/2 justify-center text-gray-900/20 text-3xl rounded-sm p-3 border-2 border-transparent font-bold`}
+          } laptop:hidden top-28 right-0 w-full bg-transparent tap-target-top items-center transform -translate-x-1/2 justify-center text-gray-900/20 text-3xl rounded-lg p-3 border-2 border-transparent font-bold`}
         >
           tap
         </button>
@@ -56,7 +56,7 @@ const Contact = ({ className = "", touch }) => {
   );
 };
 
-function SocialLinks() {
+const SocialLinks = () => {
   const [activeLink, setActiveLink] = useState("");
 
   const socialLinks = [
@@ -113,6 +113,6 @@ function SocialLinks() {
       ))}
     </div>
   );
-}
+};
 
-export default Contact;
+export default ContactPage;

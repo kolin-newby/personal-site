@@ -67,7 +67,7 @@ const ContactModal = ({ open, setOpen }) => {
         <div
           className={
             "absolute inset-5 laptop:inset-20 border border-black flex flex-row " +
-            "items-center justify-center bg-gray-300 rounded-sm overflow-hidden"
+            "items-center justify-center bg-gray-300 rounded-lg overflow-hidden"
           }
         >
           <div
@@ -90,7 +90,7 @@ const ContactModal = ({ open, setOpen }) => {
             </div>
             <div
               className={
-                "flex w-full rounded-sm shadow-xl p-2 border border-black items-center justify-center"
+                "flex w-full rounded-lg shadow-xl p-2 border border-black items-center justify-center"
               }
             >
               <input
@@ -114,7 +114,7 @@ const ContactModal = ({ open, setOpen }) => {
             </div>
             <div
               className={
-                "flex w-full rounded-sm shadow-xl p-2 border border-black items-center justify-center"
+                "flex w-full rounded-lg shadow-xl p-2 border border-black items-center justify-center"
               }
             >
               <input
@@ -144,7 +144,7 @@ const ContactModal = ({ open, setOpen }) => {
             </div>
             <div
               className={
-                "flex w-full rounded-sm shadow-xl p-2 border border-black items-center justify-center"
+                "flex w-full rounded-lg shadow-xl p-2 border border-black items-center justify-center"
               }
             >
               <textarea
@@ -197,7 +197,7 @@ const ContactModal = ({ open, setOpen }) => {
               )}
             <div className={"flex w-full justify-end items-center align-end"}>
               <button
-                className={`relative text-xl font-bold rounded-sm p-2 border border-black`}
+                className={`relative text-xl font-bold rounded-lg p-2 border border-black`}
                 onClick={
                   errors.length !== 0
                     ? () => setShowErrors(true)

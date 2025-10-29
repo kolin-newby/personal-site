@@ -3,10 +3,10 @@ import React, { useEffect, useState, Suspense } from "react";
 import { loadIcons } from "./config/iconLoader";
 
 const Navbar = React.lazy(() => import("./components/navbar"));
-const About = React.lazy(() => import("./components/about"));
-const Contact = React.lazy(() => import("./components/contact"));
-const Home = React.lazy(() => import("./components/home"));
-const Portfolio = React.lazy(() => import("./components/portfolio"));
+const AboutPage = React.lazy(() => import("./pages/about-page"));
+const ContactPage = React.lazy(() => import("./pages/contact-page"));
+const HomePage = React.lazy(() => import("./pages/home-page"));
+const WorkPage = React.lazy(() => import("./pages/work-page"));
 
 const App = () => {
   const [darkMode, setDarkMode] = useState(false);
@@ -80,10 +80,10 @@ const App = () => {
           scrollPosition={scrollPosition}
           touch={hasTouch}
         />
-        <Home className={"snap-start"} />
-        <About className={"snap-start"} />
-        <Portfolio className={"snap-start"} />
-        <Contact className={"snap-start"} touch={hasTouch} />
+        <HomePage className={"snap-start"} />
+        <AboutPage className={"snap-start"} />
+        <WorkPage className={"snap-start"} />
+        <ContactPage className={"snap-start"} touch={hasTouch} />
       </Suspense>
     </div>
   );

@@ -8,7 +8,7 @@ import {
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React from "react";
 
-export default function Experience({ darkMode }) {
+const Experience = ({ darkMode }) => {
   const skills = [
     { name: "React.js", level: "80%", levelNum: 80 },
     { name: "Python", level: "60%", levelNum: 60 },
@@ -55,9 +55,10 @@ export default function Experience({ darkMode }) {
           <span className={"text-lg lg:text-xl 2xl:text-2xl pb-8 sm:px-10"}>
             I am a full stack developer! I have experience maintaining and
             developing backend infrastructure in Java in conjunction with Trino
-            and SQL. I've designed and developed intuitive and responsive frontends that
-            support big data visualization. I've even taken on a QA role,
-            creating and applying thorough stress tests for low-latency API logging systems.
+            and SQL. I've designed and developed intuitive and responsive
+            frontends that support big data visualization. I've even taken on a
+            QA role, creating and applying thorough stress tests for low-latency
+            API logging systems.
           </span>
           <span
             className={"text-lg lg:text-xl 2xl:text-2xl pb-0 sm:pb-8 sm:px-10"}
@@ -72,14 +73,16 @@ export default function Experience({ darkMode }) {
               }
             >
               &nbsp;Linkedin
-            </a> or see my<a
+            </a>{" "}
+            or see my
+            <a
               href={"/resume.pdf"}
               target={"_blank"}
               rel={"noreferrer"}
               className={
-                  "bg-clip-text text-transparent bg-gradient-to-r from-theme-light-1 to-theme-light-2 dark:from-theme-dark-1 dark:to-theme-dark-2"
+                "bg-clip-text text-transparent bg-gradient-to-r from-theme-light-1 to-theme-light-2 dark:from-theme-dark-1 dark:to-theme-dark-2"
               }
-          >
+            >
               &nbsp;Resume
             </a>
             !
@@ -332,30 +335,29 @@ export default function Experience({ darkMode }) {
                 </span>
               </a>
               <a
-                  href={"https://graylog.org/"}
-                  target={"_blank"}
-                  rel={"noreferrer"}
-                  className={
-                      "flex flex-col 2xl:h-1/3 " +
-                      "p-5 justify-center items-center rounded-lg transition-all transform hover:-translate-y-1 " +
-                      "shadow-lg dark:shadow-blue-900 hover:shadow-2xl bg-gradient-to-r " +
-                      "from-theme-light-1/50 to-theme-light-2/70 dark:from-theme-dark-1/50 " +
-                      "dark:to-theme-dark-2/70 w-5/6 sm:w-full"
-                  }
+                href={"https://graylog.org/"}
+                target={"_blank"}
+                rel={"noreferrer"}
+                className={
+                  "flex flex-col 2xl:h-1/3 " +
+                  "p-5 justify-center items-center rounded-lg transition-all transform hover:-translate-y-1 " +
+                  "shadow-lg dark:shadow-blue-900 hover:shadow-2xl bg-gradient-to-r " +
+                  "from-theme-light-1/50 to-theme-light-2/70 dark:from-theme-dark-1/50 " +
+                  "dark:to-theme-dark-2/70 w-5/6 sm:w-full"
+                }
               >
                 <span
-                    className={"flex text-center 2xl:text-2xl font-bold pb-4"}
+                  className={"flex text-center 2xl:text-2xl font-bold pb-4"}
                 >
                   Software Engineer
                 </span>
-                <span className={"flex text-center 2xl:text-xl"}>
-                  Graylog
-                </span>
+                <span className={"flex text-center 2xl:text-xl"}>Graylog</span>
                 <span className={"flex text-center 2xl:text-lg pb-4"}>
                   2023-Present
                 </span>
                 <span className={"flex text-center 2xl:text-base"}>
-                  A startup that provides empowering threat detection & incident response solutions with cutting-edge technology
+                  A startup that provides empowering threat detection & incident
+                  response solutions with cutting-edge technology
                 </span>
               </a>
             </div>
@@ -364,4 +366,6 @@ export default function Experience({ darkMode }) {
       </div>
     </div>
   );
-}
+};
+
+export default Experience;

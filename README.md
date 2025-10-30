@@ -9,6 +9,7 @@ https://kolinnewby.dev
 - React.js
 - Node.js
 - JavaScript
+- TailwindCSS
 - Recharts
 - FontAwesome Icons
 - Lucide Icons

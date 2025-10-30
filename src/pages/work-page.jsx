@@ -43,7 +43,7 @@ const WorkPage = ({ darkMode, className = "" }) => {
             <div className={"flex flex-row gap-2 text-sm"}>
               <IdleScrollArea
                 axis="x"
-                speed={500}
+                speed={20}
                 idleDelay={3000}
                 startDirection="forward"
                 className="scrollbar-display-none w-[640px]"

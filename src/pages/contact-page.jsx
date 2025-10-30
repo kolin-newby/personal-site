@@ -104,8 +104,8 @@ const SocialLinks = () => {
             icon={link.icon}
           />
           <IdleScrollArea
-            speed={500}
-            idleDelay={3000}
+            speed={20}
+            idleDelay={1000}
             startDirection="forward"
             axis="x"
             className={`lg:flex hidden transition-all duration-500 overflow-hidden text-lg scrollbar-display-none ${

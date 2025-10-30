@@ -17,6 +17,8 @@ const IdleScrollArea = ({
   const dirRef = useRef(startDirection === "backward" ? -1 : 1);
   const [isHovering, setIsHovering] = useState(false);
 
+  const isProgrammaticScrollRef = useRef(false);
+
   const speedRef = useRef(speed);
   useEffect(() => {
     speedRef.current = speed;
@@ -41,11 +43,10 @@ const IdleScrollArea = ({
     [axis]
   );
   const getMax = useCallback(
-    (el) => {
-      return axis === "x"
+    (el) =>
+      axis === "x"
         ? Math.max(0, el.scrollWidth - el.clientWidth)
-        : Math.max(0, el.scrollHeight - el.clientHeight);
-    },
+        : Math.max(0, el.scrollHeight - el.clientHeight),
     [axis]
   );
 
@@ -70,7 +71,11 @@ const IdleScrollArea = ({
           dirRef.current = -1;
         }
 
+        isProgrammaticScrollRef.current = true;
         setPos(el, next);
+        requestAnimationFrame(() => {
+          isProgrammaticScrollRef.current = false;
+        });
       }
 
       rafRef.current = requestAnimationFrame(animate);
@@ -81,14 +86,25 @@ const IdleScrollArea = ({
   const markInteraction = useCallback(() => {
     lastUserInteractionRef.current = Date.now();
   }, []);
+
   const onEnter = useCallback(() => {
     setIsHovering(true);
     markInteraction();
   }, [markInteraction]);
+
   const onLeave = useCallback(() => {
     setIsHovering(false);
     markInteraction();
   }, [markInteraction]);
+
+  const onScroll = useCallback(
+    (e) => {
+      if (isProgrammaticScrollRef.current) return;
+      if (e && e.isTrusted === false) return;
+      markInteraction();
+    },
+    [markInteraction]
+  );
 
   useEffect(() => {
     const el = containerRef.current;
@@ -96,7 +112,7 @@ const IdleScrollArea = ({
 
     el.style.scrollBehavior = "auto";
 
-    el.addEventListener("scroll", markInteraction, { passive: true });
+    el.addEventListener("scroll", onScroll, { passive: true });
     el.addEventListener("mouseenter", onEnter);
     el.addEventListener("mouseleave", onLeave);
     el.addEventListener("touchstart", markInteraction, { passive: true });
@@ -107,14 +123,14 @@ const IdleScrollArea = ({
 
     return () => {
       cancelAnimationFrame(rafRef.current);
-      el.removeEventListener("scroll", markInteraction);
+      el.removeEventListener("scroll", onScroll);
       el.removeEventListener("mouseenter", onEnter);
       el.removeEventListener("mouseleave", onLeave);
       el.removeEventListener("touchstart", markInteraction);
       el.removeEventListener("touchmove", markInteraction);
       el.removeEventListener("touchend", markInteraction);
     };
-  }, [animate, markInteraction, onEnter, onLeave]);
+  }, [animate, markInteraction, onEnter, onLeave, onScroll]);
 
   const overflowStyle =
     axis === "x"

@@ -1,11 +1,7 @@
-import { useState } from "react";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { Transition } from "@headlessui/react";
-import { ArrowBigRight, EllipsisVertical } from "lucide-react";
+import { ChevronLeft } from "lucide-react";
+import IdleScrollArea from "../components/IdleScrollArea";
 
 const WorkPage = ({ darkMode, className = "" }) => {
-  const [activeGraySec, setActiveGraySec] = useState(1);
-
   const graylogPhotos = [
     {
       src: "/img/gray_api_sec_1.png",
@@ -20,6 +16,15 @@ const WorkPage = ({ darkMode, className = "" }) => {
       alt: "graylog api security 3",
     },
   ];
+  const apiSkills = [
+    "React",
+    "Node.js",
+    "TypeScript",
+    "JavaScript",
+    "HTML",
+    "CSS",
+    "SQL",
+  ];
 
   return (
     <div
@@ -29,32 +34,34 @@ const WorkPage = ({ darkMode, className = "" }) => {
       <div className="flex relative w-full pl-10">
         <div
           className={
-            "flex flex-row w-full justify-between shadow-inner bg-gradient-to-br from-black/10 to-zinc-200/50 rounded-l-lg p-16 items-center"
+            "flex flex-row w-full justify-between shadow-inner bg-gradient-to-br from-black/10 to-gray-200/50 rounded-l-lg items-center"
           }
         >
-          <div className="flex flex-col w-3/4">
+          <div className="flex flex-col w-3/4 space-y-3 p-16">
             <h2 className={"flex text-2xl"}>Graylog API Security</h2>
-            <div className={"flex flex-row"}>
-              <span>
-                React - Node.js - TypeScript - JavaScript - HTML - CSS - SQL
-              </span>
+            <h2 className="flex text-lg opacity-50">Full Stack</h2>
+            <div className={"flex flex-row gap-2 text-sm"}>
+              <IdleScrollArea
+                axis="x"
+                speed={500}
+                idleDelay={3000}
+                startDirection="forward"
+                className="scrollbar-display-none w-[640px]"
+              >
+                {apiSkills.map((skill, index) => (
+                  <div className="inline-block">
+                    <span>{skill}</span>
+                    {index !== apiSkills.length - 1 && <span>-</span>}
+                  </div>
+                ))}
+              </IdleScrollArea>
             </div>
           </div>
-          <div>
-            <EllipsisVertical
-              size={"48px"}
-              className="text-black/40 bg-clip-text "
-            />
-          </div>
-          <div
-            className={
-              "absolute group right-0 inset-y-1/2 -translate-y-1/2 w-[200px] h-full flex"
-            }
-          >
-            <div className="flex h-full w-full rounded-l-lg bg-zinc-200/50 shadow-inner p-2 justify-center items-center cursor-pointer transition-transform duration-300 transform translate-x-full group-hover:translate-x-0">
-              <ArrowBigRight className={"flex"} size={"40px"} />
+          <button className={"relative group flex h-full py-1"}>
+            <div className="flex h-full w-full p-4 justify-center items-center cursor-pointer shadow bg-gradient-to-br from-gray-200 to-gray-100 rounded-l-lg">
+              <ChevronLeft size={"44px"} className={"flex"} />
             </div>
-          </div>
+          </button>
         </div>
       </div>
     </div>

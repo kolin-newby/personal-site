@@ -10,7 +10,7 @@ const Follower = ({ active, setActive, modalOpen, setModalOpen }) => {
     });
   };
 
-  // if(!active || modalOpen) return;
+  if (!active || modalOpen) return;
 
   return (
     <div
@@ -35,7 +35,7 @@ const Follower = ({ active, setActive, modalOpen, setModalOpen }) => {
             : null
         }
         className={
-          "absolute hidden laptop:flex transform pointer-events-none size-transition text-nowrap overflow-hidden -translate-x-1/2 -translate-y-1/2 items-center justify-center bg-gray-400/30 rounded-full backdrop-blur-lg"
+          "absolute hidden lg:flex transform pointer-events-none size-transition text-nowrap overflow-hidden -translate-x-1/2 -translate-y-1/2 items-center justify-center bg-gray-400/30 rounded-full backdrop-blur-lg"
         }
       >
         <span className={"flex font-bold text-2xl"}>Click...</span>

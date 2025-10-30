@@ -8,19 +8,7 @@ module.exports = {
   ],
   theme: {
     extend: {
-      screens: {
-        phone: "450px",
-        tablet: "640px",
-        // => @media (min-width: 640px) { ... }
-
-        laptop: "1024px",
-        // => @media (min-width: 1024px) { ... }
-
-        desktop: "1280px",
-        // => @media (min-width: 1280px) { ... }
-      },
       backgroundImage: {
-        "light-bg-image": "url('/public/img/bg.svg')",
         "portfolio-gray-1": "url('/public/photos/gray_api_sec_1.png')",
         "portfolio-gray-2": "url('/public/photos/gray_api_sec_2.png')",
         "portfolio-gray-3": "url('/public/photos/gray_api_sec_3.png')",

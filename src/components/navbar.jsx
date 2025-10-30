@@ -1,9 +1,16 @@
 import React, { useEffect } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { ChevronDown } from "lucide-react";
 
-const Navbar = ({ darkMode, setDarkMode, scrollPosition, touch }) => {
+const Navbar = ({
+  darkMode,
+  setDarkMode,
+  scrollPosition,
+  touch,
+  barOpen,
+  setBarOpen,
+}) => {
   const [active, setActive] = React.useState("home");
-  const [barOpen, setBarOpen] = React.useState(false);
 
   const navbarItems = [
     { id: "home", title: "Home", icon: "home" },
@@ -40,16 +47,23 @@ const Navbar = ({ darkMode, setDarkMode, scrollPosition, touch }) => {
             "absolute w-full top-0 h-10 flex items-end justify-center text-black/50"
           }
         >
-          <FontAwesomeIcon
-            icon={barOpen ? "chevron-up" : "chevron-down"}
-            size={"2x"}
-            className={`flex laptop:hidden w-full transform transition-all duration-500 rounded-b-sm ${
-              barOpen ? "translate-y-10 backdrop-blur-sm" : "translate-y-0"
-            }`}
-            onClick={() => {
-              setBarOpen(!barOpen);
-            }}
-          />
+          {touch && (
+            <div
+              className={`flex w-full transform transition-all duration-500 rounded-b-sm ${
+                barOpen ? "translate-y-10 backdrop-blur-sm" : "translate-y-0"
+              }`}
+              onClick={() => {
+                setBarOpen(!barOpen);
+              }}
+            >
+              <ChevronDown
+                className={`flex w-full transform transition-transform duration-300 ${
+                  barOpen ? "rotate-180" : "rotate-0"
+                }`}
+                size={"36px"}
+              />
+            </div>
+          )}
         </div>
       </div>
       {navbarItems.map((item) => (
@@ -74,7 +88,7 @@ const Navbar = ({ darkMode, setDarkMode, scrollPosition, touch }) => {
           <FontAwesomeIcon
             icon={item.icon}
             size={"xl"}
-            className={"hidden laptop:flex"}
+            className={"hidden lg:flex"}
           />
           <span className={"flex"}>{item.title}</span>
         </div>

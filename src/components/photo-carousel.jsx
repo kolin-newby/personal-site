@@ -4,10 +4,10 @@ const PhotoCarousel = () => {
   const [active, setActive] = useState(null);
 
   return (
-    <div className={`flex laptop:w-1/2 w-full h-5/6 laptop:h-full`}>
+    <div className={`flex lg:w-1/2 w-full h-5/6 lg:h-full`}>
       <div
         className={
-          "flex laptop:items-center items-start pt-4 justify-center relative w-full"
+          "flex lg:items-center items-start pt-4 justify-center relative w-full"
         }
       >
         <div
@@ -23,7 +23,10 @@ const PhotoCarousel = () => {
                 ? "flex-col overflow-hidden basis-24 hover:basis-3/12 shadow-xl z-0"
                 : "basis-0"
             } bg-center bg-cover bg-no-repeat bg-photo-1 h-full transition-all duration-700 rounded-lg transform justify-end items-end`}
-            onClick={() => setActive(1)}
+            onClick={() => {
+              if (active !== 1) setActive(1);
+              else setActive(null);
+            }}
             onMouseOut={() => setActive(null)}
           ></div>
           <div
@@ -34,7 +37,10 @@ const PhotoCarousel = () => {
                 ? "flex-col basis-24 hover:basis-3/12 shadow-xl z-0"
                 : "basis-0"
             } bg-center bg-cover bg-no-repeat bg-photo-3 h-full transition-all duration-500 rounded-lg transform`}
-            onClick={() => setActive(2)}
+            onClick={() => {
+              if (active !== 2) setActive(2);
+              else setActive(null);
+            }}
             onMouseOut={() => setActive(null)}
           />
           <div
@@ -45,7 +51,10 @@ const PhotoCarousel = () => {
                 ? "flex-col basis-24 hover:basis-3/12 shadow-xl z-0"
                 : "basis-0"
             } bg-center bg-cover bg-no-repeat bg-photo-4 h-full transition-all duration-500 rounded-lg transform`}
-            onClick={() => setActive(3)}
+            onClick={() => {
+              if (active !== 3) setActive(3);
+              else setActive(null);
+            }}
             onMouseOut={() => setActive(null)}
           />
           <div
@@ -56,7 +65,10 @@ const PhotoCarousel = () => {
                 ? "flex-col basis-24 hover:basis-3/12 shadow-xl z-0"
                 : "basis-0"
             } bg-center bg-cover bg-no-repeat bg-photo-5 h-full transition-all duration-500 rounded-lg transform`}
-            onClick={() => setActive(4)}
+            onClick={() => {
+              if (active !== 4) setActive(4);
+              else setActive(null);
+            }}
             onMouseOut={() => setActive(null)}
           />
           <div
@@ -67,7 +79,10 @@ const PhotoCarousel = () => {
                 ? "flex-col basis-24 hover:basis-3/12 shadow-xl z-0"
                 : "basis-0"
             } bg-center bg-cover bg-no-repeat bg-photo-6 h-full transition-all duration-500 rounded-lg transform`}
-            onClick={() => setActive(5)}
+            onClick={() => {
+              if (active !== 5) setActive(5);
+              else setActive(null);
+            }}
             onMouseOut={() => setActive(null)}
           />
         </div>

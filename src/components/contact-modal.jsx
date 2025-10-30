@@ -66,7 +66,7 @@ const ContactModal = ({ open, setOpen }) => {
       <div className={"absolute inset-0 w-full h-full"}>
         <div
           className={
-            "absolute inset-5 laptop:inset-20 border border-black flex flex-row " +
+            "absolute inset-5 lg:inset-20 border border-black flex flex-row " +
             "items-center justify-center bg-gray-300 rounded-lg overflow-hidden"
           }
         >

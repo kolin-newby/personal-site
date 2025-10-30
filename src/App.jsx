@@ -1,6 +1,7 @@
 import "./App.css";
 import React, { useEffect, useState, Suspense } from "react";
 import { loadIcons } from "./config/iconLoader";
+import LoadingCover from "./components/loading-cover";
 
 const Navbar = React.lazy(() => import("./components/navbar"));
 const AboutPage = React.lazy(() => import("./pages/about-page"));
@@ -11,6 +12,7 @@ const WorkPage = React.lazy(() => import("./pages/work-page"));
 const App = () => {
   const [darkMode, setDarkMode] = useState(false);
   const [scrollPosition, setScrollPosition] = useState(0);
+  const [navBarOpen, setNavBarOpen] = useState(false);
 
   const [hasTouch, setHasTouch] = useState(false);
 
@@ -43,27 +45,6 @@ const App = () => {
     }
   }, [hasTouch, scrollPosition]);
 
-  useEffect(() => {
-    const typingScript = document.createElement("script");
-    typingScript.src = "/scripts/typewriter.js";
-    typingScript.async = true;
-
-    // const cursorScript = document.createElement('script');
-    // cursorScript.src = "/scripts/cursor-effect.js";
-    // cursorScript.async = true;
-
-    typingScript.onerror = () => console.error("Failed to load typewriter.js");
-    // cursorScript.onerror = () => console.error("Failed to load cursor-effect.js");
-
-    document.body.appendChild(typingScript);
-    // document.body.appendChild(cursorScript);
-
-    return () => {
-      if (typingScript.parentNode) document.body.removeChild(typingScript);
-      // if(cursorScript.parentNode) document.body.removeChild(cursorScript);
-    };
-  }, []);
-
   return (
     <div
       className={`${
@@ -71,14 +52,19 @@ const App = () => {
       } bg-gradient-to-br from-gray-100 via-gray-200 to-gray-100 h-screen snap-y 
           snap-mandatory snap overflow-y-scroll scroll-smooth scrollbar-display-none`}
       onScroll={handleScroll}
+      onClick={() => {
+        if (navBarOpen) setNavBarOpen(false);
+      }}
     >
-      <Suspense fallback={<div aria-busy="true">Loading...</div>}>
+      <Suspense fallback={<LoadingCover />}>
         <Navbar
           id={"navbar"}
           darkMode={darkMode}
           setDarkMode={setDarkMode}
           scrollPosition={scrollPosition}
           touch={hasTouch}
+          barOpen={navBarOpen}
+          setBarOpen={setNavBarOpen}
         />
         <HomePage className={"snap-start"} />
         <AboutPage className={"snap-start"} />

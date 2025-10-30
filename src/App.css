@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400;1,700&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400;1,700&display=swap");
 
 @tailwind base;
 @tailwind components;
@@ -12,6 +12,12 @@ a {
 * {
   box-sizing: border-box;
   font-family: "Space Mono", monospace;
+}
+
+.cursor {
+  display: inline-block;
+  width: 1ch;
+  animation: blink 1s infinite;
 }
 
 .navbar-container {
@@ -28,7 +34,7 @@ a {
   transition-duration: 500ms;
   width: 100%;
   display: flex;
-  background-color: rgb(0,0,0,0.9);
+  background-color: rgb(0, 0, 0, 0.9);
   height: 100%;
   /*  ----------------------------------*/
   transform: none;
@@ -39,7 +45,7 @@ a {
   transition-duration: 2000ms;
   width: 100%;
   display: flex;
-  background-color: rgb(0,0,0,0.9);
+  background-color: rgb(0, 0, 0, 0.9);
   height: 100%;
   /*  ----------------------------------*/
   transform: translateY(-4rem);
@@ -57,8 +63,8 @@ a {
 }
 
 .scrollbar-display-none {
-  -ms-overflow-style: none;  /* IE and Edge */
-  scrollbar-width: none;  /* Firefox */
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
 }
 
 .shadow-light {
@@ -116,7 +122,7 @@ a {
 }
 
 .portfolio-display-bg {
-    box-shadow: inset 15px 0 50px rgb(0 0 0 / 0.2);
+  box-shadow: inset 15px 0 50px rgb(0 0 0 / 0.2);
 }
 
 .portfolio_scroll-bg-start {
@@ -212,53 +218,66 @@ a {
   animation-iteration-count: infinite;
 }
 
+@keyframes blink {
+  0%,
+  50% {
+    opacity: 1;
+  }
+  51%,
+  100% {
+    opacity: 0;
+  }
+}
+
 @keyframes tap-target-move-left {
-  0%{
+  0% {
     transform: translateX(100%);
   }
-  100%{
+  100% {
     transform: translateX(-100%);
   }
 }
 
 @keyframes tap-target-move-right {
-  0%{
+  0% {
     transform: translateX(-100%);
   }
-  100%{
+  100% {
     transform: translateX(100%);
   }
 }
 
 @keyframes portfolio-scroll {
-  0%{
+  0% {
     transform: translateY(0%);
   }
-  100%{
+  100% {
     transform: translateY(100%);
   }
 }
 
 @keyframes scroll-across-left {
-  0%{
+  0% {
     transform: translateX(0%);
   }
-  100%{
+  100% {
     transform: translateX(-100%);
   }
 }
 
 @keyframes scroll-across-right {
-  0%{
+  0% {
     transform: translateX(0%);
   }
-  100%{
+  100% {
     transform: translateX(100%);
   }
 }
 
 @keyframes cursor {
-  50% {border-color: transparent}
+  50% {
+    border-color: transparent;
+  }
 }
 
 #shift-container {

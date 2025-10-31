@@ -1,6 +1,8 @@
 import { ChevronRight } from "lucide-react";
 import IdleScrollArea from "../IdleScrollArea";
 import PhotoCarousel from "../photo-carousel";
+import ParticleField from "../particle-field";
+import RepoPreview from "../repo-preview";
 
 const WorkModal = ({ open, selectedWork, setOpen, setSelectedWork }) => {
   const handleCloseClick = () => {
@@ -30,50 +32,56 @@ const WorkModal = ({ open, selectedWork, setOpen, setSelectedWork }) => {
         </div>
       </div>
       <div className="flex flex-col h-full space-y-4 md:flex-row justify-evenly items-center">
-        <div className="flex flex-col w-full h-max p-6 items-center justify-center text-sm space-y-4 md:w-1/2">
-          <span className="flex">{selectedWork?.section1}</span>
-          <span className="flex">{selectedWork?.section2}</span>
+        <div className="flex flex-col w-full h-max p-6 items-center justify-center text-xs sm:text-sm space-y-4 md:w-1/2">
+          {selectedWork?.section1}
+          {selectedWork?.section2}
         </div>
-        <div className="flex px-2 md:hidden">
-          <IdleScrollArea
-            axis={"x"}
-            speed={25}
-            idleDelay={3000}
-            startDirection="forward"
-            className="scrollbar-display-none flex space-x-2 max-h-[220px] min-h-[200px]"
-          >
-            {selectedWork?.images?.map((image, index) => (
-              <img
-                key={image + "-" + index + "-X"}
-                src={image}
-                alt={image}
-                className="flex flex-none h-[220px] object-cover rounded-lg"
-                loading="lazy"
-                decoding="async"
-              />
-            ))}
-          </IdleScrollArea>
-        </div>
-        <div className="hidden px-2 md:flex max-w-[500px] max-h-[600px]">
-          <IdleScrollArea
-            axis={"y"}
-            speed={25}
-            idleDelay={3000}
-            startDirection="forward"
-            className="scrollbar-display-none flex flex-col space-y-2 w-full"
-          >
-            {selectedWork?.images?.map((image, index) => (
-              <img
-                key={image + "-" + index + "-Y"}
-                src={image}
-                alt={image}
-                className="flex flex-none h-[250px] object-cover rounded-lg"
-                loading="lazy"
-                decoding="async"
-              />
-            ))}
-          </IdleScrollArea>
-        </div>
+        {selectedWork?.images !== null ? (
+          <>
+            <div className="flex px-2 md:hidden">
+              <IdleScrollArea
+                axis={"x"}
+                speed={25}
+                idleDelay={3000}
+                startDirection="forward"
+                className="scrollbar-display-none flex space-x-2 max-h-[220px] min-h-[200px]"
+              >
+                {selectedWork?.images?.map((image, index) => (
+                  <img
+                    key={image + "-" + index + "-X"}
+                    src={image}
+                    alt={image}
+                    className="flex flex-none h-[220px] object-cover rounded-lg"
+                    loading="lazy"
+                    decoding="async"
+                  />
+                ))}
+              </IdleScrollArea>
+            </div>
+            <div className="hidden px-2 md:flex max-w-[500px] max-h-[600px]">
+              <IdleScrollArea
+                axis={"y"}
+                speed={25}
+                idleDelay={3000}
+                startDirection="forward"
+                className="scrollbar-display-none max-h-[500px] flex flex-col space-y-2 w-full"
+              >
+                {selectedWork?.images?.map((image, index) => (
+                  <img
+                    key={image + "-" + index + "-Y"}
+                    src={image}
+                    alt={image}
+                    className="flex flex-none h-[250px] object-cover rounded-lg"
+                    loading="lazy"
+                    decoding="async"
+                  />
+                ))}
+              </IdleScrollArea>
+            </div>
+          </>
+        ) : (
+          <RepoPreview url={"https://github.com/resurfaceio/logger-go"} />
+        )}
       </div>
       <div className="flex flex-col items-center px-2">
         <IdleScrollArea

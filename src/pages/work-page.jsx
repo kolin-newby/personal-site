@@ -19,16 +19,31 @@ const WorkPage = ({ darkMode, className = "" }) => {
         "https://u.cubeupload.com/CallAnUbie/summarysignatures.jpg",
         "https://u.cubeupload.com/CallAnUbie/summary2.png",
       ],
-      section1:
-        "Graylog API Security is a platform that allows users to monitor, record, and analyze their APIs' requests and responses. It alerts users to potential threats and breaches, and can even intelligently track PII to assure that APIs comply with national privacy standards.",
-      section2:
-        "I lead development of the UI and UX for Graylog API Security from July of 2021 to June of 2025. In that time I did everything from; leveraging tools such as React.js, Node.js, TailwindsCss, and Recharts to develop new features, to optimizing backend queries using SQL and Trino.",
+      section1: (
+        <span className="flex">
+          Graylog API Security is a platform that allows users to monitor,
+          record, and analyze their APIs' requests and responses. It alerts
+          users to potential threats and breaches, and can even intelligently
+          track PII to assure that APIs comply with national privacy standards.
+        </span>
+      ),
+      section2: (
+        <span className="flex">
+          I lead development of the UI and UX for Graylog API Security from July
+          of 2021 to June of 2025. In that time I did everything from;
+          leveraging tools such as React.js, Node.js, TailwindsCss, and Recharts
+          to develop new features, to optimizing backend queries using SQL and
+          Trino.
+        </span>
+      ),
       skills: [
         "React",
         "Node.js",
         "TypeScript",
         "JavaScript",
         "HTML",
+        "TailwindCSS",
+        "Recharts",
         "CSS",
         "SQL",
       ],
@@ -37,10 +52,28 @@ const WorkPage = ({ darkMode, className = "" }) => {
       title: "Resurface API Logger",
       role: "Backend",
       images: null,
+      section1: (
+        <span className="flex">
+          The Resurface API Logger is open source software that hooks directly
+          into an API as middleware and collects the API's request and response
+          data, packages it up, and sends it to whatever destination is
+          configured. The logger is built in Golang and utilizes go routines and
+          NDJSON to asynchronously bundle API data and send it to the
+          destination in the background, minimizing performance overhead.
+        </span>
+      ),
+      section2: (
+        <span className="flex">
+          I lead the initial development of the logger in 2021. Later, I lead
+          the maintenance of existing features and the development of new major
+          features such as the asynchronous goroutine submission, as well as the
+          NDJSON bundling and general performace improvements.
+        </span>
+      ),
       skills: [
         "Golang",
         "Web Traffic",
-        "JSON",
+        "JSON/NDJSON",
         "Async Threads",
         "RESTful APIs",
         "GraphQL APIs",

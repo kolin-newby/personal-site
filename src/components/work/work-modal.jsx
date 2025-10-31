@@ -1,7 +1,5 @@
 import { ChevronRight } from "lucide-react";
 import IdleScrollArea from "../IdleScrollArea";
-import PhotoCarousel from "../photo-carousel";
-import ParticleField from "../particle-field";
 import RepoPreview from "../repo-preview";
 
 const WorkModal = ({ open, selectedWork, setOpen, setSelectedWork }) => {

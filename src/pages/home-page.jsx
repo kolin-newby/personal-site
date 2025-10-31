@@ -1,4 +1,3 @@
-import React, { useState, useEffect, useCallback } from "react";
 import Typer from "../components/typer";
 import ParticleField from "../components/particle-field";
 

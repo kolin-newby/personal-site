@@ -1,5 +1,6 @@
 import React, { useEffect, useMemo, useState } from "react";
 import ParticleField from "./particle-field";
+import { Link, Link2 } from "lucide-react";
 
 const parseOwnerRepo = (url) => {
   try {
@@ -53,6 +54,35 @@ const RepoPreview = ({ url, className = "" }) => {
     };
   }, [parsed]);
 
+  if (!loading && error) {
+    return (
+      <a
+        href={url}
+        target="_blank"
+        rel="noreferrer"
+        className={
+          "relative flex flex-col text-sm items-center justify-between p-4 max-w-[500px] overflow-hidden rounded-lg bg-gradient-to-br from-black/10 to-gray-200/50 shadow-inner " +
+          className
+        }
+        aria-busy="true"
+      >
+        <ParticleField
+          lum="70%"
+          maxParticlesFollowMode={20}
+          className="absolute top-0 left-0 w-full h-full z-0"
+          speed="slow"
+        />
+        <div className="flex flex-col z-10">
+          <span>Failed to load repository...</span>
+          <div className="flex space-x-2">
+            <span>Try visiting the url directly</span>
+            <Link2 />
+          </div>
+        </div>
+      </a>
+    );
+  }
+
   if (loading || !data) {
     return (
       <div
@@ -78,7 +108,6 @@ const RepoPreview = ({ url, className = "" }) => {
     );
   }
 
-  const og = `https://opengraph.githubassets.com/preview/${data.full_name}`;
   const isArchived = data.archived;
 
   return (

@@ -1,6 +1,6 @@
 import React, { useEffect, useMemo, useState } from "react";
 import ParticleField from "./particle-field";
-import { Link, Link2 } from "lucide-react";
+import { Link2 } from "lucide-react";
 
 const parseOwnerRepo = (url) => {
   try {

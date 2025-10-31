@@ -83,9 +83,7 @@ const WorkPage = ({ darkMode, className = "" }) => {
 
   return (
     <div
-      className={`flex flex-col h-screen relative w-full justify-center transform transition-transform duration-500 ${className} ${
-        modalOpen ? "-translate-x-full" : "translate-x-0"
-      }`}
+      className={`flex flex-col h-screen relative w-full justify-center ${className}`}
       id={"work"}
     >
       <WorkModal
@@ -96,6 +94,7 @@ const WorkPage = ({ darkMode, className = "" }) => {
       />
       <WorkList
         workItemList={workItems}
+        modalOpen={modalOpen}
         setModalOpen={setModalOpen}
         setSelectedWork={setSelectedWork}
       />

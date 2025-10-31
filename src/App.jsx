@@ -59,7 +59,7 @@ const App = () => {
       className={`${
         darkMode ? "dark" : ""
       } bg-gradient-to-br from-gray-100 via-gray-200 to-gray-100 h-screen snap-y 
-          snap-mandatory snap overflow-y-scroll scroll-smooth scrollbar-display-none`}
+          snap-mandatory snap overflow-y-scroll overflow-x-hidden scroll-smooth scrollbar-display-none`}
       onScroll={handleScroll}
       onClick={() => {
         if (navBarOpen) setNavBarOpen(false);

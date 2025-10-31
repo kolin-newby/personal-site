@@ -1,6 +1,11 @@
 import WorkListItem from "./work-list-item";
 
-const WorkList = ({ workItemList, setModalOpen, setSelectedWork }) => {
+const WorkList = ({
+  workItemList,
+  modalOpen,
+  setModalOpen,
+  setSelectedWork,
+}) => {
   const handleOpenClick = (workItem) => {
     setSelectedWork(workItem);
     setModalOpen(true);
@@ -8,7 +13,9 @@ const WorkList = ({ workItemList, setModalOpen, setSelectedWork }) => {
 
   return (
     <ul
-      className={`flex flex-col space-y-6 w-full items-center justify-center`}
+      className={`flex flex-col space-y-6 w-full items-center justify-center transform transition-transform duration-500 ${
+        modalOpen ? "-translate-x-full" : "translate-x-0"
+      }`}
     >
       {workItemList?.map((item, index) => (
         <WorkListItem

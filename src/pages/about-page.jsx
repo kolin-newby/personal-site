@@ -1,6 +1,6 @@
 import PhotoCarousel from "../components/photo-carousel";
-import React from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import IdleScrollArea from "../components/IdleScrollArea";
 
 const AboutPage = ({ className = "" }) => {
   const skills1 = [
@@ -64,16 +64,19 @@ const AboutPage = ({ className = "" }) => {
         <div className={"flex w-full items-center justify-center lg:h-1/2"}>
           <div
             className={
-              "grid grid-rows-3 gap-8 lg:w-2/3 w-full lg:h-3/4 text-black/40"
+              "relative grid grid-rows-3 gap-4 lg:w-2/3 w-full lg:h-3/4 text-black/40 py-4 shadow-inner bg-gradient-to-br from-black/10 to-gray-200/50 lg:rounded-lg"
             }
           >
             <div
               key={"skills-row-1"}
               className={"flex row-span-1 w-full h-full overflow-hidden"}
             >
-              <div
-                key={"skills-r1-1"}
-                className={"scroll-left-container-start-1"}
+              <IdleScrollArea
+                axis="x"
+                speed={100}
+                idleDelay={3000}
+                startDirection="forward"
+                className="scrollbar-display-none w-[640px]"
               >
                 {skills1.map((skill, index) => (
                   <>
@@ -92,29 +95,7 @@ const AboutPage = ({ className = "" }) => {
                     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                   </>
                 ))}
-              </div>
-              <div
-                key={"skills-r1-2"}
-                className={"scroll-left-container-end-1"}
-              >
-                {skills1.map((skill, index) => (
-                  <>
-                    <div
-                      key={`skills1-second-${index}`}
-                      className={
-                        "flex items-center h-full justify-center relative text-3xl text-nowrap font-bold"
-                      }
-                    >
-                      <FontAwesomeIcon
-                        className={"absolute inset-0 w-full h-full"}
-                        icon={skill.icon}
-                      />
-                      <span className={"text-transparent"}>{skill.title}</span>
-                    </div>
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                  </>
-                ))}
-              </div>
+              </IdleScrollArea>
             </div>
             <div
               key={"skills-row-2"}

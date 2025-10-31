@@ -13,7 +13,9 @@ const WorkModal = ({ open, selectedWork, setOpen, setSelectedWork }) => {
   return (
     <div
       role="dialog"
-      className={`absolute top-0 left-full flex flex-col justify-evenly w-full h-full bg-gradient-to-br from-gray-100 to-gray-200`}
+      className={`absolute top-0 left-0 flex flex-col justify-evenly w-full h-full bg-gradient-to-br from-gray-100 to-gray-200 transform transition-transform duration-500 ${
+        open ? "translate-x-0" : "translate-x-full"
+      }`}
     >
       <div className="flex min-h-[64px]" />
       <div className="flex flex-row space-x-10">
@@ -30,7 +32,7 @@ const WorkModal = ({ open, selectedWork, setOpen, setSelectedWork }) => {
         </div>
       </div>
       <div className="flex flex-col h-full space-y-4 md:flex-row justify-evenly items-center">
-        <div className="flex flex-col w-full h-max p-6 items-center justify-center text-xs sm:text-sm space-y-4 md:w-1/2">
+        <div className="flex flex-col w-full h-max p-6 items-center justify-center text-xs sm:text-base lg:text-lg space-y-4 md:w-1/2">
           {selectedWork?.section1}
           {selectedWork?.section2}
         </div>

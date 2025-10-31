@@ -1,10 +1,10 @@
 import { useState } from "react";
 
-const PhotoCarousel = () => {
+const PhotoCarousel = ({ imageSourceList, className }) => {
   const [active, setActive] = useState(null);
 
   return (
-    <div className={`flex lg:w-1/2 w-full h-5/6 lg:h-full`}>
+    <div className={`flex lg:w-1/2 w-full h-5/6 lg:h-full ${className}`}>
       <div
         className={
           "flex lg:items-center items-start pt-4 justify-center relative w-full"
@@ -15,76 +15,26 @@ const PhotoCarousel = () => {
             "flex w-11/12 h-3/4 items-center justify-center relative space-x-1"
           }
         >
-          <div
-            className={`flex ${
-              active === 1
-                ? "basis-full z-10 shadow-2xl"
-                : active === null
-                ? "flex-col overflow-hidden basis-24 hover:basis-3/12 shadow-xl z-0"
-                : "basis-0"
-            } bg-center bg-cover bg-no-repeat bg-photo-1 h-full transition-all duration-700 rounded-lg transform justify-end items-end`}
-            onClick={() => {
-              if (active !== 1) setActive(1);
-              else setActive(null);
-            }}
-            onMouseOut={() => setActive(null)}
-          ></div>
-          <div
-            className={`flex ${
-              active === 2
-                ? "basis-full z-10 shadow-2xl"
-                : active === null
-                ? "flex-col basis-24 hover:basis-3/12 shadow-xl z-0"
-                : "basis-0"
-            } bg-center bg-cover bg-no-repeat bg-photo-3 h-full transition-all duration-500 rounded-lg transform`}
-            onClick={() => {
-              if (active !== 2) setActive(2);
-              else setActive(null);
-            }}
-            onMouseOut={() => setActive(null)}
-          />
-          <div
-            className={`flex ${
-              active === 3
-                ? "basis-full z-10 shadow-2xl"
-                : active === null
-                ? "flex-col basis-24 hover:basis-3/12 shadow-xl z-0"
-                : "basis-0"
-            } bg-center bg-cover bg-no-repeat bg-photo-4 h-full transition-all duration-500 rounded-lg transform`}
-            onClick={() => {
-              if (active !== 3) setActive(3);
-              else setActive(null);
-            }}
-            onMouseOut={() => setActive(null)}
-          />
-          <div
-            className={`flex ${
-              active === 4
-                ? "basis-full z-10 shadow-2xl"
-                : active === null
-                ? "flex-col basis-24 hover:basis-3/12 shadow-xl z-0"
-                : "basis-0"
-            } bg-center bg-cover bg-no-repeat bg-photo-5 h-full transition-all duration-500 rounded-lg transform`}
-            onClick={() => {
-              if (active !== 4) setActive(4);
-              else setActive(null);
-            }}
-            onMouseOut={() => setActive(null)}
-          />
-          <div
-            className={`flex ${
-              active === 5
-                ? "basis-full z-10 shadow-2xl"
-                : active === null
-                ? "flex-col basis-24 hover:basis-3/12 shadow-xl z-0"
-                : "basis-0"
-            } bg-center bg-cover bg-no-repeat bg-photo-6 h-full transition-all duration-500 rounded-lg transform`}
-            onClick={() => {
-              if (active !== 5) setActive(5);
-              else setActive(null);
-            }}
-            onMouseOut={() => setActive(null)}
-          />
+          {imageSourceList?.map((source, index) => (
+            <div
+              key={`image-${source}-${index}`}
+              className={`flex ${
+                active === index
+                  ? "basis-full z-10 shadow-2xl"
+                  : active === null
+                  ? "flex-col overflow-hidden basis-24 hover:basis-1/2 shadow-xl z-0"
+                  : "basis-0"
+              } bg-center bg-cover bg-no-repeat h-full transition-all duration-700 rounded-lg transform justify-end items-end`}
+              style={{
+                backgroundImage: `url('${source}')`,
+              }}
+              onClick={() => {
+                if (active !== index) setActive(index);
+                else setActive(null);
+              }}
+              onMouseLeave={() => setActive(null)}
+            />
+          ))}
         </div>
       </div>
     </div>

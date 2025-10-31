@@ -1,69 +1,71 @@
-import { ChevronLeft } from "lucide-react";
-import IdleScrollArea from "../components/IdleScrollArea";
+import React, { useState } from "react";
+
+import WorkModal from "../components/work/work-modal";
+import WorkList from "../components/work/work-list";
 
 const WorkPage = ({ darkMode, className = "" }) => {
-  const graylogPhotos = [
+  const [modalOpen, setModalOpen] = useState(false);
+  const [selectedWork, setSelectedWork] = useState(null);
+
+  const workItems = [
     {
-      src: "/img/gray_api_sec_1.png",
-      alt: "graylog api security 1",
+      title: "Graylog API Security",
+      role: "Full Stack",
+      images: [
+        "https://u.cubeupload.com/CallAnUbie/settings1.png",
+        "https://u.cubeupload.com/CallAnUbie/search5.png",
+        "https://u.cubeupload.com/CallAnUbie/signatures1.png",
+        "https://u.cubeupload.com/CallAnUbie/summaryresponsescori.jpg",
+        "https://u.cubeupload.com/CallAnUbie/summarysignatures.jpg",
+        "https://u.cubeupload.com/CallAnUbie/summary2.png",
+      ],
+      section1:
+        "Graylog API Security is a platform that allows users to monitor, record, and analyze their APIs' requests and responses. It alerts users to potential threats and breaches, and can even intelligently track PII to assure that APIs comply with national privacy standards.",
+      section2:
+        "I lead development of the UI and UX for Graylog API Security from July of 2021 to June of 2025. In that time I did everything from; leveraging tools such as React.js, Node.js, TailwindsCss, and Recharts to develop new features, to optimizing backend queries using SQL and Trino.",
+      skills: [
+        "React",
+        "Node.js",
+        "TypeScript",
+        "JavaScript",
+        "HTML",
+        "CSS",
+        "SQL",
+      ],
     },
     {
-      src: "/img/gray_api_sec_2.png",
-      alt: "graylog api security 2",
+      title: "Resurface API Logger",
+      role: "Backend",
+      images: null,
+      skills: [
+        "Golang",
+        "Web Traffic",
+        "JSON",
+        "Async Threads",
+        "RESTful APIs",
+        "GraphQL APIs",
+      ],
     },
-    {
-      src: "/img/gray_api_sec_3.png",
-      alt: "graylog api security 3",
-    },
-  ];
-  const apiSkills = [
-    "React",
-    "Node.js",
-    "TypeScript",
-    "JavaScript",
-    "HTML",
-    "CSS",
-    "SQL",
   ];
 
   return (
     <div
-      className={`flex flex-col h-screen relative w-full items-center justify-center space-y-6 ${className}`}
+      className={`flex flex-col h-screen relative w-full justify-center transform transition-transform duration-500 ${className} ${
+        modalOpen ? "-translate-x-full" : "translate-x-0"
+      }`}
       id={"work"}
     >
-      <div className="flex relative w-full pl-10">
-        <div
-          className={
-            "flex flex-row w-full justify-between shadow-inner bg-gradient-to-br from-black/10 to-gray-200/50 rounded-l-lg items-center"
-          }
-        >
-          <div className="flex flex-col w-3/4 space-y-3 p-16">
-            <h2 className={"flex text-2xl"}>Graylog API Security</h2>
-            <h2 className="flex text-lg opacity-50">Full Stack</h2>
-            <div className={"flex flex-row gap-2 text-sm"}>
-              <IdleScrollArea
-                axis="x"
-                speed={20}
-                idleDelay={3000}
-                startDirection="forward"
-                className="scrollbar-display-none w-[640px]"
-              >
-                {apiSkills.map((skill, index) => (
-                  <div className="inline-block">
-                    <span>{skill}</span>
-                    {index !== apiSkills.length - 1 && <span>-</span>}
-                  </div>
-                ))}
-              </IdleScrollArea>
-            </div>
-          </div>
-          <button className={"relative group flex h-full py-1"}>
-            <div className="flex h-full w-full p-4 justify-center items-center cursor-pointer shadow bg-gradient-to-br from-gray-200 to-gray-100 rounded-l-lg">
-              <ChevronLeft size={"44px"} className={"flex"} />
-            </div>
-          </button>
-        </div>
-      </div>
+      <WorkModal
+        open={modalOpen}
+        selectedWork={selectedWork}
+        setOpen={setModalOpen}
+        setSelectedWork={setSelectedWork}
+      />
+      <WorkList
+        workItemList={workItems}
+        setModalOpen={setModalOpen}
+        setSelectedWork={setSelectedWork}
+      />
     </div>
   );
 };

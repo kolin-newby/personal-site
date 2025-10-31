@@ -1,5 +1,5 @@
 import "./App.css";
-import React, { useEffect, useState, Suspense } from "react";
+import React, { useEffect, useState, Suspense, useCallback } from "react";
 import { loadIcons } from "./config/iconLoader";
 import LoadingCover from "./components/loading-cover";
 
@@ -28,9 +28,18 @@ const App = () => {
     setScrollPosition(scrollPositionTemp);
   }
 
-  function detectTouch() {
-    setHasTouch("ontouchstart" in window || navigator.maxTouchPoints > 0);
-  }
+  const isTouchDevice = useCallback(() => {
+    console.log(
+      "ontouchstart" in window ||
+        navigator.maxTouchPoints > 0 ||
+        navigator.msMaxTouchPoints > 0
+    );
+    return (
+      "ontouchstart" in window ||
+      navigator.maxTouchPoints > 0 ||
+      navigator.msMaxTouchPoints > 0
+    );
+  }, []);
 
   useEffect(() => {
     try {
@@ -39,11 +48,11 @@ const App = () => {
       console.error("Failed to load icons: ", error);
     }
     try {
-      detectTouch();
+      setHasTouch(isTouchDevice());
     } catch (error) {
       console.error("Failed to detect touchscreen: ", error);
     }
-  }, [hasTouch, scrollPosition]);
+  }, [hasTouch, isTouchDevice, scrollPosition]);
 
   return (
     <div
@@ -66,7 +75,7 @@ const App = () => {
           barOpen={navBarOpen}
           setBarOpen={setNavBarOpen}
         />
-        <HomePage className={"snap-start"} />
+        <HomePage className={"snap-start"} touch={hasTouch} />
         <AboutPage className={"snap-start"} />
         <WorkPage className={"snap-start"} />
         <ContactPage className={"snap-start"} touch={hasTouch} />

@@ -3,16 +3,18 @@ import React, { useRef, useEffect, useCallback } from "react";
 const getRandom = (min, max) => Math.random() * (max - min) + min;
 
 class Particle {
-  constructor(width, height, { followModeRef, lumRef, mouseRef }) {
+  constructor(width, height, { followModeRef, lumRef, mouseRef, speedRef }) {
     this._followModeRef = followModeRef;
     this._lumRef = lumRef;
     this._mouseRef = mouseRef;
+    this._speedRef = speedRef;
 
     const fm = this._followModeRef.current;
     const mouse = this._mouseRef.current;
     this.x = fm ? mouse.x : getRandom(0, width);
     this.y = fm ? mouse.y : getRandom(0, height);
     this.size = Math.random() * 2.5;
+
     this.speedX = Math.random() * 2;
     this.speedY = Math.random() * 2;
 
@@ -44,8 +46,21 @@ class Particle {
         if (directionProbY > 0.5) adjustmentY = -adjustmentY;
       }
 
-      const sx = this.speedX + adjustmentX;
-      const sy = this.speedY + adjustmentY;
+      let sx = this.speedX + adjustmentX;
+      let sy = this.speedY + adjustmentY;
+
+      switch (this._speedRef.current) {
+        case "fast":
+          sx = (this.speedX + adjustmentX) * 1.5;
+          sy = (this.speedY + adjustmentY) * 1.5;
+          break;
+        case "slow":
+          sx = (this.speedX + adjustmentX) * 0.45;
+          sy = (this.speedY + adjustmentY) * 0.45;
+          break;
+        default:
+          break;
+      }
 
       this.x = (this.x + sx + width) % width;
       this.y = (this.y + sy + height) % height;
@@ -66,6 +81,7 @@ const ParticleField = ({
   maxParticlesFollowMode = 100,
   className = "",
   style = {},
+  speed = "normal",
 }) => {
   const canvasRef = useRef(null);
   const ctxRef = useRef(null);
@@ -75,6 +91,7 @@ const ParticleField = ({
 
   const followModeRef = useRef(followMode);
   const lumRef = useRef(lum);
+  const speedRef = useRef(speed);
   const maxFollowRef = useRef(maxParticlesFollowMode);
   useEffect(() => {
     followModeRef.current = followMode;
@@ -82,6 +99,9 @@ const ParticleField = ({
   useEffect(() => {
     lumRef.current = lum;
   }, [lum]);
+  useEffect(() => {
+    speedRef.current = speed;
+  }, [speed]);
   useEffect(() => {
     maxFollowRef.current = maxParticlesFollowMode;
   }, [maxParticlesFollowMode]);
@@ -156,7 +176,12 @@ const ParticleField = ({
       const { width: cssW, height: cssH } = canvas.getBoundingClientRect();
       for (let i = 0; i < maxFollowRef.current; i++) {
         spotsRef.current.push(
-          new Particle(cssW, cssH, { followModeRef, lumRef, mouseRef })
+          new Particle(cssW, cssH, {
+            followModeRef,
+            lumRef,
+            mouseRef,
+            speedRef,
+          })
         );
       }
     }
@@ -191,7 +216,12 @@ const ParticleField = ({
       const { width: cssW, height: cssH } = rect;
       for (let i = 0; i < 2; i++) {
         spotsRef.current.push(
-          new Particle(cssW, cssH, { followModeRef, lumRef, mouseRef })
+          new Particle(cssW, cssH, {
+            followModeRef,
+            lumRef,
+            mouseRef,
+            speedRef,
+          })
         );
       }
     };
@@ -211,7 +241,12 @@ const ParticleField = ({
       const { width: cssW, height: cssH } = canvas.getBoundingClientRect();
       for (let i = 0; i < maxFollowRef.current; i++) {
         spotsRef.current.push(
-          new Particle(cssW, cssH, { followModeRef, lumRef, mouseRef })
+          new Particle(cssW, cssH, {
+            followModeRef,
+            lumRef,
+            mouseRef,
+            speedRef,
+          })
         );
       }
     }

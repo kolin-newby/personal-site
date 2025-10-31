@@ -28,26 +28,26 @@ const AboutPage = ({ className = "" }) => {
   return (
     <div
       id={"about"}
-      className={`relative flex laptop:h-screen h-full flex-col laptop:flex-row items-center ${className}`}
+      className={`relative flex lg:h-screen h-full flex-col lg:flex-row items-center ${className}`}
     >
       <div
         className={
-          "flex flex-col items-center laptop:h-full laptop:w-1/2 w-full laptop:justify-center"
+          "flex flex-col items-center lg:h-full lg:w-1/2 w-full lg:justify-center"
         }
       >
         <div
           className={
-            "flex items-center justify-center w-full laptop:h-1/2 pb-4 pt-10 laptop:py-0"
+            "flex items-center justify-center w-full lg:h-1/2 pb-4 pt-10 lg:py-0"
           }
         >
           <div
             className={
-              "flex laptop:w-3/5 w-4/5 rounded-lg bg-gradient-to-br from-orange-500 via-purple-400 to-red-400 shadow-lg transition-all duration-500 transform hover:scale-105 hover:shadow-xl"
+              "flex lg:w-3/5 w-4/5 rounded-lg bg-gradient-to-br from-orange-500 via-purple-400 to-red-400 shadow-lg transition-all duration-500 transform hover:scale-105 hover:shadow-xl"
             }
           >
             <span
               className={
-                "flex bg-gray-200 rounded-lg w-full h-full m-0.5 px-3 py-2 text-sm laptop:text-base"
+                "flex bg-gray-200 rounded-lg w-full h-full m-0.5 px-3 py-2 text-sm lg:text-base"
               }
             >
               I love creating things and seeing the world from new perspectives.
@@ -61,10 +61,10 @@ const AboutPage = ({ className = "" }) => {
             </span>
           </div>
         </div>
-        <div className={"flex w-full items-center justify-center laptop:h-1/2"}>
+        <div className={"flex w-full items-center justify-center lg:h-1/2"}>
           <div
             className={
-              "grid grid-rows-3 gap-8 laptop:w-2/3 w-full laptop:h-3/4 text-black/40"
+              "grid grid-rows-3 gap-8 lg:w-2/3 w-full lg:h-3/4 text-black/40"
             }
           >
             <div
@@ -216,7 +216,15 @@ const AboutPage = ({ className = "" }) => {
           </div>
         </div>
       </div>
-      <PhotoCarousel />
+      <PhotoCarousel
+        imageSourceList={[
+          "https://s1.darkroom.com/x0bhc9o374iyukfue2r0w16eylx6",
+          "https://s2.darkroom.com/j62muwmn0qscmt0vrdlizmtod0nc",
+          "https://s0.darkroom.com/rb69qelblbux7vzc6z96tx8zqq5n",
+          "https://s1.darkroom.com/vya81fp2tnfae5mg7tjm6ed1t87w",
+          "https://s3.darkroom.com/syt12jq96c9jxcw7etw93xplnpr6",
+        ]}
+      />
     </div>
   );
 };

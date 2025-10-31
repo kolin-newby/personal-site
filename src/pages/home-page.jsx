@@ -2,25 +2,11 @@ import React, { useState, useEffect, useCallback } from "react";
 import Typer from "../components/typer";
 import ParticleField from "../components/particle-field";
 
-const HomePage = ({ className = "" }) => {
-  const [hasTouch, setHasTouch] = useState(false);
-
-  const isTouchDevice = useCallback(() => {
-    return (
-      "ontouchstart" in window ||
-      navigator.maxTouchPoints > 0 ||
-      navigator.msMaxTouchPoints > 0
-    );
-  }, []);
-
-  useEffect(() => {
-    setHasTouch(isTouchDevice());
-  }, [isTouchDevice]);
-
+const HomePage = ({ className = "", touch }) => {
   return (
     <div className={`w-full h-screen overflow-hidden relative ${className}`}>
       <ParticleField
-        followMode={!hasTouch}
+        followMode={!touch}
         lum="60%"
         maxParticlesFollowMode={110}
         className="absolute top-0 left-0 w-full h-full z-0"

@@ -9,17 +9,19 @@ const IdleScrollArea = ({
   startDirection = "forward",
   className = "",
   style = {},
+  minStepPx = 0,
 }) => {
   const containerRef = useRef(null);
-  const rafRef = useRef(null);
+  const rafRef = useRef(0);
   const lastTsRef = useRef(0);
   const lastUserInteractionRef = useRef(Date.now());
   const dirRef = useRef(startDirection === "backward" ? -1 : 1);
   const [isHovering, setIsHovering] = useState(false);
 
   const isProgrammaticScrollRef = useRef(false);
-
   const speedRef = useRef(speed);
+  const virtualPosRef = useRef(0);
+
   useEffect(() => {
     speedRef.current = speed;
   }, [speed]);
@@ -55,32 +57,47 @@ const IdleScrollArea = ({
       const el = containerRef.current;
       if (!el) return;
 
-      if (!lastTsRef.current) lastTsRef.current = ts;
+      if (!lastTsRef.current) {
+        lastTsRef.current = ts;
+        virtualPosRef.current = getPos(el);
+      }
+
       const dt = (ts - lastTsRef.current) / 1000;
       lastTsRef.current = ts;
 
       if (isIdle()) {
         const max = getMax(el);
-        let next = getPos(el) + dirRef.current * speedRef.current * dt;
+        const dir = dirRef.current;
 
-        if (next <= 0) {
-          next = 0;
+        let step = speedRef.current * dt;
+        if (minStepPx > 0 && step > 0 && step < minStepPx) step = minStepPx;
+
+        let nextVirtual = virtualPosRef.current + dir * step;
+
+        if (nextVirtual <= 0) {
+          nextVirtual = 0;
           dirRef.current = 1;
-        } else if (next >= max) {
-          next = max;
+        } else if (nextVirtual >= max) {
+          nextVirtual = max;
           dirRef.current = -1;
         }
 
-        isProgrammaticScrollRef.current = true;
-        setPos(el, next);
-        requestAnimationFrame(() => {
-          isProgrammaticScrollRef.current = false;
-        });
+        const prevInt = Math.trunc(virtualPosRef.current);
+        const nextInt = Math.trunc(nextVirtual);
+        virtualPosRef.current = nextVirtual;
+
+        if (nextInt !== prevInt) {
+          isProgrammaticScrollRef.current = true;
+          setPos(el, nextInt);
+          requestAnimationFrame(() => {
+            isProgrammaticScrollRef.current = false;
+          });
+        }
       }
 
       rafRef.current = requestAnimationFrame(animate);
     },
-    [getMax, getPos, setPos, isIdle]
+    [getMax, getPos, setPos, isIdle, minStepPx]
   );
 
   const markInteraction = useCallback(() => {
@@ -101,9 +118,11 @@ const IdleScrollArea = ({
     (e) => {
       if (isProgrammaticScrollRef.current) return;
       if (e && e.isTrusted === false) return;
+      const el = containerRef.current;
+      if (el) virtualPosRef.current = getPos(el);
       markInteraction();
     },
-    [markInteraction]
+    [getPos, markInteraction]
   );
 
   useEffect(() => {
@@ -143,7 +162,7 @@ const IdleScrollArea = ({
       className={className}
       style={{ ...overflowStyle, ...style }}
     >
-      {children}
+      &nbsp;{children}&nbsp;
     </div>
   );
 };

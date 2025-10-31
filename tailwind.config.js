@@ -8,23 +8,6 @@ module.exports = {
   ],
   theme: {
     extend: {
-      backgroundImage: {
-        "portfolio-gray-1": "url('/public/photos/gray_api_sec_1.png')",
-        "portfolio-gray-2": "url('/public/photos/gray_api_sec_2.png')",
-        "portfolio-gray-3": "url('/public/photos/gray_api_sec_3.png')",
-        "photo-1":
-          "url('https://s1.darkroom.com/xrldcnuprphtrdvppvs6frqjpgok')",
-        "photo-2":
-          "url('https://s2.darkroom.com/6fbpp12cfffsuaq8brn5mvk5dct3')",
-        "photo-3":
-          "url('https://s2.darkroom.com/j62muwmn0qscmt0vrdlizmtod0nc')",
-        "photo-4":
-          "url('https://s0.darkroom.com/rb69qelblbux7vzc6z96tx8zqq5n')",
-        "photo-5":
-          "url('https://s1.darkroom.com/vya81fp2tnfae5mg7tjm6ed1t87w')",
-        "photo-6":
-          "url('https://s3.darkroom.com/syt12jq96c9jxcw7etw93xplnpr6')",
-      },
       keyframes: {
         wiggle: {
           "0%, 100%": { transform: "rotate(-2deg)" },

@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400;1,700&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400;1,700&display=swap");
 
 @tailwind base;
 @tailwind components;
@@ -12,6 +12,59 @@ a {
 * {
   box-sizing: border-box;
   font-family: "Space Mono", monospace;
+}
+
+.cursor {
+  display: inline-block;
+  width: 1ch;
+  animation: blink 1s infinite;
+}
+
+.navbar-container {
+  position: fixed;
+  display: flex;
+  top: 0;
+  width: 100%;
+  height: 5rem;
+}
+
+.navbar-block:hover .navbar-riser {
+  transition-property: transform;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 500ms;
+  width: 100%;
+  display: flex;
+  background-color: rgb(0, 0, 0, 0.9);
+  height: 100%;
+  /*  ----------------------------------*/
+  transform: none;
+}
+
+.navbar-riser {
+  transition-property: transform;
+  transition-duration: 2000ms;
+  width: 100%;
+  display: flex;
+  background-color: rgb(0, 0, 0, 0.9);
+  height: 100%;
+  /*  ----------------------------------*/
+  transform: translateY(-4rem);
+}
+
+.navbar-block {
+  width: 5%;
+  display: flex;
+  height: 5rem;
+}
+
+.scrollbar-display-none::-webkit-scrollbar {
+  /*Hide scrollbar for Chrome, Safari and Opera*/
+  display: none;
+}
+
+.scrollbar-display-none {
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
 }
 
 .shadow-light {
@@ -63,77 +116,168 @@ a {
   padding-right: 2rem; /* 4px */
 }
 
-.carousel > div {
-  /*transition-property: transform;*/
-  /*transition-duration: 300ms;*/
-  transform-origin: top left;
+.size-transition {
+  transition-duration: 0.2s;
+  transition-property: height, width, margin;
 }
 
-.carousel > div:nth-child(1).inactive {
-  border-radius: 0.75rem;
-  background-color: black;
-  transform: scale(80%) translateX(-70%) translateY(-50%);
-  z-index: 20;
+.portfolio-display-bg {
+  box-shadow: inset 15px 0 50px rgb(0 0 0 / 0.2);
 }
 
-.carousel > div:nth-child(2).inactive {
-  border-radius: 0.75rem;
-  background-color: black;
-  transform: scale(60%) translateX(-125%) translateY(-50%);
-  z-index: 10;
+.portfolio_scroll-bg-start {
+  transform: translateY(-100%);
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  animation-name: portfolio-scroll;
+  animation-duration: 5s;
+  animation-iteration-count: infinite;
+  animation-timing-function: linear;
+}
+.portfolio_scroll-bg-end {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  animation-name: portfolio-scroll;
+  animation-duration: 5s;
+  animation-delay: 5s;
+  animation-iteration-count: infinite;
+  animation-timing-function: linear;
 }
 
-.carousel > div:nth-child(3).inactive {
-  border-radius: 0.75rem;
-  background-color: black;
-  transform: scale(40%) translateX(-215%) translateY(-50%);
-  z-index: 0;
+.scroll-left-container-start-1 {
+  display: flex;
+  height: 100%;
+  animation-name: scroll-across-left;
+  animation-duration: 12s;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
 }
 
-.carousel > div.active:hover {
-  z-index: 30;
-  transform: translateX(-30%) translateY(-52%);
+.scroll-left-container-end-1 {
+  display: flex;
+  height: 100%;
+  animation-name: scroll-across-left;
+  animation-duration: 12s;
+  animation-delay: 12s;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
 }
 
-.carousel > div.active {
-  z-index: 30;
-  border-radius: 0.75rem;
-  transition-property: all;
-  transform: translateX(-30%) translateY(-50%);
-  /*--------------------------*/
-  /*animation-name: carousel-active;*/
-  /*animation-direction: normal;*/
-  /*animation-duration: 0.5s;*/
-  /*animation-fill-mode: none;*/
-  /*animation-play-state: running;*/
-  /*animation-timing-function: linear;*/
-  /*animation-iteration-count: 1;*/
+.scroll-left-container-start-2 {
+  display: flex;
+  height: 100%;
+  animation-name: scroll-across-left;
+  animation-duration: 10s;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
 }
 
-/*@keyframes carousel-active {*/
-/*  0%{*/
-/*    transform: rotateY(40deg) translateX(40%) scale(70%);*/
-/*  }*/
+.scroll-left-container-end-2 {
+  display: flex;
+  height: 100%;
+  animation-name: scroll-across-left;
+  animation-duration: 10s;
+  animation-delay: 10s;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+}
 
-/*  100%{*/
-/*    transform: rotateY(0deg) translateX(0%);*/
-/*  }*/
-/*}*/
+.scroll-right-container-start {
+  display: flex;
+  height: 100%;
+  animation-name: scroll-across-right;
+  animation-duration: 14s;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+}
 
-@media print {
-  .no-print,
-  .no-print * {
-    display: none !important;
+.scroll-right-container-end {
+  display: flex;
+  height: 100%;
+  animation-name: scroll-across-right;
+  animation-duration: 14s;
+  animation-delay: 14s;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+}
+
+.tap-target-top {
+  animation-name: tap-target-move-left;
+  animation-duration: 4s;
+  animation-delay: 2s;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+}
+
+.tap-target-bottom {
+  animation-name: tap-target-move-right;
+  animation-duration: 4s;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+}
+
+@keyframes blink {
+  0%,
+  50% {
+    opacity: 1;
   }
+  51%,
+  100% {
+    opacity: 0;
+  }
+}
 
-  .printable,
-  .printable * {
-    display: block !important;
+@keyframes tap-target-move-left {
+  0% {
+    transform: translateX(100%);
+  }
+  100% {
+    transform: translateX(-100%);
+  }
+}
+
+@keyframes tap-target-move-right {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+@keyframes portfolio-scroll {
+  0% {
+    transform: translateY(0%);
+  }
+  100% {
+    transform: translateY(100%);
+  }
+}
+
+@keyframes scroll-across-left {
+  0% {
+    transform: translateX(0%);
+  }
+  100% {
+    transform: translateX(-100%);
+  }
+}
+
+@keyframes scroll-across-right {
+  0% {
+    transform: translateX(0%);
+  }
+  100% {
+    transform: translateX(100%);
   }
 }
 
 @keyframes cursor {
-  50% {border-color: transparent}
+  50% {
+    border-color: transparent;
+  }
 }
 
 #shift-container {

@@ -22,17 +22,39 @@ import {
     faPlay,
     faSquareCheck,
     faImages,
-    faSpider,
+    faLink,
+    faEnvelope,
+    faAngleRight,
+    faAngleLeft,
+    faHome,
+    faUser,
+    faWalkieTalkie,
+    faBriefcase,
+    faChevronDown,
+    faChevronUp,
 } from "@fortawesome/free-solid-svg-icons";
 
 import {
-    faNodeJs
+    faNodeJs,
+    faGolang,
+    faPython,
+    faJs,
+    faReact,
+    faGitAlt,
+    faHtml5,
+    faCss3,
+    faDocker,
+    faJava,
+    faLinux,
+    faHubspot,
+    faUbuntu,
+    faConfluence,
 } from "@fortawesome/free-brands-svg-icons";
 
 // Branded icon imports
 import { faInstagram, faFacebook, faTwitter, faSnapchatGhost, faLinkedin, faGithub } from "@fortawesome/free-brands-svg-icons";
 
-export const loadIcons = () => {
+export function loadIcons(){
     library.add(
         faInstagram,
         faLinkedin,
@@ -61,6 +83,28 @@ export const loadIcons = () => {
         faSquareCheck,
         faNodeJs,
         faImages,
-        faSpider,
+        faGolang,
+        faPython,
+        faJs,
+        faReact,
+        faGitAlt,
+        faHtml5,
+        faCss3,
+        faDocker,
+        faJava,
+        faLinux,
+        faHubspot,
+        faUbuntu,
+        faConfluence,
+        faLink,
+        faEnvelope,
+        faAngleRight,
+        faAngleLeft,
+        faWalkieTalkie,
+        faBriefcase,
+        faUser,
+        faHome,
+        faChevronDown,
+        faChevronUp,
     );
-};
+}

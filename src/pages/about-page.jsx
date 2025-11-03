@@ -61,138 +61,89 @@ const AboutPage = ({ className = "" }) => {
             </span>
           </div>
         </div>
-        <div className={"flex w-full items-center justify-center lg:h-1/2"}>
+        <div className={"flex w-full items-center justify-center lg:max-h-1/2"}>
           <div
             className={
-              "relative grid grid-rows-3 gap-4 lg:w-2/3 w-full lg:h-3/4 text-black/40 py-4 shadow-inner bg-gradient-to-br from-black/10 to-gray-200/50 lg:rounded-lg"
+              "relative flex flex-col space-y-3 lg:w-2/3 w-full text-black/40 py-4 shadow-inner bg-gradient-to-br from-black/10 to-gray-200/50 lg:rounded-lg"
             }
           >
-            <div
-              key={"skills-row-1"}
-              className={"flex row-span-1 w-full h-full overflow-hidden"}
-            >
+            <div key={"skills-row-1"} className={"overflow-hidden w-full"}>
               <IdleScrollArea
+                infinite
                 axis="x"
-                speed={100}
-                idleDelay={3000}
+                minStepPx={1}
+                speed={80}
+                idleDelay={2000}
                 startDirection="forward"
-                className="scrollbar-display-none w-[640px]"
+                className="scrollbar-display-none w-full h-full [line-height:0]"
               >
-                {skills1.map((skill, index) => (
-                  <>
+                <div className="inline-flex h-full items-center">
+                  {skills1.map((skill, index) => (
                     <div
-                      key={`skills1-first-${index}`}
-                      className={
-                        "flex items-center h-full justify-center relative text-3xl text-nowrap font-bold"
-                      }
+                      key={`skill-r1-${index}-${skill.title}`}
+                      className={"mx-10"}
                     >
                       <FontAwesomeIcon
-                        className={"absolute inset-0 w-full h-full"}
                         icon={skill.icon}
+                        className="block size-12 md:size-16"
+                        style={{ verticalAlign: "middle" }}
                       />
-                      <div className={"text-transparent"}>{skill.title}</div>
                     </div>
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                  </>
-                ))}
+                  ))}
+                </div>
               </IdleScrollArea>
             </div>
-            <div
-              key={"skills-row-2"}
-              className={
-                "flex row-span-1 w-full h-full justify-end overflow-hidden"
-              }
-            >
-              <div key={"skills-r2-1"} className={"scroll-right-container-end"}>
-                {skills2.map((skill, index) => (
-                  <>
-                    <div
-                      key={`skills2-first-${index}`}
-                      className={
-                        "flex items-center h-full justify-center relative text-3xl text-nowrap font-bold"
-                      }
-                    >
-                      <FontAwesomeIcon
-                        className={"absolute inset-0 w-full h-full"}
-                        icon={skill.icon}
-                      />
-                      <span className={"text-transparent"}>{skill.title}</span>
-                    </div>
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                  </>
-                ))}
-              </div>
-              <div
-                key={"skills-r2-2"}
-                className={"scroll-right-container-start"}
+            <div key={"skills-row-2"} className={"overflow-hidden w-full"}>
+              <IdleScrollArea
+                infinite
+                axis="x"
+                minStepPx={1}
+                speed={60}
+                idleDelay={2000}
+                startDirection="backward"
+                className="scrollbar-display-none w-full h-full [line-height:0]"
               >
-                {skills2.map((skill, index) => (
-                  <>
+                <div className="inline-flex h-full items-center">
+                  {skills2.map((skill, index) => (
                     <div
-                      key={`skills2-second-${index}`}
-                      className={
-                        "flex items-center h-full justify-center relative text-3xl text-nowrap font-bold"
-                      }
+                      key={`skill-r2-${index}-${skill.title}`}
+                      className={"mx-10"}
                     >
                       <FontAwesomeIcon
-                        className={"absolute inset-0 w-full h-full"}
                         icon={skill.icon}
+                        className="block size-12 md:size-16"
+                        style={{ verticalAlign: "middle" }}
                       />
-                      <span className={"text-transparent"}>{skill.title}</span>
                     </div>
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                  </>
-                ))}
-              </div>
+                  ))}
+                </div>
+              </IdleScrollArea>
             </div>
-            <div
-              key={"skills-row-3"}
-              className={"flex row-span-1 w-full h-full overflow-hidden"}
-            >
-              <div
-                key={"skills-r3-1"}
-                className={"scroll-left-container-start-2"}
+            <div key={"skills-row-3"} className={"overflow-hidden w-full"}>
+              <IdleScrollArea
+                infinite
+                axis="x"
+                minStepPx={1}
+                speed={50}
+                idleDelay={2000}
+                startDirection="forward"
+                className="scrollbar-display-none w-full h-full [line-height:0]"
               >
-                {skills3.map((skill, index) => (
-                  <>
+                <div className="inline-flex h-full items-center">
+                  {skills3.map((skill, index) => (
                     <div
-                      key={`skills3-first-${index}`}
-                      className={
-                        "flex items-center h-full justify-center relative text-3xl text-nowrap font-bold"
-                      }
+                      key={`skill-r3-${index}-${skill.title}`}
+                      className={"mx-10"}
                     >
                       <FontAwesomeIcon
-                        className={"absolute inset-0 w-full h-full"}
                         icon={skill.icon}
+                        className="block size-12 md:size-16"
+                        style={{ verticalAlign: "middle" }}
                       />
-                      <span className={"text-transparent"}>{skill.title}</span>
                     </div>
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                  </>
-                ))}
-              </div>
-              <div
-                key={"skills-r3-2"}
-                className={"scroll-left-container-end-2"}
-              >
-                {skills3.map((skill, index) => (
-                  <>
-                    <div
-                      key={`skills3-second-${index}`}
-                      className={
-                        "flex items-center h-full justify-center relative text-3xl text-nowrap font-bold"
-                      }
-                    >
-                      <FontAwesomeIcon
-                        className={"absolute inset-0 w-full h-full"}
-                        icon={skill.icon}
-                      />
-                      <span className={"text-transparent"}>{skill.title}</span>
-                    </div>
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                  </>
-                ))}
-              </div>
+                  ))}
+                </div>
+              </IdleScrollArea>
             </div>
           </div>
         </div>

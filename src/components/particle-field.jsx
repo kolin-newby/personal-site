@@ -1,4 +1,6 @@
 import React, { useRef, useEffect, useCallback } from "react";
+import { useInViewport } from "../common/use-in-viewport";
+import { usePageVisible } from "../common/use-page-visible";
 
 const getRandom = (min, max) => Math.random() * (max - min) + min;
 
@@ -82,8 +84,10 @@ const ParticleField = ({
   className = "",
   style = {},
   speed = "normal",
+  pauseWhenOffScreen = true,
 }) => {
   const canvasRef = useRef(null);
+  const sizeRef = useRef({ w: 1, h: 1 });
   const ctxRef = useRef(null);
   const rafRef = useRef(null);
   const spotsRef = useRef([]);
@@ -93,6 +97,21 @@ const ParticleField = ({
   const lumRef = useRef(lum);
   const speedRef = useRef(speed);
   const maxFollowRef = useRef(maxParticlesFollowMode);
+
+  const inView = useInViewport(canvasRef, { threshold: 0 });
+  const pageVisible = usePageVisible();
+  const prefersReducedMotion =
+    typeof window !== "undefined" &&
+    window.matchMedia?.("(prefers-reduced-motion: reduce)")?.matches;
+
+  const shouldRun =
+    !prefersReducedMotion && (!pauseWhenOffScreen || (inView && pageVisible));
+
+  const shouldRunRef = useRef(shouldRun);
+  useEffect(() => {
+    shouldRunRef.current = shouldRun;
+  }, [shouldRun]);
+
   useEffect(() => {
     followModeRef.current = followMode;
   }, [followMode]);
@@ -113,6 +132,9 @@ const ParticleField = ({
 
     const dpr = Math.max(1, window.devicePixelRatio || 1);
     const { width: cssW, height: cssH } = canvas.getBoundingClientRect();
+
+    sizeRef.current.w = Math.max(1, Math.floor(cssW));
+    sizeRef.current.h = Math.max(1, Math.floor(cssH));
 
     canvas.width = Math.max(1, Math.floor(cssW * dpr));
     canvas.height = Math.max(1, Math.floor(cssH * dpr));
@@ -153,15 +175,22 @@ const ParticleField = ({
     const ctx = ctxRef.current;
     if (!canvas || !ctx) return;
 
-    const { width: cssW, height: cssH } = canvas.getBoundingClientRect();
-    const width = Math.max(1, Math.floor(cssW));
-    const height = Math.max(1, Math.floor(cssH));
+    const { w: width, h: height } = sizeRef.current;
 
     ctx.clearRect(0, 0, width, height);
     handleParticles(ctx, width, height);
 
     rafRef.current = requestAnimationFrame(animate);
   }, []);
+
+  useEffect(() => {
+    if (shouldRun) {
+      if (!rafRef.current) rafRef.current = requestAnimationFrame(animate);
+    } else if (rafRef.current) {
+      cancelAnimationFrame(rafRef.current);
+      rafRef.current = null;
+    }
+  }, [shouldRun, animate]);
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -173,15 +202,10 @@ const ParticleField = ({
     resizeCanvas();
 
     if (!followModeRef.current) {
-      const { width: cssW, height: cssH } = canvas.getBoundingClientRect();
+      const { w, h } = sizeRef.current;
       for (let i = 0; i < maxFollowRef.current; i++) {
         spotsRef.current.push(
-          new Particle(cssW, cssH, {
-            followModeRef,
-            lumRef,
-            mouseRef,
-            speedRef,
-          })
+          new Particle(w, h, { followModeRef, lumRef, mouseRef, speedRef })
         );
       }
     }
@@ -193,14 +217,20 @@ const ParticleField = ({
     };
 
     window.addEventListener("resize", handleResize);
-    window.addEventListener("mouseout", handleMouseOut);
 
-    rafRef.current = requestAnimationFrame(animate);
+    const ro =
+      "ResizeObserver" in window ? new ResizeObserver(handleResize) : null;
+
+    ro?.observe(canvas);
+
+    window.addEventListener("pointerleave", handleMouseOut);
 
     return () => {
       if (rafRef.current) cancelAnimationFrame(rafRef.current);
+      rafRef.current = null;
       window.removeEventListener("resize", handleResize);
-      window.removeEventListener("mouseout", handleMouseOut);
+      ro?.disconnect();
+      window.removeEventListener("pointerleave", handleMouseOut);
     };
   }, [animate]);
 
@@ -209,14 +239,15 @@ const ParticleField = ({
     if (!canvas) return;
 
     const handleMouseMove = (e) => {
+      if (!shouldRunRef.current) return;
       const rect = canvas.getBoundingClientRect();
       mouseRef.current.x = e.clientX - rect.left;
       mouseRef.current.y = e.clientY - rect.top;
 
-      const { width: cssW, height: cssH } = rect;
+      const { w, h } = sizeRef.current;
       for (let i = 0; i < 2; i++) {
         spotsRef.current.push(
-          new Particle(cssW, cssH, {
+          new Particle(w, h, {
             followModeRef,
             lumRef,
             mouseRef,
@@ -227,26 +258,19 @@ const ParticleField = ({
     };
 
     if (followMode) {
-      canvas.addEventListener("mousemove", handleMouseMove);
+      canvas.addEventListener("pointermove", handleMouseMove);
     }
     return () => {
-      canvas.removeEventListener("mousemove", handleMouseMove);
+      canvas.removeEventListener("pointermove", handleMouseMove);
     };
   }, [followMode]);
 
   useEffect(() => {
     if (!followMode && spotsRef.current.length === 0) {
-      const canvas = canvasRef.current;
-      if (!canvas) return;
-      const { width: cssW, height: cssH } = canvas.getBoundingClientRect();
+      const { w, h } = sizeRef.current; // use cached size
       for (let i = 0; i < maxFollowRef.current; i++) {
         spotsRef.current.push(
-          new Particle(cssW, cssH, {
-            followModeRef,
-            lumRef,
-            mouseRef,
-            speedRef,
-          })
+          new Particle(w, h, { followModeRef, lumRef, mouseRef, speedRef })
         );
       }
     }

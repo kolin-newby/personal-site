@@ -13,7 +13,7 @@ const WorkModal = ({ open, selectedWork, setOpen, setSelectedWork }) => {
   return (
     <div
       role="dialog"
-      className={`absolute top-0 left-0 flex flex-col justify-evenly w-full h-full bg-gradient-to-br from-gray-100 to-gray-200 transform transition-transform duration-500 ${
+      className={`absolute top-0 left-0 flex flex-col justify-evenly w-full h-full bg-linear-to-br from-gray-100 to-gray-200 transform transition-transform duration-500 ${
         open ? "translate-x-0" : "translate-x-full"
       }`}
     >
@@ -21,7 +21,7 @@ const WorkModal = ({ open, selectedWork, setOpen, setSelectedWork }) => {
       <div className="flex flex-row space-x-10">
         <button
           onClick={handleCloseClick}
-          className="flex items-center justify-center p-5 shadow-inner rounded-r-lg bg-gradient-to-br from-black/10 to-gray-200/50 transition-all duration-300 basis-20 hover:basis-32"
+          className="flex items-center justify-center p-5 shadow-inner rounded-r-lg bg-linear-to-br from-black/10 to-gray-200/50 transition-all duration-300 basis-20 hover:basis-32"
         >
           <ChevronRight size={"44px"} className="flex" />
         </button>

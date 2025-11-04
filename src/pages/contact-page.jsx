@@ -12,7 +12,7 @@ const ContactPage = ({ className = "", touch }) => {
     <div className={`flex flex-col h-screen ${className}`} id={"contact"}>
       <div
         className={
-          "flex items-center h-full justify-center bg-gradient-to-bl from-transparent to-black/90 from-50% to-50% w-full relative"
+          "flex items-center h-full justify-center bg-linear-to-bl from-transparent to-black/90 from-50% to-50% w-full relative"
         }
         onMouseEnter={() => setFollowerActive(true)}
         onMouseLeave={() => setFollowerActive(false)}
@@ -25,7 +25,7 @@ const ContactPage = ({ className = "", touch }) => {
         />
         <span
           className={
-            "flex font-bold text-transparent lg:text-8xl text-5xl w-full h-full items-center text-center bg-clip-text lg:px-24 bg-gradient-to-tr from-gray-200 to-black/90 from-50% to-50%"
+            "flex font-bold text-transparent lg:text-8xl text-5xl w-full h-full items-center text-center bg-clip-text lg:px-24 bg-linear-to-tr from-gray-200 to-black/90 from-50% to-50%"
           }
         >
           Let's build

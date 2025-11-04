@@ -7,7 +7,7 @@ const WorkListItem = ({ workItem, handleOpenClick }) => {
     <li className="flex relative w-full pl-10">
       <div
         className={
-          "flex flex-row w-full justify-between relative shadow-inner bg-gradient-to-br from-black/10 to-gray-200/50 rounded-l-lg items-center"
+          "flex flex-row w-full justify-between relative shadow-inner bg-linear-to-br from-black/10 to-gray-200/50 rounded-l-lg items-center"
         }
       >
         <ParticleField
@@ -46,7 +46,7 @@ const WorkListItem = ({ workItem, handleOpenClick }) => {
             "relative group flex h-full py-1 transition-all duration-300 basis-44 hover:basis-64 z-10"
           }
         >
-          <div className="flex h-full w-full p-4 justify-center items-center cursor-pointer shadow bg-gradient-to-br from-gray-200 to-gray-100 rounded-l-lg">
+          <div className="flex h-full w-full p-4 justify-center items-center cursor-pointer shadow bg-linear-to-br from-gray-200 to-gray-100 rounded-l-lg">
             <ChevronLeft size={"44px"} className={"flex"} />
           </div>
         </button>

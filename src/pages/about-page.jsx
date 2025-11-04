@@ -42,7 +42,7 @@ const AboutPage = ({ className = "" }) => {
         >
           <div
             className={
-              "flex lg:w-3/5 w-4/5 rounded-lg bg-gradient-to-br from-orange-500 via-purple-400 to-red-400 shadow-lg transition-all duration-500 transform hover:scale-105 hover:shadow-xl"
+              "flex lg:w-3/5 w-4/5 rounded-lg bg-linear-to-br from-orange-500 via-purple-400 to-red-400 shadow-lg transition-all duration-500 transform hover:scale-105 hover:shadow-xl"
             }
           >
             <span
@@ -64,7 +64,7 @@ const AboutPage = ({ className = "" }) => {
         <div className={"flex w-full items-center justify-center lg:max-h-1/2"}>
           <div
             className={
-              "relative flex flex-col space-y-3 lg:w-2/3 w-full text-black/40 py-4 shadow-inner bg-gradient-to-br from-black/10 to-gray-200/50 lg:rounded-lg"
+              "relative flex flex-col space-y-3 lg:w-2/3 w-full text-black/40 py-4 shadow-inner bg-linear-to-br from-black/10 to-gray-200/50 lg:rounded-lg"
             }
           >
             <div key={"skills-row-1"} className={"overflow-hidden w-full"}>
@@ -75,7 +75,7 @@ const AboutPage = ({ className = "" }) => {
                 speed={80}
                 idleDelay={2000}
                 startDirection="forward"
-                className="scrollbar-display-none w-full h-full [line-height:0]"
+                className="scrollbar-display-none w-full h-full leading-0"
               >
                 <div className="inline-flex h-full items-center">
                   {skills1.map((skill, index) => (
@@ -101,7 +101,7 @@ const AboutPage = ({ className = "" }) => {
                 speed={60}
                 idleDelay={2000}
                 startDirection="backward"
-                className="scrollbar-display-none w-full h-full [line-height:0]"
+                className="scrollbar-display-none w-full h-full leading-0"
               >
                 <div className="inline-flex h-full items-center">
                   {skills2.map((skill, index) => (
@@ -127,7 +127,7 @@ const AboutPage = ({ className = "" }) => {
                 speed={50}
                 idleDelay={2000}
                 startDirection="forward"
-                className="scrollbar-display-none w-full h-full [line-height:0]"
+                className="scrollbar-display-none w-full h-full leading-0"
               >
                 <div className="inline-flex h-full items-center">
                   {skills3.map((skill, index) => (

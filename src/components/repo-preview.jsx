@@ -61,7 +61,7 @@ const RepoPreview = ({ url, className = "" }) => {
         target="_blank"
         rel="noreferrer"
         className={
-          "relative flex flex-col text-sm items-center justify-between p-4 max-w-[500px] overflow-hidden rounded-lg bg-gradient-to-br from-black/10 to-gray-200/50 shadow-inner " +
+          "relative flex flex-col text-sm items-center justify-between p-4 max-w-[500px] overflow-hidden rounded-lg bg-linear-to-br from-black/10 to-gray-200/50 shadow-inner " +
           className
         }
         aria-busy="true"
@@ -87,7 +87,7 @@ const RepoPreview = ({ url, className = "" }) => {
     return (
       <div
         className={
-          "relative flex items-center justify-between p-4 w-full max-w-[500px] overflow-hidden rounded-lg bg-gradient-to-br from-black/10 to-gray-200/50 shadow-inner " +
+          "relative flex items-center justify-between p-4 w-full max-w-[500px] overflow-hidden rounded-lg bg-linear-to-br from-black/10 to-gray-200/50 shadow-inner " +
           className
         }
         aria-busy="true"
@@ -115,7 +115,7 @@ const RepoPreview = ({ url, className = "" }) => {
       href={data.html_url}
       target="_blank"
       rel="noopener noreferrer"
-      className={`flex flex-col relative max-w-[500px] overflow-hidden p-4 mx-4 rounded-lg shadow-inner bg-gradient-to-br from-black/10 to-gray-200/50 ${className}`}
+      className={`flex flex-col relative max-w-[500px] overflow-hidden p-4 mx-4 rounded-lg shadow-inner bg-linear-to-br from-black/10 to-gray-200/50 ${className}`}
       aria-label={`Open ${data.full_name} on GitHub`}
     >
       <ParticleField

@@ -3,18 +3,18 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "@fortawesome/fontawesome-svg-core": "^6.2.0",
-    "@fortawesome/free-brands-svg-icons": "^6.2.0",
-    "@fortawesome/free-regular-svg-icons": "^6.7.2",
-    "@fortawesome/free-solid-svg-icons": "^6.2.0",
-    "@fortawesome/react-fontawesome": "^0.2.0",
+    "@fortawesome/fontawesome-svg-core": "^7.1.0",
+    "@fortawesome/free-brands-svg-icons": "^7.1.0",
+    "@fortawesome/free-regular-svg-icons": "^7.1.0",
+    "@fortawesome/free-solid-svg-icons": "^7.1.0",
+    "@fortawesome/react-fontawesome": "^3.1.0",
     "@headlessui/react": "^2.2.4",
-    "lucide-react": "^0.548.0",
-    "next": "^15.1.8",
+    "lucide-react": "^0.552.0",
+    "next": "^16.0.1",
     "react": "^19.1.0",
     "react-dom": "^19.1.0",
     "react-scripts": "^5.0.1",
-    "recharts": "^2.15.3"
+    "recharts": "^3.3.0"
   },
   "scripts": {
     "start": "react-scripts start",
@@ -41,6 +41,6 @@
     ]
   },
   "devDependencies": {
-    "tailwindcss": "^3.1.8"
+    "tailwindcss": "^4.1.16"
   }
 }

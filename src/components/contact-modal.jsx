@@ -3,7 +3,7 @@ import { Transition } from "@headlessui/react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 const ContactModal = ({ open, setOpen }) => {
-  const slackWebHook = process.env.REACT_APP_SLACKHOOK;
+  const slackWebHook = null;
 
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");

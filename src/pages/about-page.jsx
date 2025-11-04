@@ -61,7 +61,7 @@ const AboutPage = ({ className = "" }) => {
             </span>
           </div>
         </div>
-        <div className={"flex w-full items-center justify-center lg:max-h-1/2"}>
+        <div className={"flex w-full items-center justify-center"}>
           <div
             className={
               "relative flex flex-col space-y-3 lg:w-2/3 w-full text-black/40 py-4 shadow-inner bg-linear-to-br from-black/10 to-gray-200/50 lg:rounded-lg"
@@ -75,18 +75,17 @@ const AboutPage = ({ className = "" }) => {
                 speed={80}
                 idleDelay={2000}
                 startDirection="forward"
-                className="scrollbar-display-none w-full h-full leading-0"
+                className="scrollbar-display-none w-full leading-0"
               >
-                <div className="inline-flex h-full items-center">
+                <div className="inline-flex items-center">
                   {skills1.map((skill, index) => (
                     <div
                       key={`skill-r1-${index}-${skill.title}`}
-                      className={"mx-10"}
+                      className={"mx-10 size-12 md:size-16 lg:size-20"}
                     >
                       <FontAwesomeIcon
                         icon={skill.icon}
-                        className="block size-12 md:size-16"
-                        style={{ verticalAlign: "middle" }}
+                        className="block align-middle w-full! h-full!"
                       />
                     </div>
                   ))}
@@ -101,18 +100,17 @@ const AboutPage = ({ className = "" }) => {
                 speed={60}
                 idleDelay={2000}
                 startDirection="backward"
-                className="scrollbar-display-none w-full h-full leading-0"
+                className="scrollbar-display-none w-full leading-0"
               >
-                <div className="inline-flex h-full items-center">
+                <div className="inline-flex items-center">
                   {skills2.map((skill, index) => (
                     <div
                       key={`skill-r2-${index}-${skill.title}`}
-                      className={"mx-10"}
+                      className={"mx-10 size-12 md:size-16 lg:size-20"}
                     >
                       <FontAwesomeIcon
                         icon={skill.icon}
-                        className="block size-12 md:size-16"
-                        style={{ verticalAlign: "middle" }}
+                        className="block align-middle w-full! h-full!"
                       />
                     </div>
                   ))}
@@ -129,16 +127,15 @@ const AboutPage = ({ className = "" }) => {
                 startDirection="forward"
                 className="scrollbar-display-none w-full h-full leading-0"
               >
-                <div className="inline-flex h-full items-center">
+                <div className="inline-flex items-center">
                   {skills3.map((skill, index) => (
                     <div
                       key={`skill-r3-${index}-${skill.title}`}
-                      className={"mx-10"}
+                      className={"mx-10 size-12 md:size-16 lg:size-20"}
                     >
                       <FontAwesomeIcon
                         icon={skill.icon}
-                        className="block size-12 md:size-16"
-                        style={{ verticalAlign: "middle" }}
+                        className="block align-middle w-full! h-full!"
                       />
                     </div>
                   ))}

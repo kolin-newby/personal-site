@@ -13,7 +13,7 @@ const WorkModal = ({ open, selectedWork, setOpen, setSelectedWork }) => {
   return (
     <div
       role="dialog"
-      className={`absolute top-0 left-0 flex flex-col justify-start w-full h-full bg-linear-to-br from-gray-100 to-gray-200 transform transition-transform duration-500 ${
+      className={`absolute top-0 left-0 flex flex-col justify-start w-full h-screen bg-linear-to-br from-gray-100 to-gray-200 transform transition-transform duration-500 ${
         open ? "translate-x-0" : "translate-x-full"
       }`}
     >

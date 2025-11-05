@@ -42,7 +42,7 @@ const WorkModal = ({ open, selectedWork, setOpen, setSelectedWork }) => {
               <IdleScrollArea
                 axis={"x"}
                 speed={25}
-                idleDelay={3000}
+                idleDelay={2000}
                 startDirection="forward"
                 className="scrollbar-display-none max-h-[220px] min-h-[200px]"
               >
@@ -87,7 +87,7 @@ const WorkModal = ({ open, selectedWork, setOpen, setSelectedWork }) => {
         <IdleScrollArea
           axis="x"
           speed={35}
-          idleDelay={3000}
+          idleDelay={2000}
           startDirection="forward"
           className="scrollbar-display-none py-2 w-full text-center"
         >

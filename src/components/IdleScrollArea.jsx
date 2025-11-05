@@ -20,6 +20,7 @@ const IdleScrollArea = ({
   style = {},
   minStepPx = 0,
   infinite = false,
+  idleScrollRampDuration = 1000,
   pauseWhenOffScreen = true,
 }) => {
   const containerRef = useRef(null);
@@ -31,6 +32,7 @@ const IdleScrollArea = ({
 
   const isProgrammaticScrollRef = useRef(false);
   const speedRef = useRef(speed);
+  const idleScrollRampDurationRef = useRef(idleScrollRampDuration);
   const virtualPosRef = useRef(0);
 
   const firstCopyRef = useRef(null);
@@ -53,12 +55,30 @@ const IdleScrollArea = ({
     speedRef.current = speed;
   }, [speed]);
 
+  useEffect(() => {
+    idleScrollRampDurationRef.current = idleScrollRampDuration;
+  }, [idleScrollRampDuration]);
+
   const isIdle = useCallback(() => {
     return (
       Date.now() - lastUserInteractionRef.current > idleDelay &&
       (!pauseOnHover || !isHovering)
     );
   }, [idleDelay, pauseOnHover, isHovering]);
+
+  const easeOutCubic = (t) => 1 - Math.pow(1 - t, 3);
+
+  const getRampFactor = useCallback(() => {
+    // NEW
+    const now = Date.now();
+    const idleStart = lastUserInteractionRef.current + idleDelay;
+    const elapsed = now - idleStart;
+    if (elapsed <= 0) return 0;
+    const dur = Math.max(0, idleScrollRampDurationRef.current || 0);
+    if (dur === 0) return 1;
+    const t = Math.min(1, elapsed / dur);
+    return easeOutCubic(t);
+  }, [idleDelay]);
 
   const getPos = useCallback(
     (el) => (axis === "x" ? el.scrollLeft : el.scrollTop),
@@ -159,8 +179,13 @@ const IdleScrollArea = ({
       lastTsRef.current = ts;
 
       if (isIdle()) {
-        let step = speedRef.current * dt;
-        if (minStepPx > 0 && step > 0 && step < minStepPx) step = minStepPx;
+        const ramp = getRampFactor();
+        let effSpeed = speedRef.current * ramp;
+        let step = effSpeed * dt;
+
+        if (ramp >= 1 && minStepPx > 0 && step > 0 && step < minStepPx) {
+          step = minStepPx;
+        }
 
         const dir = dirRef.current;
 
@@ -220,6 +245,7 @@ const IdleScrollArea = ({
       infinite,
       normalizePhysicalPos,
       physFromVirtual,
+      getRampFactor,
     ]
   );
 

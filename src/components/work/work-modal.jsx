@@ -82,7 +82,7 @@ const WorkModal = ({ open, selectedWork, setOpen, setSelectedWork }) => {
           <RepoPreview url={selectedWork?.repo} />
         )}
       </div>
-      <div className="flex flex-col grow items-center px-2 justify-end">
+      <div className="flex flex-col grow items-center px-2 justify-end pb-8">
         <IdleScrollArea
           axis="x"
           speed={35}

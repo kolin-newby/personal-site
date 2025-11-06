@@ -70,10 +70,9 @@ const App = () => {
           barOpen={navBarOpen}
           setBarOpen={setNavBarOpen}
         />
-        <HomePage className={"snap-start"} touch={hasTouch} />
-        <AboutPage className={"snap-start"} />
-        <WorkPage className={"snap-start"} />
-        <ContactPage className={"snap-start"} touch={hasTouch} />
+        <HomePage className={"snap-start my-0.5"} touch={hasTouch} />
+        <AboutPage className={"snap-start my-0.5"} />
+        <WorkPage className={"snap-start my-0.5"} />
       </Suspense>
     </div>
   );

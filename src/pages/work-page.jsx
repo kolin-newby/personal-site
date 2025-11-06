@@ -1,9 +1,14 @@
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 
 import WorkModal from "../components/work/work-modal";
 import WorkList from "../components/work/work-list";
 
+import { useInViewport } from "../common/use-in-viewport";
+
 const WorkPage = ({ darkMode, className = "" }) => {
+  const containerRef = useRef(null);
+  const isInViewport = useInViewport(containerRef, { threshold: 0 });
+
   const [modalOpen, setModalOpen] = useState(false);
   const [selectedWork, setSelectedWork] = useState(null);
 
@@ -81,8 +86,16 @@ const WorkPage = ({ darkMode, className = "" }) => {
     },
   ];
 
+  useEffect(() => {
+    if (modalOpen && !isInViewport) {
+      setModalOpen(false);
+      setSelectedWork(null);
+    }
+  }, [isInViewport, modalOpen]);
+
   return (
     <div
+      ref={containerRef}
       className={`flex flex-col h-screen relative w-full justify-center ${className}`}
       id={"work"}
     >

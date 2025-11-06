@@ -1,6 +1,7 @@
 import PhotoCarousel from "../components/photo-carousel";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import IdleScrollArea from "../components/IdleScrollArea";
+import TextHighlighterContainer from "../components/text-highlighter-container";
 
 const AboutPage = ({ className = "" }) => {
   const skills1 = [
@@ -32,39 +33,98 @@ const AboutPage = ({ className = "" }) => {
     >
       <div
         className={
-          "flex flex-col items-center lg:h-full lg:w-1/2 w-full lg:justify-center"
+          "flex flex-col items-center lg:h-full lg:w-2/3 w-full lg:justify-center"
         }
       >
         <div
           className={
-            "flex items-center justify-center w-full lg:h-1/2 pb-4 pt-10 lg:py-0"
+            "flex flex-col space-y-4 text-xs md:text-sm lg:text-base text-shadow p-6 lg:px-12 items-start justify-center max-w-[900px] lg:h-1/2 pb-4 pt-10 lg:py-0"
           }
         >
-          <div
-            className={
-              "flex lg:w-3/5 w-4/5 rounded-lg bg-linear-to-br from-orange-500 via-purple-400 to-red-400 shadow-lg transition-all duration-500 transform hover:scale-105 hover:shadow-xl"
-            }
+          <TextHighlighterContainer
+            className="flex flex-col space-y-4"
+            terms={[
+              "backend",
+              "frontend",
+              "API calls",
+              "full-stack",
+              "web applications",
+              "hire me",
+              "startup",
+              "enterprise",
+              "thousands of users",
+            ]}
+            caseSensitive
+            holdAfterAllSec={10}
+            perWordFillSec={0.45}
           >
-            <span
-              className={
-                "flex bg-gray-200 rounded-lg w-full h-full m-0.5 px-3 py-2 text-sm lg:text-base"
-              }
-            >
-              I love creating things and seeing the world from new perspectives.
-              Besides software development, my passion is in photography and the
-              great outdoors!
-              <br />
-              <br />I have built robust, data-driven UIs using React.js and
-              developed API logging software using Golang. My experience spans
-              the full stack and I am eager to keep learning and growing my
-              skills!
+            <span>
+              I&#39;m a full-stack software engineer based in Denver. I have
+              experience building performant, reliable, and user-focused web
+              applications from the ground up. My background spans both startup
+              and enterprise environments, with a focus on crafting clean,
+              maintainable code and developing products that make complex
+              systems intuitive to use.
             </span>
+            <span>
+              At Resurface Labs, I led the design and development of the user
+              experience and user interface, working across backend
+              infrastructure and frontend services to ship production-ready
+              features. At Graylog, I collaborated with the core team across
+              time zones to implement new features, build interfaces, and
+              optimize API calls, improving performance and usability for
+              thousands of users.
+            </span>
+            <span>
+              I'm currently looking for my next role as a developer. Want to
+              hire me?
+            </span>
+          </TextHighlighterContainer>
+
+          <div className="flex justify-evenly w-full py-2 space-x-2">
+            <a
+              href="https://www.linkedin.com/in/knewby/"
+              target="_blank"
+              rel="noreferrer"
+              className="flex rounded-lg py-2 px-3 shadow items-center justify-center space-x-2"
+            >
+              <FontAwesomeIcon
+                icon={"fa-brands fa-linkedin"}
+                className="size-5! md:size-7!"
+              />
+              <span>See my Linkedin</span>
+            </a>
+            <a
+              href="https://github.com/kolin-newby"
+              target="_blank"
+              rel="noreferrer"
+              className="flex rounded-lg py-2 px-3 shadow items-center justify-center space-x-2"
+            >
+              <FontAwesomeIcon
+                icon={"fa-brands fa-github"}
+                className="size-5! md:size-7!"
+              />
+              <span>See my GitHub</span>
+            </a>
+            <a
+              href="/resume.pdf"
+              target="_blank"
+              rel="noreferrer"
+              download={"resume_newby"}
+              className="flex rounded-lg py-2 px-3 shadow items-center justify-center space-x-2"
+            >
+              <FontAwesomeIcon
+                icon={"fa-solid fa-file-lines"}
+                className="size-5! md:size-7!"
+              />
+              <span className="flex">See my resume</span>
+            </a>
           </div>
         </div>
         <div className={"flex w-full items-center justify-center"}>
           <div
             className={
-              "relative flex flex-col space-y-3 lg:w-2/3 w-full text-black/40 py-4 shadow-inner bg-linear-to-br from-black/10 to-gray-200/50 lg:rounded-lg"
+              "relative flex flex-col space-y-3 lg:max-w-[450px] w-full text-black/40 py-4 shadow-inner bg-linear-to-br from-black/10 to-gray-200/50 lg:rounded-lg"
             }
           >
             <div key={"skills-row-1"} className={"overflow-hidden w-full"}>
@@ -81,7 +141,7 @@ const AboutPage = ({ className = "" }) => {
                   {skills1.map((skill, index) => (
                     <div
                       key={`skill-r1-${index}-${skill.title}`}
-                      className={"mx-10 size-12 md:size-16 lg:size-20"}
+                      className={"mx-10 size-10 md:size-14 lg:size-16"}
                     >
                       <FontAwesomeIcon
                         icon={skill.icon}
@@ -106,7 +166,7 @@ const AboutPage = ({ className = "" }) => {
                   {skills2.map((skill, index) => (
                     <div
                       key={`skill-r2-${index}-${skill.title}`}
-                      className={"mx-10 size-12 md:size-16 lg:size-20"}
+                      className={"mx-10 size-10 md:size-14 lg:size-16"}
                     >
                       <FontAwesomeIcon
                         icon={skill.icon}
@@ -131,7 +191,7 @@ const AboutPage = ({ className = "" }) => {
                   {skills3.map((skill, index) => (
                     <div
                       key={`skill-r3-${index}-${skill.title}`}
-                      className={"mx-10 size-12 md:size-16 lg:size-20"}
+                      className={"mx-10 size-10 md:size-14 lg:size-16"}
                     >
                       <FontAwesomeIcon
                         icon={skill.icon}
@@ -146,6 +206,7 @@ const AboutPage = ({ className = "" }) => {
         </div>
       </div>
       <PhotoCarousel
+        className={"flex lg:w-1/3 w-full h-1/2 lg:h-full"}
         imageSourceList={[
           "https://s1.darkroom.com/x0bhc9o374iyukfue2r0w16eylx6",
           "https://s2.darkroom.com/j62muwmn0qscmt0vrdlizmtod0nc",

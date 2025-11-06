@@ -16,13 +16,12 @@ const Navbar = ({
     { id: "home", title: "Home", icon: "home" },
     { id: "about", title: "About", icon: "user" },
     { id: "work", title: "Work", icon: "briefcase" },
-    { id: "contact", title: "Contact", icon: "walkie-talkie" },
   ];
 
-  function scrollTo(key) {
+  const scrollTo = (key) => {
     let el = document.getElementById(key);
     el.scrollIntoView({ behavior: "smooth" });
-  }
+  };
 
   useEffect(() => {
     if (active && ["home", "about", "work", "contact"].includes(active)) {
@@ -37,7 +36,7 @@ const Navbar = ({
       }
     >
       <div
-        className={"absolute top-0 w-1/4 bg-black/90 h-3 z-10"}
+        className={"absolute top-0 w-1/3 bg-black/90 h-3 z-10"}
         style={{
           left: `${scrollPosition}%`,
         }}
@@ -68,7 +67,7 @@ const Navbar = ({
       </div>
       {navbarItems.map((item) => (
         <div
-          className={`group/item relative flex w-1/4 items-center h-full bg-transparent backdrop-blur-2xl space-x-4 transform transition-transform duration-500 -translate-y-full cursor-pointer ${
+          className={`group/item relative flex w-1/3 items-center h-full bg-transparent backdrop-blur-2xl space-x-4 transform transition-transform duration-500 -translate-y-full cursor-pointer ${
             touch
               ? barOpen
                 ? "translate-y-0"

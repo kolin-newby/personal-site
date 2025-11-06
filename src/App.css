@@ -279,3 +279,129 @@ a {
 #shift-container {
   perspective: 40px;
 }
+
+:root {
+  /* ink strip geometry */
+  --strokeTop: 0.18em;
+  --strokeBottom: 0.12em;
+
+  /* you can tweak these if desired */
+  --inkFeatherPx: 0.8px; /* soft edge */
+  --rightTailW: 0.4em; /* little flowing tip while filling */
+}
+
+/* ===== Keyframes (sequential fill + group fade) ===== */
+
+/* fill the word once, then hold */
+@keyframes hl-fillOnce {
+  0% {
+    background-size: 0% 100%;
+    opacity: 1;
+  }
+  60% {
+    background-size: 100% 100%;
+    opacity: 1;
+  }
+  100% {
+    background-size: 100% 100%;
+    opacity: 1;
+  }
+}
+
+/* tiny tip while filling */
+@keyframes hl-tailOnce {
+  0% {
+    transform: scaleX(0);
+    opacity: 0;
+  }
+  20% {
+    transform: scaleX(1.05);
+    opacity: 0.28;
+  }
+  60% {
+    transform: scaleX(0.9);
+    opacity: 0.18;
+  }
+  100% {
+    transform: scaleX(0);
+    opacity: 0;
+  }
+}
+
+/* unified fade for everyone at end of loop */
+@keyframes hl-fadeOut {
+  0% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+/* ===== Highlight wrapper ===== */
+
+.hl-mark {
+  position: relative;
+  display: inline-block;
+}
+
+/* the ink: skewed parallelogram, text is above and unskewed */
+.hl-mark::before {
+  content: "";
+  position: absolute;
+  left: -0.12em;
+  right: -0.06em;
+  top: var(--strokeTop);
+  bottom: var(--strokeBottom);
+
+  background: linear-gradient(0deg, var(--hlColor) 0 100%) no-repeat;
+  background-size: 0% 100%;
+
+  /* only the ink is skewed and jittered, not the text */
+  transform-origin: left center;
+  transform: skewX(var(--bodySkewDeg, 0deg)) translateY(var(--jitterY, 0));
+  border-radius: 1px; /* gentle rounding; remove if you want perfectly straight edges */
+  filter: blur(var(--inkFeatherPx));
+  z-index: 0;
+  pointer-events: none;
+
+  /* per-word fill (with delay), then group fade at loop end */
+  animation: hl-fillOnce var(--fillSec) ease-out var(--delay) both 1,
+    hl-fadeOut var(--fadeSec) linear calc(var(--loopSec) - var(--fadeSec)) both
+      1;
+}
+
+/* optional flowing tip during fill (also skewed to match body) */
+.hl-mark::after {
+  display: none;
+  content: "";
+  position: absolute;
+  top: var(--strokeTop);
+  bottom: var(--strokeBottom);
+  width: var(--rightTailW);
+  right: -0.18em;
+  background: var(--hlColor);
+  transform-origin: left center;
+  transform: skewX(var(--bodySkewDeg, 0deg)) translateY(var(--jitterY, 0));
+  border-radius: 10px;
+  filter: blur(calc(var(--inkFeatherPx) * 0.75));
+  opacity: 0;
+  z-index: 0;
+  pointer-events: none;
+
+  animation: hl-tailOnce var(--fillSec) ease-out var(--delay) both 1,
+    hl-fadeOut var(--fadeSec) linear calc(var(--loopSec) - var(--fadeSec)) both
+      1;
+}
+
+/* ensure text is on top */
+.hl-mark > * {
+  position: relative;
+  z-index: 1;
+}
+
+/* Pauses all highlight animations when not visible */
+.hl-paused .hl-mark::before,
+.hl-paused .hl-mark::after {
+  animation-play-state: paused !important;
+}

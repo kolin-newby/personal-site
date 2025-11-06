@@ -4,7 +4,7 @@ const PhotoCarousel = ({ imageSourceList, className }) => {
   const [active, setActive] = useState(null);
 
   return (
-    <div className={`flex lg:w-1/2 w-full h-5/6 lg:h-full ${className}`}>
+    <div className={className}>
       <div
         className={
           "flex lg:items-center items-start pt-4 justify-center relative w-full"

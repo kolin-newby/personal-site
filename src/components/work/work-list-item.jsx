@@ -30,7 +30,10 @@ const WorkListItem = ({ workItem, handleOpenClick }) => {
               className="scrollbar-display-none w-[640px]"
             >
               {workItem.skills.map((skill, index) => (
-                <div className="inline-block">
+                <div
+                  className="inline-block"
+                  key={`skill-item-${index}-${skill}`}
+                >
                   <span>{skill}</span>
                   {index !== workItem.skills.length - 1 && (
                     <span>&nbsp;-&nbsp;</span>

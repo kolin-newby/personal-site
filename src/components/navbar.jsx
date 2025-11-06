@@ -65,8 +65,9 @@ const Navbar = ({
           )}
         </div>
       </div>
-      {navbarItems.map((item) => (
+      {navbarItems.map((item, index) => (
         <div
+          key={`nav-item-${index}-${item.id}`}
           className={`group/item relative flex w-1/3 items-center h-full bg-transparent backdrop-blur-2xl space-x-4 transform transition-transform duration-500 -translate-y-full cursor-pointer ${
             touch
               ? barOpen

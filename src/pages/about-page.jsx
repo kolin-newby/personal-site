@@ -47,11 +47,11 @@ const AboutPage = ({ className = "" }) => {
   return (
     <div
       id={"about"}
-      className={`relative flex lg:h-screen h-full flex-col lg:flex-row items-center ${className}`}
+      className={`relative flex lg:h-screen h-full w-full flex-col lg:flex-row items-center ${className}`}
     >
       <div
         className={
-          "flex flex-col items-center lg:h-full w-full lg:w-max lg:justify-center lg:space-y-0"
+          "flex flex-col items-center lg:h-full w-full lg:justify-center lg:space-y-0"
         }
       >
         <div
@@ -263,7 +263,9 @@ const AboutPage = ({ className = "" }) => {
         </div>
       </div>
       <PhotoCarousel
-        className={"flex lg:max-w-1/2 lg:grow lg:w-1/3 w-full h-1/2 lg:h-full"}
+        className={
+          "flex lg:max-w-1/2 lg:min-w-[200px] w-full h-1/2 lg:h-full grow"
+        }
         imageSourceList={[
           "https://s1.darkroom.com/x0bhc9o374iyukfue2r0w16eylx6",
           "https://s2.darkroom.com/j62muwmn0qscmt0vrdlizmtod0nc",

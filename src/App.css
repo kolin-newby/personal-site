@@ -359,7 +359,8 @@ a {
 
   /* only the ink is skewed and jittered, not the text */
   transform-origin: left center;
-  transform: skewX(var(--bodySkewDeg, 0deg)) translateY(var(--jitterY, 0));
+  transform: skewX(var(--bodySkewDeg, 0deg)) rotate(var(--globalTiltDeg, 0deg))
+    translateY(var(--jitterY, 0));
   border-radius: 1px; /* gentle rounding; remove if you want perfectly straight edges */
   filter: blur(var(--inkFeatherPx));
   z-index: 0;
@@ -382,7 +383,8 @@ a {
   right: -0.18em;
   background: var(--hlColor);
   transform-origin: left center;
-  transform: skewX(var(--bodySkewDeg, 0deg)) translateY(var(--jitterY, 0));
+  transform: skewX(var(--bodySkewDeg, 0deg)) rotate(var(--globalTiltDeg, 0deg))
+    translateY(var(--jitterY, 0));
   border-radius: 10px;
   filter: blur(calc(var(--inkFeatherPx) * 0.75));
   opacity: 0;

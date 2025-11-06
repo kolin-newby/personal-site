@@ -33,8 +33,7 @@ const WorkModal = ({ open, selectedWork, setOpen, setSelectedWork }) => {
       </div>
       <div className="flex flex-col space-y-4 md:flex-row justify-center items-center grow">
         <div className="flex flex-col w-full h-max p-6 items-center justify-center text-xs sm:text-base lg:text-lg space-y-4 md:w-1/2">
-          {selectedWork?.section1}
-          {selectedWork?.section2}
+          {selectedWork?.textSection}
         </div>
         {selectedWork?.images !== null ? (
           <>
@@ -80,7 +79,7 @@ const WorkModal = ({ open, selectedWork, setOpen, setSelectedWork }) => {
             </div>
           </>
         ) : (
-          <RepoPreview url={"https://github.com/resurfaceio/logger-go"} />
+          <RepoPreview url={selectedWork?.repo} />
         )}
       </div>
       <div className="flex flex-col grow items-center px-2 justify-end">
@@ -92,7 +91,10 @@ const WorkModal = ({ open, selectedWork, setOpen, setSelectedWork }) => {
           className="scrollbar-display-none py-2 w-full text-center"
         >
           {selectedWork?.skills?.map((skill, index) => (
-            <div className="inline-flex">
+            <div
+              className="inline-flex"
+              key={`project-skill-${index}-${skill}`}
+            >
               <span>{skill}</span>
               {index !== selectedWork?.skills?.length - 1 && (
                 <span>&nbsp;-&nbsp;</span>

@@ -51,16 +51,16 @@ const AboutPage = ({ className = "" }) => {
     >
       <div
         className={
-          "flex flex-col items-center lg:h-full lg:w-2/3 w-full lg:justify-center space-y-2"
+          "flex flex-col items-center lg:h-full w-full lg:w-max lg:justify-center lg:space-y-0"
         }
       >
         <div
           className={
-            "flex flex-col space-y-4 text-xs md:text-sm lg:text-base text-shadow p-6 lg:px-12 items-start justify-center max-w-[900px] lg:h-1/2 pb-4 pt-10 lg:py-0"
+            "flex flex-col space-y-4 text-xs md:text-sm text-shadow p-6 lg:px-12 items-start justify-center max-w-[900px] lg:min-h-2/3 pb-4 pt-10 lg:py-0"
           }
         >
           <TextHighlighterContainer
-            className="flex flex-col space-y-4"
+            className="flex flex-col space-y-2"
             terms={[
               "backend",
               "frontend",
@@ -139,7 +139,9 @@ const AboutPage = ({ className = "" }) => {
             </a>
           </div>
         </div>
-        <div className={"flex w-full items-center justify-center"}>
+        <div
+          className={"flex w-full lg:w-auto lg:grow items-start justify-center"}
+        >
           {/* ====================================================== */}
           <div
             className={
@@ -261,7 +263,7 @@ const AboutPage = ({ className = "" }) => {
         </div>
       </div>
       <PhotoCarousel
-        className={"flex lg:w-1/3 w-full h-1/2 lg:h-full"}
+        className={"flex lg:max-w-1/2 lg:grow lg:w-1/3 w-full h-1/2 lg:h-full"}
         imageSourceList={[
           "https://s1.darkroom.com/x0bhc9o374iyukfue2r0w16eylx6",
           "https://s2.darkroom.com/j62muwmn0qscmt0vrdlizmtod0nc",

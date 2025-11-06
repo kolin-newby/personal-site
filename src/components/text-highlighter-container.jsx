@@ -120,6 +120,7 @@ const TextHighlighterContainer = ({
 
         const rng = mulberryHash(order + 7);
         const bodySkewDeg = `${(rng() * 50 - 25).toFixed(2)}deg`;
+        const tiltDeg = `${(rng() * 6 - 3).toFixed(2)}deg`;
         const jitterY = `${(rng() * 2 - 1) * 0.12}em`;
 
         out.push(
@@ -133,6 +134,7 @@ const TextHighlighterContainer = ({
               "--delay": `${delaySec}s`,
               "--hlColor": color,
               "--bodySkewDeg": bodySkewDeg,
+              "--globalTiltDeg": tiltDeg,
               "--jitterY": jitterY,
             }}
           >
@@ -173,7 +175,7 @@ const TextHighlighterContainer = ({
   return (
     <div
       ref={containerRef}
-      className={`hl-root relative leading-relaxed ${
+      className={`hl-root relative leading-normal ${
         shouldRun ? "" : "hl-paused"
       } ${className}`}
     >

@@ -12,7 +12,7 @@ const PhotoCarousel = ({ imageSourceList, className }) => {
       >
         <div
           className={
-            "flex w-11/12 h-3/4 items-center justify-center relative space-x-1"
+            "flex w-full px-4 h-3/4 items-center justify-center relative space-x-1"
           }
         >
           {imageSourceList?.map((source, index) => (

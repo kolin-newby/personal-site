@@ -26,6 +26,24 @@ const AboutPage = ({ className = "" }) => {
     { title: "Bash", icon: "fa-solid fa-terminal" },
   ];
 
+  const allSkills = [
+    { title: "Golang", icon: "fa-brands fa-golang" },
+    { title: "JavaScript", icon: "fa-brands fa-js" },
+    { title: "React", icon: "fa-brands fa-react" },
+    { title: "Python", icon: "fa-brands fa-python" },
+    { title: "HTML5", icon: "fa-brands fa-html5" },
+    { title: "CSS3", icon: "fa-brands fa-css3" },
+    { title: "Git", icon: "fa-brands fa-git-alt" },
+    { title: "Docker", icon: "fa-brands fa-docker" },
+    { title: "Java", icon: "fa-brands fa-java" },
+    { title: "Linux", icon: "fa-brands fa-linux" },
+    { title: "Hubspot", icon: "fa-brands fa-hubspot" },
+    { title: "Ubuntu", icon: "fa-brands fa-ubuntu" },
+    { title: "Github", icon: "fa-brands fa-github" },
+    { title: "Confluence", icon: "fa-brands fa-confluence" },
+    { title: "Bash", icon: "fa-solid fa-terminal" },
+  ];
+
   return (
     <div
       id={"about"}
@@ -33,7 +51,7 @@ const AboutPage = ({ className = "" }) => {
     >
       <div
         className={
-          "flex flex-col items-center lg:h-full lg:w-2/3 w-full lg:justify-center"
+          "flex flex-col items-center lg:h-full lg:w-2/3 w-full lg:justify-center space-y-3"
         }
       >
         <div
@@ -81,7 +99,7 @@ const AboutPage = ({ className = "" }) => {
             </span>
           </TextHighlighterContainer>
 
-          <div className="flex justify-evenly w-full py-2 space-x-2">
+          <div className="flex justify-evenly items-center w-full pt-2 space-x-2">
             <a
               href="https://www.linkedin.com/in/knewby/"
               target="_blank"
@@ -122,9 +140,45 @@ const AboutPage = ({ className = "" }) => {
           </div>
         </div>
         <div className={"flex w-full items-center justify-center"}>
+          {/* ====================================================== */}
           <div
             className={
-              "relative flex flex-col space-y-3 lg:max-w-[450px] w-full text-black/40 py-4 shadow-inner bg-linear-to-br from-black/10 to-gray-200/50 lg:rounded-lg"
+              "relative flex lg:hidden flex-col space-y-3 lg:max-w-[450px] w-full text-black/40 py-4 shadow-inner bg-linear-to-br from-black/10 to-gray-200/50 lg:rounded-lg"
+            }
+          >
+            <div key={"skills-row-all"} className={"overflow-hidden w-full"}>
+              <IdleScrollArea
+                infinite
+                axis="x"
+                minStepPx={1}
+                speed={50}
+                idleDelay={2000}
+                startDirection="forward"
+                className="scrollbar-display-none w-full h-full leading-0"
+              >
+                <div className="inline-flex items-center">
+                  {allSkills.map((skill, index) => (
+                    <div
+                      key={`skill-all-${index}-${skill.title}`}
+                      className={"mx-10 size-10 md:size-14 lg:size-16"}
+                    >
+                      <FontAwesomeIcon
+                        icon={skill.icon}
+                        className="block align-middle w-full! h-full!"
+                      />
+                    </div>
+                  ))}
+                </div>
+              </IdleScrollArea>
+            </div>
+          </div>
+
+          {/* single line skill scroller above ^ */}
+          {/* triple line skill scroller below \/ */}
+
+          <div
+            className={
+              "relative hidden lg:flex flex-col space-y-3 lg:max-w-[450px] w-full text-black/40 py-4 shadow-inner bg-linear-to-br from-black/10 to-gray-200/50 lg:rounded-lg"
             }
           >
             <div key={"skills-row-1"} className={"overflow-hidden w-full"}>
@@ -203,6 +257,7 @@ const AboutPage = ({ className = "" }) => {
               </IdleScrollArea>
             </div>
           </div>
+          {/* ====================================================== */}
         </div>
       </div>
       <PhotoCarousel

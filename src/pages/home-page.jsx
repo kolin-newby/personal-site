@@ -3,7 +3,10 @@ import ParticleField from "../components/particle-field";
 
 const HomePage = ({ className = "", touch }) => {
   return (
-    <div className={`w-full h-screen overflow-hidden relative ${className}`}>
+    <div
+      className={`w-full h-screen overflow-hidden relative ${className}`}
+      id="home"
+    >
       <ParticleField
         followMode={!touch}
         lum="60%"

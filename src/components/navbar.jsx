@@ -24,8 +24,9 @@ const Navbar = ({
   };
 
   useEffect(() => {
-    if (active && ["home", "about", "work", "contact"].includes(active)) {
-      scrollTo(active);
+    if (active && ["home", "about", "work"].includes(active)) {
+      const el = document.getElementById(active);
+      el.scrollIntoView();
     }
   }, [active]);
 

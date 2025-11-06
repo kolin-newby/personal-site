@@ -48,19 +48,18 @@ const WorkPage = ({ darkMode, className = "" }) => {
           perWordFillSec={0.45}
         >
           <span>
-            Graylog API Security is a platform that allows users to monitor,
-            record, and analyze their APIs' requests and responses. It alerts
-            users to potential threats and breaches, and can even intelligently
-            track PII to assure that APIs comply with national privacy
-            standards.
+            Graylog API Security is a platform that lets teams monitor, record,
+            and analyze their APIs' requests and responses. It alerts users to
+            potential threats and breaches, and can even intelligently track PII
+            to ensure that APIs comply with national privacy standards.
           </span>
           <span>
             I led design and development of the UI and UX for Graylog API
             Security from July of 2021 to June of 2025. In that time, I had a
-            hand in ever aspect of the product from; leveraging React,
+            hand in every aspect of the product from; leveraging React,
             TypeScript, Node.js, TailwindsCss, and Recharts to develop new
             interfaces and features on the frontend, to optimizing queries and
-            backend data structures using Jave, SQL and Trino.
+            backend data structures using Java, SQL and Trino.
           </span>
         </TextHighlighterContainer>
       ),
@@ -85,30 +84,30 @@ const WorkPage = ({ darkMode, className = "" }) => {
         <TextHighlighterContainer
           className="flex flex-col space-y-2"
           terms={[
-            "open source",
+            "open-source",
             "asynchronous",
-            "goroutine",
-            "Golang",
+            "Goroutine",
+            "Go",
             "NDJSON",
-            "API as middleware",
+            "API",
           ]}
           caseSensitive
           holdAfterAllSec={10}
           perWordFillSec={0.45}
         >
           <span>
-            The Resurface API Logger is open source software that hooks directly
+            The Resurface API Logger is open-source software that hooks directly
             into an API as middleware and collects the API's request and
-            response data, packages it up, and sends it to whatever destination
-            is configured. The logger is built in Golang and utilizes go
-            routines and NDJSON to asynchronously bundle API data and send it to
-            the destination in the background, minimizing performance overhead.
+            response data, packages it, and sends it to the configured
+            destination. The logger is built in Go and uses Goroutines and
+            NDJSON to asynchronously batch API data and send it to the
+            destination, minimizing performance overhead.
           </span>
           <span>
-            I lead the initial development of the logger in 2021. Later, I lead
+            I led the initial development of the logger in 2021. Later, I lead
             the maintenance of existing features and the development of new
-            major features such as the asynchronous goroutine submission, as
-            well as the NDJSON bundling and general performace improvements.
+            major features such as the asynchronous Goroutine submission, as
+            well as the NDJSON batching and general performance improvements.
           </span>
         </TextHighlighterContainer>
       ),
@@ -130,29 +129,29 @@ const WorkPage = ({ darkMode, className = "" }) => {
         <TextHighlighterContainer
           className="flex flex-col space-y-2"
           terms={[
-            "high throughput",
+            "high-throughput",
             "asynchronous",
             "gRPC",
-            "Golang",
-            "open source",
+            "Go",
+            "open-source",
           ]}
           caseSensitive
           holdAfterAllSec={10}
           perWordFillSec={0.45}
         >
           <span>
-            The Blowhole load tester is open source, API load testing software
-            that utilizes Golang, gRPC, and threaded goroutines to effectively
-            imitate different levels of traffic to a given endpoint. It was
-            originally developed to help test the open source loggers from
+            The Blowhole load tester is open-source, API load-testing software
+            that utilizes Go, gRPC, and concurrent Goroutines to effectively
+            simulate different levels of traffic to a given endpoint. It was
+            originally developed to help test the open-source loggers from
             Resurface Labs, including the Go logger included in my other work.
           </span>
           <span>
-            I lead the initial development of the load tester in 2023. I
-            implemented the load testers base functionality including sending
-            high throughput web traffic to a given endpoint through a
-            distributed, asynchronous 'master' and 'worker' architechture, where
-            the nodes communicate via gRPC.
+            I led the initial development of the load tester in 2023. I
+            implemented the load tester's base functionality including sending
+            high-throughput web traffic to a given endpoint through a
+            distributed, asynchronous 'coordinator' and 'worker' architechture,
+            where the nodes communicate via gRPC.
           </span>
         </TextHighlighterContainer>
       ),

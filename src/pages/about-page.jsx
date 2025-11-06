@@ -51,7 +51,7 @@ const AboutPage = ({ className = "" }) => {
     >
       <div
         className={
-          "flex flex-col items-center lg:h-full lg:w-2/3 w-full lg:justify-center space-y-3"
+          "flex flex-col items-center lg:h-full lg:w-2/3 w-full lg:justify-center space-y-2"
         }
       >
         <div

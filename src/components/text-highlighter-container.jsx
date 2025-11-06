@@ -1,21 +1,7 @@
 import React, { useMemo, useEffect, useState, useRef } from "react";
-
 import { usePageVisible } from "../common/use-page-visible";
 import { useInViewport } from "../common/use-in-viewport";
 
-/**
- * Props
- * - terms: string[]
- * - colors?: string[]
- * - caseSensitive?: boolean (default false)
- * - wholeWord?: boolean (default true)
- * - perWordFillSec?: number (default 0.9)
- * - gapSec?: number (default 0.1)
- * - holdAfterAllSec?: number (default 0.4)
- * - fadeSec?: number (default 0.6)
- * - autoLoop?: boolean (default true)
- * - className?: string
- */
 const TextHighlighterContainer = ({
   children,
   terms,
@@ -42,7 +28,6 @@ const TextHighlighterContainer = ({
   const shouldRun =
     !prefersReducedMotion && (!pauseWhenOffScreen || (inView && pageVisible));
 
-  // -------- regex (Unicode-aware whole-word) --------
   const escapeRegex = (s) => s.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
   const makeTermRegex = (terms, { wholeWord, caseSensitive }) => {
     const nonEmpty = (terms || []).filter(Boolean);
@@ -67,7 +52,6 @@ const TextHighlighterContainer = ({
     return { ...cfg, sortedTermsNorm };
   }, [terms, caseSensitive, wholeWord]);
 
-  // -------- count matches for timing --------
   const totalMatches = useMemo(() => {
     if (!shouldRun || !config.source) return 0;
     const countInString = (str) => {
@@ -86,21 +70,18 @@ const TextHighlighterContainer = ({
     return walk(children);
   }, [children, config, shouldRun]);
 
-  // schedule
   const lastFinish =
     totalMatches > 0
       ? (totalMatches - 1) * (perWordFillSec + gapSec) + perWordFillSec
       : 0;
   const loopSec = lastFinish + holdAfterAllSec + fadeSec;
 
-  // loop restarter (so delays reapply every cycle)
   const [cycle, setCycle] = useState(0);
 
   const prevActiveRef = useRef(shouldRun);
 
   useEffect(() => {
     if (shouldRun && !prevActiveRef.current) {
-      // just became active -> restart
       setCycle((c) => c + 1);
     }
     prevActiveRef.current = shouldRun;
@@ -112,7 +93,6 @@ const TextHighlighterContainer = ({
     return () => clearInterval(id);
   }, [autoLoop, loopSec, shouldRun]);
 
-  // build
   let order = 0;
   const renderHighlighted = (node) => {
     if (!config.source) return node;
@@ -136,12 +116,10 @@ const TextHighlighterContainer = ({
         const termIndex = config.sortedTermsNorm.findIndex((t) => t === key);
         const color = colors[(termIndex >= 0 ? termIndex : 0) % colors.length];
 
-        // schedule
         const delaySec = order * (perWordFillSec + gapSec);
 
-        // deterministic “messiness”
         const rng = mulberryHash(order + 7);
-        const bodySkewDeg = `${(rng() * 50 - 25).toFixed(2)}deg`; // ±5°
+        const bodySkewDeg = `${(rng() * 50 - 25).toFixed(2)}deg`;
         const jitterY = `${(rng() * 2 - 1) * 0.12}em`;
 
         out.push(
@@ -149,19 +127,15 @@ const TextHighlighterContainer = ({
             key={`hl-${cycle}-${order}-${start}`}
             className="hl-mark relative inline-block"
             style={{
-              // global timings
               "--loopSec": `${loopSec}s`,
               "--fadeSec": `${fadeSec}s`,
-              // local timing
               "--fillSec": `${perWordFillSec}s`,
               "--delay": `${delaySec}s`,
-              // visuals
               "--hlColor": color,
               "--bodySkewDeg": bodySkewDeg,
               "--jitterY": jitterY,
             }}
           >
-            {/* text stays unskewed above the ink */}
             <span className="relative z-1">{matched}</span>
           </span>
         );
@@ -208,7 +182,6 @@ const TextHighlighterContainer = ({
   );
 };
 
-/* deterministic PRNG */
 const mulberryHash = (seed) => {
   let t = Math.imul(seed ^ 0x6d2b79f5, 1);
   return () => {

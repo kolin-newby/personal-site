@@ -4,7 +4,7 @@ import ParticleField from "../particle-field";
 
 const WorkListItem = ({ workItem, handleOpenClick }) => {
   return (
-    <li className="flex relative w-full pl-10">
+    <li className="flex relative w-full pl-6">
       <div
         className={
           "flex flex-row w-full justify-between relative shadow-inner bg-linear-to-br from-black/10 to-gray-200/50 rounded-l-lg items-center"
@@ -16,7 +16,7 @@ const WorkListItem = ({ workItem, handleOpenClick }) => {
           className="absolute top-0 left-0 w-full h-full z-0"
           speed="slow"
         />
-        <div className="flex flex-col w-3/4 space-y-3 p-16 z-10">
+        <div className="flex flex-col w-3/4 space-y-3 px-12 py-10 z-10">
           <h2 className={"flex text-lg md:text-2xl"}>{workItem.title}</h2>
           <h2 className="flex text-base md:text-lg opacity-50">
             {workItem.role}

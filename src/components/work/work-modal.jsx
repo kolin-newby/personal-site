@@ -1,5 +1,5 @@
 import { ChevronRight } from "lucide-react";
-import IdleScrollArea from "../IdleScrollArea";
+import IdleScrollArea from "../idle-scroll-area";
 import RepoPreview from "../repo-preview";
 
 const WorkModal = ({ open, selectedWork, setOpen, setSelectedWork }) => {

@@ -1,5 +1,5 @@
 import { ChevronLeft } from "lucide-react";
-import IdleScrollArea from "../IdleScrollArea";
+import IdleScrollArea from "../idle-scroll-area";
 import ParticleField from "../particle-field";
 
 const WorkListItem = ({ workItem, handleOpenClick }) => {

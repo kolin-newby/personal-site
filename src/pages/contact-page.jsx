@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import Follower from "../components/follower";
 import ContactModal from "../components/contact-modal";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import IdleScrollArea from "../components/IdleScrollArea";
+import IdleScrollArea from "../components/idle-scroll-area";
 
 const ContactPage = ({ className = "", touch }) => {
   const [contactOpen, setContactOpen] = useState(false);

@@ -338,7 +338,7 @@ const IdleScrollArea = ({
   return (
     <div
       ref={containerRef}
-      className={className}
+      className={`overscroll-contain ${className}`}
       style={{ ...overflowStyle, ...style }}
     >
       {infinite ? (

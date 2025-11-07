@@ -1,6 +1,6 @@
 import PhotoCarousel from "../components/photo-carousel";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import IdleScrollArea from "../components/IdleScrollArea";
+import IdleScrollArea from "../components/idle-scroll-area";
 import TextHighlighterContainer from "../components/text-highlighter-container";
 
 const AboutPage = ({ className = "" }) => {

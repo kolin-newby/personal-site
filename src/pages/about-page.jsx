@@ -56,7 +56,7 @@ const AboutPage = ({ className = "" }) => {
       >
         <div
           className={
-            "flex flex-col space-y-4 text-xs md:text-sm text-shadow p-6 lg:px-12 items-start justify-end max-w-[900px] lg:min-h-1/2 pb-4 pt-10 lg:py-0"
+            "flex flex-col space-y-4 text-xs md:text-sm text-shadow p-6 lg:px-12 items-start justify-end max-w-[900px] lg:min-h-1/2 pb-4 pt-10 lg:pb-0 lg:pt-10"
           }
         >
           <TextHighlighterContainer

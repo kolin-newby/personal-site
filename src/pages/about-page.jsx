@@ -56,7 +56,7 @@ const AboutPage = ({ className = "" }) => {
       >
         <div
           className={
-            "flex flex-col space-y-4 text-xs md:text-sm text-shadow p-6 lg:px-12 items-start justify-center max-w-[900px] lg:min-h-2/3 pb-4 pt-10 lg:py-0"
+            "flex flex-col space-y-4 text-xs md:text-sm text-shadow p-6 lg:px-12 items-start justify-end max-w-[900px] lg:min-h-1/2 pb-4 pt-10 lg:py-0"
           }
         >
           <TextHighlighterContainer
@@ -140,7 +140,9 @@ const AboutPage = ({ className = "" }) => {
           </div>
         </div>
         <div
-          className={"flex w-full lg:w-auto lg:grow items-start justify-center"}
+          className={
+            "flex w-full lg:w-auto lg:grow items-center justify-center"
+          }
         >
           {/* ====================================================== */}
           <div

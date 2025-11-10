@@ -29,7 +29,7 @@ const HomePage = ({ className = "", touch }) => {
             }
           >
             <div className={"flex text-center rounded-2xl relative px-4 py-3"}>
-              Hi, I'm Kolin
+              Hi, I'm Kolin.
               <br />
             </div>
             <Typer />

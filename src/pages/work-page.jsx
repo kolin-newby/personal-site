@@ -49,17 +49,17 @@ const WorkPage = ({ darkMode, className = "" }) => {
         >
           <span>
             Graylog API Security is a platform that lets teams monitor, record,
-            and analyze their APIs' requests and responses. It alerts users to
-            potential threats and breaches, and can even intelligently track PII
-            to ensure that APIs comply with national privacy standards.
+            and analyze their APIs' request and response traffic. It alerts
+            users to potential threats and breaches, and can even intelligently
+            track PII to ensure that APIs comply with national standards.
           </span>
           <span>
             I led design and development of the UI and UX for Graylog API
             Security from July of 2021 to June of 2025. In that time, I had a
-            hand in every aspect of the product from; leveraging React,
-            TypeScript, Node.js, TailwindsCss, and Recharts to develop new
-            interfaces and features on the frontend, to optimizing queries and
-            backend data structures using Java, SQL and Trino.
+            hand in every aspect of the product; leveraging React, TypeScript,
+            Node.js, TailwindCSS, and Recharts to develop new interfaces and
+            features on the frontend, to optimizing queries and backend data
+            structures using Java, SQL and Trino.
           </span>
         </TextHighlighterContainer>
       ),

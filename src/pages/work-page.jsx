@@ -150,7 +150,7 @@ const WorkPage = ({ darkMode, className = "" }) => {
             I led the initial development of the load tester in 2023. I
             implemented the load tester's base functionality including sending
             high-throughput web traffic to a given endpoint through a
-            distributed, asynchronous 'coordinator' and 'worker' architechture,
+            distributed, asynchronous 'coordinator' and 'worker' architecture,
             where the nodes communicate via gRPC.
           </span>
         </TextHighlighterContainer>

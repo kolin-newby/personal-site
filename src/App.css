@@ -407,3 +407,60 @@ a {
 .hl-paused .hl-mark::after {
   animation-play-state: paused !important;
 }
+
+@property --ring-angle {
+  syntax: "<angle>";
+  inherits: false;
+  initial-value: 0deg;
+}
+
+:root {
+  --ring-angle: 0deg;
+}
+
+.multicolor-shadow {
+  position: relative;
+  z-index: 0;
+  border-radius: 0.5rem;
+}
+
+/* Two-color animated glow ring */
+.multicolor-shadow::before {
+  content: "";
+  position: absolute;
+  inset: -8px;
+  border-radius: inherit;
+  padding: 5px;
+  z-index: -1;
+  pointer-events: none;
+
+  background: conic-gradient(
+    from var(--ring-angle),
+    var(--ring-color-1, #fff176) 0deg,
+    var(--ring-color-2, #f8bbd0) 180deg,
+    var(--ring-color-1, #fff176) 360deg
+  );
+
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+
+  opacity: 0.75; /* lower opacity = softer shadow */
+  filter: blur(10px);
+
+  animation: ring-spin 3500ms linear infinite;
+
+  transition: opacity 0.25s ease, filter 0.25s ease, inset 0.25s ease;
+}
+
+.multicolor-shadow:hover::before {
+  opacity: 1;
+  filter: blur(4px);
+  inset: -10px;
+}
+
+@keyframes ring-spin {
+  to {
+    --ring-angle: 360deg;
+  }
+}

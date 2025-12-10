@@ -2,6 +2,7 @@ import PhotoCarousel from "../components/photo-carousel";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import IdleScrollArea from "../components/idle-scroll-area";
 import TextHighlighterContainer from "../components/text-highlighter-container";
+import Button from "../components/common/button";
 
 const AboutPage = ({ className = "" }) => {
   const skills1 = [
@@ -99,44 +100,38 @@ const AboutPage = ({ className = "" }) => {
             </span>
           </TextHighlighterContainer>
 
-          <div className="flex justify-evenly items-center w-full pt-2 space-x-2">
-            <a
-              href="https://www.linkedin.com/in/knewby/"
-              target="_blank"
-              rel="noreferrer"
-              className="flex rounded-lg py-2 px-3 shadow items-center justify-center space-x-2 transform transition-all duration-200 hover:-translate-y-1 hover:bg-white/20 hover:shadow-lg"
-            >
-              <FontAwesomeIcon
-                icon={"fa-brands fa-linkedin"}
-                className="size-5! md:size-7!"
-              />
-              <span>See my Linkedin</span>
-            </a>
-            <a
-              href="https://github.com/kolin-newby"
-              target="_blank"
-              rel="noreferrer"
-              className="flex rounded-lg py-2 px-3 shadow items-center justify-center space-x-2 transform transition-all duration-200 hover:-translate-y-1 hover:bg-white/20 hover:shadow-lg"
-            >
-              <FontAwesomeIcon
-                icon={"fa-brands fa-github"}
-                className="size-5! md:size-7!"
-              />
-              <span>See my GitHub</span>
-            </a>
-            <a
-              href="/resume.pdf"
-              target="_blank"
-              rel="noreferrer"
+          <div className="flex justify-evenly items-center w-full pt-4 space-x-2">
+            <Button
+              buttonText="See my LinkedIn"
+              href={"https://www.linkedin.com/in/knewby/"}
+              icon={
+                <FontAwesomeIcon
+                  icon={"fa-brands fa-linkedin"}
+                  className="size-5! md:size-7!"
+                />
+              }
+            />
+            <Button
+              buttonText="See my GitHub"
+              href={"https://github.com/kolin-newby"}
+              icon={
+                <FontAwesomeIcon
+                  icon={"fa-brands fa-github"}
+                  className="size-5! md:size-7!"
+                />
+              }
+            />
+            <Button
+              buttonText="See my resume"
+              href={"/resume.pdf"}
               download={"resume_newby"}
-              className="flex rounded-lg py-2 px-3 shadow items-center justify-center space-x-2 transform transition-all duration-200 hover:-translate-y-1 hover:bg-white/20 hover:shadow-lg"
-            >
-              <FontAwesomeIcon
-                icon={"fa-solid fa-file-lines"}
-                className="size-5! md:size-7!"
-              />
-              <span className="flex">See my resume</span>
-            </a>
+              icon={
+                <FontAwesomeIcon
+                  icon={"fa-solid fa-file-lines"}
+                  className="size-5! md:size-7!"
+                />
+              }
+            />
           </div>
         </div>
         <div

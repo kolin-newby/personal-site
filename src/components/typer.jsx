@@ -8,6 +8,7 @@ const Typer = ({
     "Climber",
     "UX Designer",
     "Backpacker",
+    "API Logger",
     "Outdoors Lover",
     "Software Engineer",
     "Photographer",

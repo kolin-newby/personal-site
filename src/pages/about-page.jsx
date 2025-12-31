@@ -48,7 +48,7 @@ const AboutPage = ({ className = "" }) => {
   return (
     <div
       id={"about"}
-      className={`relative flex lg:h-screen h-full w-full flex-col lg:flex-row items-center ${className}`}
+      className={`relative flex lg:h-screen h-full w-full flex-col lg:flex-row items-center pb-5 sm:pb-0 ${className}`}
     >
       <div
         className={
@@ -102,7 +102,18 @@ const AboutPage = ({ className = "" }) => {
 
           <div className="flex justify-evenly items-center w-full pt-3 space-x-2">
             <Button
-              buttonText="LinkedIn"
+              buttonText="My Resume"
+              href={"/resume.pdf"}
+              download={"resume_newby"}
+              icon={
+                <FontAwesomeIcon
+                  icon={"fa-solid fa-file-lines"}
+                  className="size-5! md:size-7!"
+                />
+              }
+            />
+            <Button
+              buttonText="My LinkedIn"
               href={"https://www.linkedin.com/in/knewby/"}
               icon={
                 <FontAwesomeIcon
@@ -112,22 +123,11 @@ const AboutPage = ({ className = "" }) => {
               }
             />
             <Button
-              buttonText="GitHub"
+              buttonText="My GitHub"
               href={"https://github.com/kolin-newby"}
               icon={
                 <FontAwesomeIcon
                   icon={"fa-brands fa-github"}
-                  className="size-5! md:size-7!"
-                />
-              }
-            />
-            <Button
-              buttonText="Resume"
-              href={"/resume.pdf"}
-              download={"resume_newby"}
-              icon={
-                <FontAwesomeIcon
-                  icon={"fa-solid fa-file-lines"}
                   className="size-5! md:size-7!"
                 />
               }
@@ -142,7 +142,7 @@ const AboutPage = ({ className = "" }) => {
           {/* ====================================================== */}
           <div
             className={
-              "relative flex lg:hidden flex-col space-y-3 lg:max-w-[450px] w-full text-black/40 py-2 shadow-inner bg-linear-to-br from-black/10 to-gray-200/50 lg:rounded-lg"
+              "relative flex lg:hidden flex-col space-y-3 lg:max-w-[450px] w-full text-black/40 py-3 shadow-inner bg-linear-to-br from-black/10 to-gray-200/50 lg:rounded-lg"
             }
           >
             <div key={"skills-row-all"} className={"overflow-hidden w-full"}>

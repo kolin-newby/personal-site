@@ -102,7 +102,7 @@ const AboutPage = ({ className = "" }) => {
 
           <div className="flex justify-evenly items-center w-full pt-4 space-x-2">
             <Button
-              buttonText="See my LinkedIn"
+              buttonText="LinkedIn"
               href={"https://www.linkedin.com/in/knewby/"}
               icon={
                 <FontAwesomeIcon
@@ -112,7 +112,7 @@ const AboutPage = ({ className = "" }) => {
               }
             />
             <Button
-              buttonText="See my GitHub"
+              buttonText="GitHub"
               href={"https://github.com/kolin-newby"}
               icon={
                 <FontAwesomeIcon
@@ -122,7 +122,7 @@ const AboutPage = ({ className = "" }) => {
               }
             />
             <Button
-              buttonText="See my resume"
+              buttonText="Resume"
               href={"/resume.pdf"}
               download={"resume_newby"}
               icon={

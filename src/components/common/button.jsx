@@ -13,7 +13,7 @@ const getRandomColorPair = (colors) => {
 const Button = ({
   onClick = null,
   href = null,
-  buttonText = "",
+  buttonText = null,
   icon = null,
   download = null,
   ringColors = ["#FFF176", "#A5D6A7", "#81D4FA", "#FFAB91", "#F8BBD0"],
@@ -40,14 +40,14 @@ const Button = ({
         style={baseStyles}
       >
         {icon !== null && icon}
-        <span>{buttonText}</span>
+        {buttonText && <span>{buttonText}</span>}
       </a>
     );
 
   return (
     <button onClick={onClick} className={baseClasses} style={baseStyles}>
       {icon !== null && icon}
-      <span>{buttonText}</span>
+      {buttonText && <span>{buttonText}</span>}
     </button>
   );
 };

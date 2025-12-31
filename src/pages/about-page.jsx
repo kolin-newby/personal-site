@@ -100,7 +100,7 @@ const AboutPage = ({ className = "" }) => {
             </span>
           </TextHighlighterContainer>
 
-          <div className="flex justify-evenly items-center w-full pt-4 space-x-2">
+          <div className="flex justify-evenly items-center w-full pt-3 space-x-2">
             <Button
               buttonText="LinkedIn"
               href={"https://www.linkedin.com/in/knewby/"}
@@ -142,7 +142,7 @@ const AboutPage = ({ className = "" }) => {
           {/* ====================================================== */}
           <div
             className={
-              "relative flex lg:hidden flex-col space-y-3 lg:max-w-[450px] w-full text-black/40 py-4 shadow-inner bg-linear-to-br from-black/10 to-gray-200/50 lg:rounded-lg"
+              "relative flex lg:hidden flex-col space-y-3 lg:max-w-[450px] w-full text-black/40 py-2 shadow-inner bg-linear-to-br from-black/10 to-gray-200/50 lg:rounded-lg"
             }
           >
             <div key={"skills-row-all"} className={"overflow-hidden w-full"}>

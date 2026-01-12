@@ -15,6 +15,7 @@ const WorkListItem = ({ workItem, handleOpenClick }) => {
           maxParticlesFollowMode={40}
           className="absolute top-0 left-0 w-full h-full z-0"
           speed="slow"
+          color
         />
         <div className="flex flex-col w-3/4 space-y-3 px-12 py-10 z-10">
           <h2 className={"flex text-lg md:text-2xl"}>{workItem.title}</h2>

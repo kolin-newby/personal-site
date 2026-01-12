@@ -5,11 +5,16 @@ import { usePageVisible } from "../common/use-page-visible";
 const getRandom = (min, max) => Math.random() * (max - min) + min;
 
 class Particle {
-  constructor(width, height, { followModeRef, lumRef, mouseRef, speedRef }) {
+  constructor(
+    width,
+    height,
+    { followModeRef, lumRef, mouseRef, speedRef, colorRef }
+  ) {
     this._followModeRef = followModeRef;
     this._lumRef = lumRef;
     this._mouseRef = mouseRef;
     this._speedRef = speedRef;
+    this._colorRef = colorRef;
 
     const fm = this._followModeRef.current;
     const mouse = this._mouseRef.current;
@@ -20,9 +25,7 @@ class Particle {
     this.speedX = Math.random() * 2;
     this.speedY = Math.random() * 2;
 
-    this.color = `hsl(356, 0%, ${this._lumRef.current})`;
-    // const hue = Math.floor(Math.random() * 360);
-    // this.color = `hsl(${hue}, 30%, ${this._lumRef.current})`;
+    this.hue = Math.floor(Math.random() * 360);
   }
 
   update(width, height) {
@@ -69,8 +72,22 @@ class Particle {
     }
   }
 
+  getColor() {
+    const lum = this._lumRef.current;
+
+    if (this._colorRef.current) {
+      return `hsl(${this.hue}, 85%, ${lum})`;
+    }
+
+    return `hsl(0, 0%, ${lum})`;
+  }
+
+  getStrokeColor() {
+    return this.getColor();
+  }
+
   draw(ctx) {
-    ctx.fillStyle = this.color;
+    ctx.fillStyle = this.getColor();
     ctx.beginPath();
     ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
     ctx.fill();
@@ -80,6 +97,7 @@ class Particle {
 const ParticleField = ({
   followMode = false,
   lum = "0%",
+  color = false,
   maxParticlesFollowMode = 100,
   className = "",
   style = {},
@@ -97,6 +115,7 @@ const ParticleField = ({
   const lumRef = useRef(lum);
   const speedRef = useRef(speed);
   const maxFollowRef = useRef(maxParticlesFollowMode);
+  const colorRef = useRef(color);
 
   const inView = useInViewport(canvasRef, { threshold: 0 });
   const pageVisible = usePageVisible();
@@ -124,6 +143,9 @@ const ParticleField = ({
   useEffect(() => {
     maxFollowRef.current = maxParticlesFollowMode;
   }, [maxParticlesFollowMode]);
+  useEffect(() => {
+    colorRef.current = color;
+  }, [color]);
 
   const resizeCanvas = () => {
     const canvas = canvasRef.current;
@@ -155,7 +177,7 @@ const ParticleField = ({
         const distance = Math.hypot(dx, dy);
         if (distance < 90) {
           ctx.beginPath();
-          ctx.strokeStyle = p.color;
+          ctx.strokeStyle = p.getStrokeColor();
           ctx.lineWidth = p.size / 10;
           ctx.moveTo(p.x, p.y);
           ctx.lineTo(spots[j].x, spots[j].y);
@@ -205,7 +227,13 @@ const ParticleField = ({
       const { w, h } = sizeRef.current;
       for (let i = 0; i < maxFollowRef.current; i++) {
         spotsRef.current.push(
-          new Particle(w, h, { followModeRef, lumRef, mouseRef, speedRef })
+          new Particle(w, h, {
+            followModeRef,
+            lumRef,
+            mouseRef,
+            speedRef,
+            colorRef,
+          })
         );
       }
     }
@@ -252,6 +280,7 @@ const ParticleField = ({
             lumRef,
             mouseRef,
             speedRef,
+            colorRef,
           })
         );
       }
@@ -270,7 +299,13 @@ const ParticleField = ({
       const { w, h } = sizeRef.current; // use cached size
       for (let i = 0; i < maxFollowRef.current; i++) {
         spotsRef.current.push(
-          new Particle(w, h, { followModeRef, lumRef, mouseRef, speedRef })
+          new Particle(w, h, {
+            followModeRef,
+            lumRef,
+            mouseRef,
+            speedRef,
+            colorRef,
+          })
         );
       }
     }

@@ -9,9 +9,10 @@ const HomePage = ({ className = "", touch }) => {
     >
       <ParticleField
         followMode={!touch}
-        lum="60%"
-        maxParticlesFollowMode={110}
+        lum="50%"
+        maxParticlesFollowMode={100}
         className="absolute top-0 left-0 w-full h-full z-0"
+        color
       />
       <div
         id={"home"}

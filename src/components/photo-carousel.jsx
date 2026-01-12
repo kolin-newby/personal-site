@@ -1,18 +1,32 @@
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Arrow from "./common/arrow";
 import { Camera } from "lucide-react";
 
 const PhotoCarousel = ({ imageSourceList, className }) => {
   const [active, setActive] = useState(null);
   const [photoInfoOpen, setPhotoInfoOpen] = useState(false);
+  const timeoutRef = useRef(null);
 
   const handlePhotoInfoClick = () => {
+    if (timeoutRef.current) {
+      clearTimeout(timeoutRef.current);
+    }
+
     setPhotoInfoOpen(true);
 
-    setTimeout(() => {
+    timeoutRef.current = setTimeout(() => {
       setPhotoInfoOpen(false);
-    }, 3000);
+      timeoutRef.current = null;
+    }, 4000);
   };
+
+  useEffect(() => {
+    return () => {
+      if (timeoutRef.current) {
+        clearTimeout(timeoutRef.current);
+      }
+    };
+  }, []);
 
   return (
     <div className={className}>

@@ -2,12 +2,10 @@ import "./App.css";
 import React, { useEffect, useState, Suspense, useCallback } from "react";
 import { loadIcons } from "./config/iconLoader";
 import LoadingCover from "./components/loading-cover";
-
-const Navbar = React.lazy(() => import("./components/navbar"));
-const AboutPage = React.lazy(() => import("./pages/about-page"));
-const ContactPage = React.lazy(() => import("./pages/contact-page"));
-const HomePage = React.lazy(() => import("./pages/home-page"));
-const WorkPage = React.lazy(() => import("./pages/work-page"));
+import Navbar from "./components/navbar";
+import AboutPage from "./pages/about-page";
+import HomePage from "./pages/home-page";
+import WorkPage from "./pages/work-page";
 
 const App = () => {
   const [darkMode, setDarkMode] = useState(false);

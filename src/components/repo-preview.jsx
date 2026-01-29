@@ -37,10 +37,11 @@ const RepoPreview = ({ url, className = "" }) => {
       try {
         const res = await fetch(
           `https://api.github.com/repos/${parsed.owner}/${parsed.repo}`,
-          { headers: { Accept: "application/vnd.github+json" } }
+          { headers: { Accept: "application/vnd.github+json" } },
         );
         if (!res.ok) throw new Error(`GitHub API error: ${res.status}`);
         const json = await res.json();
+        console.log(json);
         if (!abort) setData(json);
       } catch (e) {
         if (!abort) setError(e?.message ?? "Failed to load repo");
@@ -164,11 +165,13 @@ const RepoPreview = ({ url, className = "" }) => {
               </span>
             </div>
           </div>
-          <img
-            src={data.organization.avatar_url}
-            alt="org_avatar"
-            className="h-[100px] rounded-lg"
-          />
+          {data?.organization && (
+            <img
+              src={data.organization.avatar_url}
+              alt="org_avatar"
+              className="h-[100px] rounded-lg"
+            />
+          )}
         </div>
       </div>
     </a>

@@ -15,69 +15,44 @@ const WorkPage = ({ darkMode, className = "" }) => {
 
   const workItems = [
     {
-      title: "Graylog API Security",
-      role: "Full Stack",
-      images: [
-        "https://u.cubeupload.com/CallAnUbie/settings1.png",
-        "https://u.cubeupload.com/CallAnUbie/search5.png",
-        "https://u.cubeupload.com/CallAnUbie/signatures1.png",
-        "https://u.cubeupload.com/CallAnUbie/summaryresponsescori.jpg",
-        "https://u.cubeupload.com/CallAnUbie/summarysignatures.jpg",
-        "https://u.cubeupload.com/CallAnUbie/summary2.png",
-      ],
-      repo: null,
+      title: "Rust Chat",
+      role: "Sole Contributor",
+      images: null,
+      repo: "https://github.com/kolin-newby/rust-chat",
       textSection: (
         <TextHighlighterContainer
           className="flex flex-col space-y-2"
           terms={[
-            "threats",
-            "breaches",
-            "track PII",
-            "design and development",
-            "UI and UX",
-            "new features",
-            "optimizing",
-            "monitor",
-            "record",
-            "analyze",
-            "frontend",
-            "backend",
+            "Rust",
+            "asynchronous I/O",
+            "TCP",
+            "Matrix",
+            "versioned",
+            "chat protocol",
           ]}
           caseSensitive
           holdAfterAllSec={10}
           perWordFillSec={0.45}
         >
           <span>
-            Graylog API Security is a platform that lets teams monitor, record,
-            and analyze their APIs' request and response traffic. It alerts
-            users to potential threats and breaches, and can even intelligently
-            track PII to ensure that APIs comply with national standards.
+            An open-source TCP-based network chat built in Rust that I started
+            for educational purposes. I started this project with the intention
+            to evolve it into a Matrix compatible client.
           </span>
           <span>
-            I led design and development of the UI and UX for Graylog API
-            Security from July of 2021 to June of 2025. In that time, I had a
-            hand in every aspect of the product; leveraging React, TypeScript,
-            Node.js, TailwindCSS, and Recharts to develop new interfaces and
-            features on the frontend, to optimizing queries and backend data
-            structures using Java, SQL and Trino.
+            I am the sole contributor at the moment, developing the strictly
+            versioned chat protocol with explicit IDs and timestamps. The
+            software uses an "event envelope" architecture along with
+            asynchronous I/O tasks to pass messages and system events across the
+            network.
           </span>
         </TextHighlighterContainer>
       ),
-      skills: [
-        "React",
-        "Node.js",
-        "TypeScript",
-        "JavaScript",
-        "HTML",
-        "TailwindCSS",
-        "Recharts",
-        "CSS",
-        "SQL",
-      ],
+      skills: ["Rust", "Async I/O", "TCP", "Matrix", "Chat Protocol"],
     },
     {
       title: "Resurface API Logger",
-      role: "Backend",
+      role: "Individual Contributor",
       images: null,
       repo: "https://github.com/resurfaceio/logger-go",
       textSection: (
@@ -85,77 +60,72 @@ const WorkPage = ({ darkMode, className = "" }) => {
           className="flex flex-col space-y-2"
           terms={[
             "open-source",
-            "asynchronous",
             "Goroutine",
             "Go",
             "NDJSON",
             "API",
+            "web traffic",
           ]}
           caseSensitive
           holdAfterAllSec={10}
           perWordFillSec={0.45}
         >
           <span>
-            The Resurface API Logger is open-source software that hooks directly
-            into an API as middleware and collects the API's request and
-            response data, packages it, and sends it to the configured
-            destination. The logger is built in Go and uses Goroutines and
-            NDJSON to asynchronously batch API data and send it to the
+            An open-source API Logger that can hook directly into an API's
+            source code or act as middleware in many architectures. It collects
+            the API's request and response data, packages it, and sends it to
+            the configured destination. The logger is built in Go and uses
+            Goroutines and NDJSON to batch API data and send it to the
             destination, minimizing performance overhead.
           </span>
           <span>
-            I led the initial development of the logger in 2021. Later, I lead
-            the maintenance of existing features and the development of new
-            major features such as the asynchronous Goroutine submission, as
-            well as the NDJSON batching and general performance improvements.
+            I was part of the team that started the initial development of the
+            logger in 2020. Later, I was assigned to lead the maintenance of
+            existing features and the development of new major features such as
+            the asynchronous Goroutine submission, as well as the NDJSON
+            batching and general performance improvements.
           </span>
         </TextHighlighterContainer>
       ),
       skills: [
-        "Golang",
+        "Go",
+        "Goroutines",
         "Web Traffic",
-        "JSON/NDJSON",
-        "Async Threads",
+        "NDJSON",
         "RESTful APIs",
         "GraphQL APIs",
       ],
     },
     {
-      title: "Blowhole API Load Tester",
-      role: "Web Traffic",
+      title: "API Traffic Load Tester",
+      role: "Individual Contributor",
       images: null,
       repo: "https://github.com/resurfaceio/blowhole",
       textSection: (
         <TextHighlighterContainer
           className="flex flex-col space-y-2"
-          terms={[
-            "high-throughput",
-            "asynchronous",
-            "gRPC",
-            "Go",
-            "open-source",
-          ]}
+          terms={["concurrency", "Goroutines", "gRPC", "Go", "open-source"]}
           caseSensitive
           holdAfterAllSec={10}
           perWordFillSec={0.45}
         >
           <span>
-            The Blowhole load tester is open-source, API load-testing software
-            that utilizes Go, gRPC, and concurrent Goroutines to effectively
-            simulate different levels of traffic to a given endpoint. It was
-            originally developed to help test the open-source loggers from
-            Resurface Labs, including the Go logger included in my other work.
+            An open-source API load-tester built in Go that uses gRPC and
+            concurrent Goroutines to effectively simulate different levels of
+            traffic to a given API endpoint. It was originally developed to help
+            test and validate the open-source loggers from Resurface Labs,
+            including the Go logger included in another project.
           </span>
           <span>
-            I led the initial development of the load tester in 2023. I
-            implemented the load tester's base functionality including sending
-            high-throughput web traffic to a given endpoint through a
+            I led the initial development of the load tester in 2023,
+            implementing the load tester's base functionality including sending
+            high concurrency web traffic to a given endpoint through a
             distributed, asynchronous 'coordinator' and 'worker' architecture,
-            where the nodes communicate via gRPC.
+            with node communication via gRPC.
           </span>
         </TextHighlighterContainer>
       ),
-      skills: ["Golang", "JSON", "Async Threads", "RESTful APIs", "gRPC"],
+      skills: ["Golang", "JSON", "Goroutines", "APIs", "gRPC"],
     },
   ];
 
@@ -170,7 +140,8 @@ const WorkPage = ({ darkMode, className = "" }) => {
     <div
       ref={containerRef}
       className={`flex flex-col h-screen relative w-full justify-center ${className}`}
-      id={"work"}
+      id="projects"
+      aria-label="projects"
     >
       <WorkModal
         open={modalOpen}

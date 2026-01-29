@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { ChevronDown } from "lucide-react";
 
@@ -10,12 +10,12 @@ const Navbar = ({
   barOpen,
   setBarOpen,
 }) => {
-  const [active, setActive] = React.useState("home");
+  const [active, setActive] = useState("home");
 
   const navbarItems = [
     { id: "home", title: "Home", icon: "home" },
     { id: "about", title: "About", icon: "user" },
-    { id: "work", title: "Work", icon: "briefcase" },
+    { id: "projects", title: "Projects", icon: "briefcase" },
   ];
 
   const scrollTo = (key) => {
@@ -24,7 +24,7 @@ const Navbar = ({
   };
 
   useEffect(() => {
-    if (active && ["home", "about", "work"].includes(active)) {
+    if (active && ["home", "about", "projects"].includes(active)) {
       const el = document.getElementById(active);
       el.scrollIntoView();
     }

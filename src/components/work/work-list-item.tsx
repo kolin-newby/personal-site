@@ -1,8 +1,14 @@
 import { ChevronLeft } from "lucide-react";
 import IdleScrollArea from "../idle-scroll-area";
 import ParticleField from "../particle-field";
+import type { WorkItem } from "../../types/work";
 
-const WorkListItem = ({ workItem, handleOpenClick }) => {
+type Props = {
+  workItem: WorkItem;
+  handleOpenClick: () => void;
+};
+
+const WorkListItem = ({ workItem, handleOpenClick }: Props) => {
   return (
     <li className="flex relative w-full pl-6">
       <div

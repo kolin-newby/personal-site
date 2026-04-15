@@ -1,6 +1,14 @@
-import React, { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef } from "react";
 import { usePageVisible } from "../common/use-page-visible";
 import { useInViewport } from "../common/use-in-viewport";
+
+type Props = {
+  words?: string[];
+  typingSpeed?: number;
+  deletingSpeed?: number;
+  pauseTime?: number;
+  pauseWhenOffScreen?: boolean;
+};
 
 const Typer = ({
   words = [
@@ -17,13 +25,13 @@ const Typer = ({
   deletingSpeed = 70,
   pauseTime = 1400,
   pauseWhenOffScreen = true,
-}) => {
+}: Props) => {
   const [text, setText] = useState("");
   const [isDeleting, setIsDeleting] = useState(false);
   const [wordIndex, setWordIndex] = useState(0);
 
-  const containerRef = useRef(null);
-  const timeoutRef = useRef(null);
+  const containerRef = useRef<HTMLSpanElement>(null);
+  const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   const inView = useInViewport(containerRef, { threshold: 0 });
   const pageVisible = usePageVisible();

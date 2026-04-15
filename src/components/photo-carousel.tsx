@@ -2,10 +2,15 @@ import { useEffect, useRef, useState } from "react";
 import Arrow from "./common/arrow";
 import { Camera } from "lucide-react";
 
-const PhotoCarousel = ({ imageSourceList, className }) => {
-  const [active, setActive] = useState(null);
+type Props = {
+  imageSourceList?: string[];
+  className?: string;
+};
+
+const PhotoCarousel = ({ imageSourceList, className }: Props) => {
+  const [active, setActive] = useState<number | null>(null);
   const [photoInfoOpen, setPhotoInfoOpen] = useState(false);
-  const timeoutRef = useRef(null);
+  const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   const handlePhotoInfoClick = () => {
     if (timeoutRef.current) {
@@ -89,7 +94,6 @@ const PhotoCarousel = ({ imageSourceList, className }) => {
           </div>
           <div className="hidden lg:flex inset-x-0 bottom-full transform -rotate-3 justify-center text-xl text-black/60 items-end">
             <Arrow
-              fillColor={"#eee"}
               className={"flex transform rotate-180 opacity-60"}
             />
             <div className="pb-2 text-nowrap flex space-x-1.5">

@@ -1,8 +1,20 @@
-import React, { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import ParticleField from "./particle-field";
 import { Link2 } from "lucide-react";
 
-const parseOwnerRepo = (url) => {
+interface GitHubRepo {
+  html_url: string;
+  full_name: string;
+  description: string | null;
+  stargazers_count: number;
+  forks_count: number;
+  language: string | null;
+  updated_at: string;
+  archived: boolean;
+  organization?: { avatar_url: string } | null;
+}
+
+const parseOwnerRepo = (url: string): { owner: string; repo: string } | null => {
   try {
     const u = new URL(url);
     if (!/github\.com$/i.test(u.hostname)) return null;
@@ -14,14 +26,19 @@ const parseOwnerRepo = (url) => {
   }
 };
 
-const formatCount = (n) => {
+const formatCount = (n: number): string => {
   return new Intl.NumberFormat(undefined, { notation: "compact" }).format(n);
 };
 
-const RepoPreview = ({ url, className = "" }) => {
+type Props = {
+  url: string;
+  className?: string;
+};
+
+const RepoPreview = ({ url, className = "" }: Props) => {
   const parsed = useMemo(() => parseOwnerRepo(url), [url]);
-  const [data, setData] = useState(null);
-  const [error, setError] = useState(null);
+  const [data, setData] = useState<GitHubRepo | null>(null);
+  const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -42,9 +59,9 @@ const RepoPreview = ({ url, className = "" }) => {
         if (!res.ok) throw new Error(`GitHub API error: ${res.status}`);
         const json = await res.json();
         console.log(json);
-        if (!abort) setData(json);
+        if (!abort) setData(json as GitHubRepo);
       } catch (e) {
-        if (!abort) setError(e?.message ?? "Failed to load repo");
+        if (!abort) setError((e as Error)?.message ?? "Failed to load repo");
       } finally {
         if (!abort) setLoading(false);
       }
@@ -178,7 +195,9 @@ const RepoPreview = ({ url, className = "" }) => {
   );
 };
 
-const GitHubIcon = ({ className = "" }) => {
+type GitHubIconProps = { className?: string };
+
+const GitHubIcon = ({ className = "" }: GitHubIconProps) => {
   return (
     <svg
       viewBox="0 0 16 16"

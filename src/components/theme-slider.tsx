@@ -2,8 +2,13 @@ import { Switch } from "@headlessui/react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React from "react";
 
-const ThemeSlider = ({ darkMode, setDarkMode }) => {
-  function handleThemeChange(mode) {
+type Props = {
+  darkMode: boolean;
+  setDarkMode: React.Dispatch<React.SetStateAction<boolean>>;
+};
+
+const ThemeSlider = ({ darkMode, setDarkMode }: Props) => {
+  function handleThemeChange(mode: boolean) {
     document.cookie = "darkMode=" + mode;
     setDarkMode(mode);
   }

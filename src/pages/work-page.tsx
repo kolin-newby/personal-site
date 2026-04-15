@@ -1,19 +1,25 @@
-import React, { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 import WorkModal from "../components/work/work-modal";
 import WorkList from "../components/work/work-list";
 
 import { useInViewport } from "../common/use-in-viewport";
 import TextHighlighterContainer from "../components/text-highlighter-container";
+import type { WorkItem } from "../types/work";
 
-const WorkPage = ({ darkMode, className = "" }) => {
-  const containerRef = useRef(null);
+type Props = {
+  darkMode?: boolean;
+  className?: string;
+};
+
+const WorkPage = ({ darkMode, className = "" }: Props) => {
+  const containerRef = useRef<HTMLDivElement>(null);
   const isInViewport = useInViewport(containerRef, { threshold: 0 });
 
   const [modalOpen, setModalOpen] = useState(false);
-  const [selectedWork, setSelectedWork] = useState(null);
+  const [selectedWork, setSelectedWork] = useState<WorkItem | null>(null);
 
-  const workItems = [
+  const workItems: WorkItem[] = [
     {
       title: "Rust Chat",
       role: "Sole Contributor",

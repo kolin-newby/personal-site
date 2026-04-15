@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 
-export const usePageVisible = () => {
+export const usePageVisible = (): boolean => {
   const [pageVisible, setPageVisible] = useState(
     typeof document !== "undefined"
       ? document.visibilityState === "visible"

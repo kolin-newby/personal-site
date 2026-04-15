@@ -1,4 +1,8 @@
-const Arrow = ({ className = "" }) => {
+type Props = {
+  className?: string;
+};
+
+const Arrow = ({ className = "" }: Props) => {
   return (
     <svg
       width="110"
@@ -6,8 +10,7 @@ const Arrow = ({ className = "" }) => {
       viewBox="0 0 110 90"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
-      class="hand-arrow"
-      className={className}
+      className={`hand-arrow ${className}`}
     >
       <path
         d="
@@ -16,9 +19,9 @@ const Arrow = ({ className = "" }) => {
       C 56 66, 53 68, 53 70
     "
         stroke="currentColor"
-        stroke-width="3.6"
-        stroke-linecap="round"
-        stroke-linejoin="round"
+        strokeWidth="3.6"
+        strokeLinecap="round"
+        strokeLinejoin="round"
         opacity="0.45"
         fill="none"
         transform="translate(-0.6, 0.3)"
@@ -31,9 +34,9 @@ const Arrow = ({ className = "" }) => {
       C 56 66, 53 68, 53 70
     "
         stroke="currentColor"
-        stroke-width="2.6"
-        stroke-linecap="round"
-        stroke-linejoin="round"
+        strokeWidth="2.6"
+        strokeLinecap="round"
+        strokeLinejoin="round"
         fill="none"
       />
 
@@ -44,10 +47,10 @@ const Arrow = ({ className = "" }) => {
       C 57 78, 58 75, 59 72
     "
         stroke="currentColor"
-        stroke-width="3.6"
+        strokeWidth="3.6"
         opacity="0.45"
-        stroke-linecap="round"
-        stroke-linejoin="round"
+        strokeLinecap="round"
+        strokeLinejoin="round"
         fill="none"
         transform="translate(-0.4, 0.4)"
       />
@@ -59,9 +62,9 @@ const Arrow = ({ className = "" }) => {
       C 57 78, 59 75, 61 71
     "
         stroke="currentColor"
-        stroke-width="2.3"
-        stroke-linecap="round"
-        stroke-linejoin="round"
+        strokeWidth="2.3"
+        strokeLinecap="round"
+        strokeLinejoin="round"
         fill="none"
       />
     </svg>

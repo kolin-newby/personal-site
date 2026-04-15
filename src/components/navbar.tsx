@@ -1,6 +1,22 @@
 import React, { useEffect, useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import type { IconProp } from "@fortawesome/fontawesome-svg-core";
 import { ChevronDown } from "lucide-react";
+
+type NavbarItem = {
+  id: string;
+  title: string;
+  icon: IconProp;
+};
+
+type Props = {
+  darkMode: boolean;
+  setDarkMode: React.Dispatch<React.SetStateAction<boolean>>;
+  scrollPosition: number;
+  touch: boolean;
+  barOpen: boolean;
+  setBarOpen: React.Dispatch<React.SetStateAction<boolean>>;
+};
 
 const Navbar = ({
   darkMode,
@@ -9,24 +25,19 @@ const Navbar = ({
   touch,
   barOpen,
   setBarOpen,
-}) => {
+}: Props) => {
   const [active, setActive] = useState("home");
 
-  const navbarItems = [
+  const navbarItems: NavbarItem[] = [
     { id: "home", title: "Home", icon: "home" },
     { id: "about", title: "About", icon: "user" },
     { id: "projects", title: "Projects", icon: "briefcase" },
   ];
 
-  const scrollTo = (key) => {
-    let el = document.getElementById(key);
-    el.scrollIntoView({ behavior: "smooth" });
-  };
-
   useEffect(() => {
     if (active && ["home", "about", "projects"].includes(active)) {
       const el = document.getElementById(active);
-      el.scrollIntoView();
+      el?.scrollIntoView();
     }
   }, [active]);
 

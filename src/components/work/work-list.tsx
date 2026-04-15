@@ -1,12 +1,21 @@
+import React from "react";
 import WorkListItem from "./work-list-item";
+import type { WorkItem } from "../../types/work";
+
+type Props = {
+  workItemList?: WorkItem[];
+  modalOpen: boolean;
+  setModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
+  setSelectedWork: React.Dispatch<React.SetStateAction<WorkItem | null>>;
+};
 
 const WorkList = ({
   workItemList,
   modalOpen,
   setModalOpen,
   setSelectedWork,
-}) => {
-  const handleOpenClick = (workItem) => {
+}: Props) => {
+  const handleOpenClick = (workItem: WorkItem) => {
     setSelectedWork(workItem);
     setModalOpen(true);
   };

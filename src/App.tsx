@@ -19,18 +19,19 @@ const App = () => {
   //     setDarkMode(mode);
   // }, []);
 
-  function handleScroll(event) {
-    let container = event.target;
+  function handleScroll(event: React.UIEvent<HTMLDivElement>) {
+    let container = event.target as HTMLDivElement;
     let scrollPositionTemp =
       Number((container.scrollTop / container.scrollHeight).toFixed(5)) * 100;
     setScrollPosition(scrollPositionTemp);
   }
 
-  const isTouchDevice = useCallback(() => {
+  const isTouchDevice = useCallback((): boolean => {
     return (
       "ontouchstart" in window ||
       navigator.maxTouchPoints > 0 ||
-      navigator.msMaxTouchPoints > 0
+      (navigator as Navigator & { msMaxTouchPoints?: number })
+        .msMaxTouchPoints! > 0
     );
   }, []);
 
@@ -51,7 +52,7 @@ const App = () => {
     <div
       className={`${
         darkMode ? "dark" : ""
-      } bg-linear-to-br from-gray-100 via-gray-200 to-gray-100 h-screen snap-y 
+      } bg-linear-to-br from-gray-100 via-gray-200 to-gray-100 h-screen snap-y
           snap-mandatory snap overflow-y-scroll overflow-x-hidden scroll-smooth scrollbar-display-none`}
       onScroll={handleScroll}
       onClick={() => {
@@ -60,7 +61,6 @@ const App = () => {
     >
       <Suspense fallback={<LoadingCover />}>
         <Navbar
-          id={"navbar"}
           darkMode={darkMode}
           setDarkMode={setDarkMode}
           scrollPosition={scrollPosition}

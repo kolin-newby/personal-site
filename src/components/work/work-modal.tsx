@@ -1,8 +1,17 @@
+import React from "react";
 import { ChevronRight } from "lucide-react";
 import IdleScrollArea from "../idle-scroll-area";
 import RepoPreview from "../repo-preview";
+import type { WorkItem } from "../../types/work";
 
-const WorkModal = ({ open, selectedWork, setOpen, setSelectedWork }) => {
+type Props = {
+  open: boolean;
+  selectedWork: WorkItem | null;
+  setOpen: React.Dispatch<React.SetStateAction<boolean>>;
+  setSelectedWork: React.Dispatch<React.SetStateAction<WorkItem | null>>;
+};
+
+const WorkModal = ({ open, selectedWork, setOpen, setSelectedWork }: Props) => {
   const handleCloseClick = () => {
     setOpen(false);
     setTimeout(() => {
@@ -79,7 +88,7 @@ const WorkModal = ({ open, selectedWork, setOpen, setSelectedWork }) => {
             </div>
           </>
         ) : (
-          <RepoPreview url={selectedWork?.repo} />
+          <RepoPreview url={selectedWork?.repo ?? ""} />
         )}
       </div>
       <div className="flex flex-col items-center px-2">

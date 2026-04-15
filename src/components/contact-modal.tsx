@@ -2,14 +2,19 @@ import React, { useEffect, useState } from "react";
 import { Transition } from "@headlessui/react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
-const ContactModal = ({ open, setOpen }) => {
-  const slackWebHook = null;
+type Props = {
+  open: boolean;
+  setOpen: React.Dispatch<React.SetStateAction<boolean>>;
+};
+
+const ContactModal = ({ open, setOpen }: Props) => {
+  const slackWebHook: string | null = null;
 
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [message, setMessage] = useState("");
   const [sent, setSent] = useState(false);
-  const [errors, setErrors] = useState([]);
+  const [errors, setErrors] = useState<string[]>([]);
   const [showErrors, setShowErrors] = useState(false);
 
   useEffect(() => {
@@ -22,22 +27,22 @@ const ContactModal = ({ open, setOpen }) => {
   }, [sent, setOpen, setSent]);
 
   function checkForErrors() {
-    let tmp = [];
+    let tmp: string[] = [];
 
-    if (!name.length > 0) tmp.push("name");
+    if (!(name.length > 0)) tmp.push("name");
 
-    if (!email.length > 0) tmp.push("email");
+    if (!(email.length > 0)) tmp.push("email");
     else if (!email.includes("@") || !email.includes("."))
       tmp.push("valid_email");
 
-    if (!message.length > 0) tmp.push("message");
+    if (!(message.length > 0)) tmp.push("message");
 
     setErrors(tmp);
   }
 
   function handleContactSubmit() {
     let msg = `{"text" : "New message from:\n${name}\n\n${message}\n\nRespond to:\n${email}"}`;
-    if (slackWebHook === undefined) {
+    if (slackWebHook === null) {
       console.log(
         `No webhook detected, development environment assumed.\nMessage not sent...\n\nWould have sent message as follows:\n${msg}`
       );
@@ -100,8 +105,8 @@ const ContactModal = ({ open, setOpen }) => {
                 placeholder={"name/company"}
                 maxLength={40}
                 value={name}
-                onChange={(input) => {
-                  setName(input.target.value);
+                onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                  setName(e.target.value);
                   checkForErrors();
                 }}
               />
@@ -124,8 +129,8 @@ const ContactModal = ({ open, setOpen }) => {
                 placeholder={"email"}
                 maxLength={40}
                 value={email}
-                onChange={(input) => {
-                  setEmail(input.target.value);
+                onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                  setEmail(e.target.value);
                   checkForErrors();
                 }}
               />
@@ -153,8 +158,8 @@ const ContactModal = ({ open, setOpen }) => {
                 placeholder={"your message"}
                 value={message}
                 maxLength={600}
-                onChange={(input) => {
-                  setMessage(input.target.value);
+                onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) => {
+                  setMessage(e.target.value);
                   checkForErrors();
                 }}
               />

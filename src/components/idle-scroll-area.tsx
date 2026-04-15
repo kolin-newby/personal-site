@@ -9,6 +9,21 @@ import React, {
 import { useInViewport } from "../common/use-in-viewport";
 import { usePageVisible } from "../common/use-page-visible";
 
+type Props = {
+  children: React.ReactNode;
+  axis?: "x" | "y";
+  speed?: number;
+  idleDelay?: number;
+  pauseOnHover?: boolean;
+  startDirection?: "forward" | "backward";
+  className?: string;
+  style?: React.CSSProperties;
+  minStepPx?: number;
+  infinite?: boolean;
+  idleScrollRampDuration?: number;
+  pauseWhenOffScreen?: boolean;
+};
+
 const IdleScrollArea = ({
   children,
   axis = "y",
@@ -22,21 +37,21 @@ const IdleScrollArea = ({
   infinite = false,
   idleScrollRampDuration = 1000,
   pauseWhenOffScreen = true,
-}) => {
-  const containerRef = useRef(null);
-  const rafRef = useRef(0);
-  const lastTsRef = useRef(0);
-  const lastUserInteractionRef = useRef(Date.now());
-  const dirRef = useRef(startDirection === "backward" ? -1 : 1);
+}: Props) => {
+  const containerRef = useRef<HTMLDivElement>(null);
+  const rafRef = useRef<number>(0);
+  const lastTsRef = useRef<number>(0);
+  const lastUserInteractionRef = useRef<number>(Date.now());
+  const dirRef = useRef<number>(startDirection === "backward" ? -1 : 1);
   const [isHovering, setIsHovering] = useState(false);
 
-  const isProgrammaticScrollRef = useRef(false);
-  const speedRef = useRef(speed);
-  const idleScrollRampDurationRef = useRef(idleScrollRampDuration);
-  const virtualPosRef = useRef(0);
+  const isProgrammaticScrollRef = useRef<boolean>(false);
+  const speedRef = useRef<number>(speed);
+  const idleScrollRampDurationRef = useRef<number>(idleScrollRampDuration);
+  const virtualPosRef = useRef<number>(0);
 
-  const firstCopyRef = useRef(null);
-  const spanRef = useRef(0);
+  const firstCopyRef = useRef<HTMLDivElement>(null);
+  const spanRef = useRef<number>(0);
 
   const inView = useInViewport(containerRef, { threshold: 0 });
   const pageVisible = usePageVisible();
@@ -46,7 +61,7 @@ const IdleScrollArea = ({
 
   const shouldRun =
     !prefersReducedMotion && (!pauseWhenOffScreen || (inView && pageVisible));
-  const shouldRunRef = useRef(shouldRun);
+  const shouldRunRef = useRef<boolean>(shouldRun);
   useEffect(() => {
     shouldRunRef.current = shouldRun;
   }, [shouldRun]);
@@ -66,10 +81,9 @@ const IdleScrollArea = ({
     );
   }, [idleDelay, pauseOnHover, isHovering]);
 
-  const easeOutCubic = (t) => 1 - Math.pow(1 - t, 3);
+  const easeOutCubic = (t: number): number => 1 - Math.pow(1 - t, 3);
 
   const getRampFactor = useCallback(() => {
-    // NEW
     const now = Date.now();
     const idleStart = lastUserInteractionRef.current + idleDelay;
     const elapsed = now - idleStart;
@@ -81,18 +95,18 @@ const IdleScrollArea = ({
   }, [idleDelay]);
 
   const getPos = useCallback(
-    (el) => (axis === "x" ? el.scrollLeft : el.scrollTop),
+    (el: HTMLElement) => (axis === "x" ? el.scrollLeft : el.scrollTop),
     [axis]
   );
   const setPos = useCallback(
-    (el, v) => {
+    (el: HTMLElement, v: number) => {
       if (axis === "x") el.scrollLeft = v;
       else el.scrollTop = v;
     },
     [axis]
   );
   const getMax = useCallback(
-    (el) =>
+    (el: HTMLElement) =>
       axis === "x"
         ? Math.max(0, el.scrollWidth - el.clientWidth)
         : Math.max(0, el.scrollHeight - el.clientHeight),
@@ -100,7 +114,7 @@ const IdleScrollArea = ({
   );
 
   const normalizePhysicalPos = useCallback(
-    (el) => {
+    (el: HTMLElement) => {
       if (!infinite) return;
       const span = spanRef.current;
       if (!span) return;
@@ -119,7 +133,7 @@ const IdleScrollArea = ({
     [getPos, setPos, infinite]
   );
 
-  const physFromVirtual = useCallback((v) => {
+  const physFromVirtual = useCallback((v: number) => {
     const span = spanRef.current || 0;
     if (!span) return v;
     const mod = ((v % span) + span) % span;
@@ -159,7 +173,7 @@ const IdleScrollArea = ({
   }, [infinite, updateSpan]);
 
   const animate = useCallback(
-    (ts) => {
+    (ts: number) => {
       const el = containerRef.current;
       if (!el) return;
 
@@ -264,9 +278,9 @@ const IdleScrollArea = ({
   }, [markInteraction]);
 
   const onScroll = useCallback(
-    (e) => {
+    (e: Event) => {
       if (isProgrammaticScrollRef.current) return;
-      if (e && e.isTrusted === false) return;
+      if (e && (e as { isTrusted?: boolean }).isTrusted === false) return;
 
       const el = containerRef.current;
       if (!el) return;
@@ -321,12 +335,14 @@ const IdleScrollArea = ({
     };
   }, [animate, markInteraction, onEnter, onLeave, onScroll]);
 
-  const overflowStyle =
+  const overflowStyle: React.CSSProperties =
     axis === "x"
       ? { overflowX: "auto", overflowY: "hidden", whiteSpace: "nowrap" }
       : { overflowY: "auto", overflowX: "hidden" };
 
-  const ContentCopy = ({ withRef = false }) => (
+  type ContentCopyProps = { withRef?: boolean };
+
+  const ContentCopy = ({ withRef = false }: ContentCopyProps) => (
     <div
       ref={withRef ? firstCopyRef : null}
       style={axis === "x" ? { display: "inline-block" } : undefined}

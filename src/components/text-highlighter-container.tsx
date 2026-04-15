@@ -2,6 +2,21 @@ import React, { useMemo, useEffect, useState, useRef } from "react";
 import { usePageVisible } from "../common/use-page-visible";
 import { useInViewport } from "../common/use-in-viewport";
 
+type Props = {
+  children: React.ReactNode;
+  terms: string[];
+  colors?: string[];
+  caseSensitive?: boolean;
+  wholeWord?: boolean;
+  perWordFillSec?: number;
+  gapSec?: number;
+  holdAfterAllSec?: number;
+  fadeSec?: number;
+  autoLoop?: boolean;
+  className?: string;
+  pauseWhenOffScreen?: boolean;
+};
+
 const TextHighlighterContainer = ({
   children,
   terms,
@@ -15,10 +30,10 @@ const TextHighlighterContainer = ({
   autoLoop = true,
   className = "",
   pauseWhenOffScreen = true,
-}) => {
+}: Props) => {
   if (!terms || terms.length === 0) return <>{children}</>;
 
-  const containerRef = useRef(null);
+  const containerRef = useRef<HTMLDivElement>(null);
   const inView = useInViewport(containerRef, { threshold: 0.1 });
   const pageVisible = usePageVisible();
   const prefersReducedMotion =
@@ -28,14 +43,19 @@ const TextHighlighterContainer = ({
   const shouldRun =
     !prefersReducedMotion && (!pauseWhenOffScreen || (inView && pageVisible));
 
-  const escapeRegex = (s) => s.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
-  const makeTermRegex = (terms, { wholeWord, caseSensitive }) => {
+  const escapeRegex = (s: string): string =>
+    s.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+
+  const makeTermRegex = (
+    terms: string[],
+    { wholeWord, caseSensitive }: { wholeWord: boolean; caseSensitive: boolean }
+  ): { source: string; flags: string; sortedTerms: string[] } => {
     const nonEmpty = (terms || []).filter(Boolean);
     if (nonEmpty.length === 0)
       return { source: "", flags: "", sortedTerms: [] };
     const sortedTerms = [...nonEmpty].sort((a, b) => b.length - a.length);
     const escaped = sortedTerms.map(escapeRegex);
-    const WORD = "[\\p{L}\\p{N}_’'-]";
+    const WORD = "[\\p{L}\\p{N}_''-]";
     const wrapped = escaped.map((t) =>
       wholeWord ? `(?<!${WORD})(${t})(?!${WORD})` : `(${t})`
     );
@@ -54,17 +74,17 @@ const TextHighlighterContainer = ({
 
   const totalMatches = useMemo(() => {
     if (!shouldRun || !config.source) return 0;
-    const countInString = (str) => {
+    const countInString = (str: string): number => {
       let c = 0;
       const re = new RegExp(config.source, config.flags);
       while (re.exec(str) !== null) c++;
       return c;
     };
-    const walk = (node) => {
+    const walk = (node: React.ReactNode): number => {
       if (typeof node === "string") return countInString(node);
       if (typeof node === "number") return countInString(String(node));
-      if (Array.isArray(node)) return node.reduce((a, n) => a + walk(n), 0);
-      if (React.isValidElement(node)) return walk(node.props?.children);
+      if (Array.isArray(node)) return node.reduce((a: number, n: React.ReactNode) => a + walk(n), 0);
+      if (React.isValidElement(node)) return walk((node.props as { children?: React.ReactNode }).children);
       return 0;
     };
     return walk(children);
@@ -78,7 +98,7 @@ const TextHighlighterContainer = ({
 
   const [cycle, setCycle] = useState(0);
 
-  const prevActiveRef = useRef(shouldRun);
+  const prevActiveRef = useRef<boolean>(shouldRun);
 
   useEffect(() => {
     if (shouldRun && !prevActiveRef.current) {
@@ -94,17 +114,17 @@ const TextHighlighterContainer = ({
   }, [autoLoop, loopSec, shouldRun]);
 
   let order = 0;
-  const renderHighlighted = (node) => {
+  const renderHighlighted = (node: React.ReactNode): React.ReactNode => {
     if (!config.source) return node;
 
     if (typeof node === "string" || typeof node === "number") {
       const text = String(node);
       if (!text) return node;
 
-      const out = [];
+      const out: React.ReactNode[] = [];
       const re = new RegExp(config.source, config.flags);
       let lastIdx = 0;
-      let m;
+      let m: RegExpExecArray | null;
 
       while ((m = re.exec(text)) !== null) {
         const start = m.index;
@@ -136,7 +156,7 @@ const TextHighlighterContainer = ({
               "--bodySkewDeg": bodySkewDeg,
               "--globalTiltDeg": tiltDeg,
               "--jitterY": jitterY,
-            }}
+            } as React.CSSProperties}
           >
             <span className="relative z-1">{matched}</span>
           </span>
@@ -159,7 +179,7 @@ const TextHighlighterContainer = ({
     }
 
     if (React.isValidElement(node)) {
-      const child = node.props?.children;
+      const child = (node.props as { children?: React.ReactNode }).children;
       if (child == null) return node;
       const newChildren = renderHighlighted(child);
       return React.cloneElement(
@@ -184,7 +204,7 @@ const TextHighlighterContainer = ({
   );
 };
 
-const mulberryHash = (seed) => {
+const mulberryHash = (seed: number): (() => number) => {
   let t = Math.imul(seed ^ 0x6d2b79f5, 1);
   return () => {
     t += 0x6d2b79f5;

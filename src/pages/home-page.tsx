@@ -1,7 +1,12 @@
 import Typer from "../components/typer";
 import ParticleField from "../components/particle-field";
 
-const HomePage = ({ className = "", touch }) => {
+type Props = {
+  className?: string;
+  touch?: boolean;
+};
+
+const HomePage = ({ className = "", touch }: Props) => {
   return (
     <div
       className={`w-full h-screen overflow-hidden relative ${className}`}

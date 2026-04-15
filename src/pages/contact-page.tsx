@@ -1,10 +1,22 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import Follower from "../components/follower";
 import ContactModal from "../components/contact-modal";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import type { IconProp } from "@fortawesome/fontawesome-svg-core";
 import IdleScrollArea from "../components/idle-scroll-area";
 
-const ContactPage = ({ className = "", touch }) => {
+type SocialLink = {
+  title: string;
+  icon: string;
+  href: string;
+};
+
+type Props = {
+  className?: string;
+  touch?: boolean;
+};
+
+const ContactPage = ({ className = "", touch }: Props) => {
   const [contactOpen, setContactOpen] = useState(false);
   const [followerActive, setFollowerActive] = useState(false);
 
@@ -60,7 +72,7 @@ const ContactPage = ({ className = "", touch }) => {
 const SocialLinks = () => {
   const [activeLink, setActiveLink] = useState("");
 
-  const socialLinks = [
+  const socialLinks: SocialLink[] = [
     {
       title: "GitHub",
       icon: "fa-brands fa-github",
@@ -93,15 +105,16 @@ const SocialLinks = () => {
         <a
           href={link.href}
           rel={"noreferrer"}
-          download={link.title === "Resume" ? "resume_kolin_newby" : null}
-          target={link.title !== "Email" ? "_blank" : null}
+          download={link.title === "Resume" ? "resume_kolin_newby" : undefined}
+          target={link.title !== "Email" ? "_blank" : undefined}
           className={`flex lg:w-56 items-center justify-start lg:space-x-3 cursor-pointer`}
           onMouseEnter={() => setActiveLink(link.title)}
           onMouseLeave={() => setActiveLink("")}
+          key={`social-${index}-${link.title}`}
         >
           <FontAwesomeIcon
             className={"text-3xl lg:text-4xl"}
-            icon={link.icon}
+            icon={link.icon as unknown as IconProp}
           />
           <IdleScrollArea
             speed={20}

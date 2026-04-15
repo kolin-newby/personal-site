@@ -1,13 +1,22 @@
 import React, { useRef } from "react";
 
-const getRandomColorPair = (colors) => {
+const getRandomColorPair = (colors: string[]): string[] => {
   const firstIndex = Math.floor(Math.random() * colors.length);
   let secondIndex = firstIndex;
   while (secondIndex === firstIndex) {
     secondIndex = Math.floor(Math.random() * colors.length);
   }
 
-  return [colors[firstIndex], colors[secondIndex]];
+  return [colors[firstIndex] ?? "", colors[secondIndex] ?? ""];
+};
+
+type Props = {
+  onClick?: React.MouseEventHandler<HTMLButtonElement> | null;
+  href?: string | null;
+  buttonText?: string | null;
+  icon?: React.ReactNode | null;
+  download?: string | null;
+  ringColors?: string[];
 };
 
 const Button = ({
@@ -17,7 +26,7 @@ const Button = ({
   icon = null,
   download = null,
   ringColors = ["#FFF176", "#A5D6A7", "#81D4FA", "#FFAB91", "#F8BBD0"],
-}) => {
+}: Props) => {
   const colorPairRef = useRef(getRandomColorPair(ringColors));
   const [ringColor1, ringColor2] = colorPairRef.current;
 
@@ -27,7 +36,7 @@ const Button = ({
   const baseStyles = {
     "--ring-color-1": ringColor1,
     "--ring-color-2": ringColor2,
-  };
+  } as React.CSSProperties;
 
   if (href !== null)
     return (
@@ -35,18 +44,18 @@ const Button = ({
         href={href}
         target="_blank"
         rel="noreferrer"
-        download={download ?? null}
+        download={download ?? undefined}
         className={baseClasses}
         style={baseStyles}
       >
-        {icon !== null && icon}
+        {icon !== null && <>{icon}</>}
         {buttonText && <span>{buttonText}</span>}
       </a>
     );
 
   return (
-    <button onClick={onClick} className={baseClasses} style={baseStyles}>
-      {icon !== null && icon}
+    <button onClick={onClick ?? undefined} className={baseClasses} style={baseStyles}>
+      {icon !== null && <>{icon}</>}
       {buttonText && <span>{buttonText}</span>}
     </button>
   );

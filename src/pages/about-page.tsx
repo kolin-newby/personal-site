@@ -1,25 +1,35 @@
 import PhotoCarousel from "../components/photo-carousel";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import type { IconProp } from "@fortawesome/fontawesome-svg-core";
 import IdleScrollArea from "../components/idle-scroll-area";
 import TextHighlighterContainer from "../components/text-highlighter-container";
 import Button from "../components/common/button";
 
-const AboutPage = ({ className = "" }) => {
-  const skills1 = [
+type Skill = {
+  title: string;
+  icon: string;
+};
+
+type Props = {
+  className?: string;
+};
+
+const AboutPage = ({ className = "" }: Props) => {
+  const skills1: Skill[] = [
     { title: "Golang", icon: "fa-brands fa-golang" },
     { title: "JavaScript", icon: "fa-brands fa-js" },
     { title: "React", icon: "fa-brands fa-react" },
     { title: "Python", icon: "fa-brands fa-python" },
     { title: "HTML5", icon: "fa-brands fa-html5" },
   ];
-  const skills2 = [
+  const skills2: Skill[] = [
     { title: "CSS3", icon: "fa-brands fa-css3" },
     { title: "Git", icon: "fa-brands fa-git-alt" },
     { title: "Docker", icon: "fa-brands fa-docker" },
     { title: "Java", icon: "fa-brands fa-java" },
     { title: "Linux", icon: "fa-brands fa-linux" },
   ];
-  const skills3 = [
+  const skills3: Skill[] = [
     { title: "Hubspot", icon: "fa-brands fa-hubspot" },
     { title: "Ubuntu", icon: "fa-brands fa-ubuntu" },
     { title: "Github", icon: "fa-brands fa-github" },
@@ -27,7 +37,7 @@ const AboutPage = ({ className = "" }) => {
     { title: "Bash", icon: "fa-solid fa-terminal" },
   ];
 
-  const allSkills = [
+  const allSkills: Skill[] = [
     { title: "Golang", icon: "fa-brands fa-golang" },
     { title: "JavaScript", icon: "fa-brands fa-js" },
     { title: "React", icon: "fa-brands fa-react" },
@@ -107,7 +117,7 @@ const AboutPage = ({ className = "" }) => {
               download={"resume_newby"}
               icon={
                 <FontAwesomeIcon
-                  icon={"fa-solid fa-file-lines"}
+                  icon={"fa-solid fa-file-lines" as unknown as IconProp}
                   className="size-5! md:size-7!"
                 />
               }
@@ -117,7 +127,7 @@ const AboutPage = ({ className = "" }) => {
               href={"https://www.linkedin.com/in/knewby/"}
               icon={
                 <FontAwesomeIcon
-                  icon={"fa-brands fa-linkedin"}
+                  icon={"fa-brands fa-linkedin" as unknown as IconProp}
                   className="size-5! md:size-7!"
                 />
               }
@@ -127,7 +137,7 @@ const AboutPage = ({ className = "" }) => {
               href={"https://github.com/kolin-newby"}
               icon={
                 <FontAwesomeIcon
-                  icon={"fa-brands fa-github"}
+                  icon={"fa-brands fa-github" as unknown as IconProp}
                   className="size-5! md:size-7!"
                 />
               }
@@ -162,7 +172,7 @@ const AboutPage = ({ className = "" }) => {
                       className={"mx-10 size-10 md:size-14 lg:size-16"}
                     >
                       <FontAwesomeIcon
-                        icon={skill.icon}
+                        icon={skill.icon as unknown as IconProp}
                         className="block align-middle w-full! h-full!"
                       />
                     </div>
@@ -197,7 +207,7 @@ const AboutPage = ({ className = "" }) => {
                       className={"mx-10 size-10 md:size-14 lg:size-16"}
                     >
                       <FontAwesomeIcon
-                        icon={skill.icon}
+                        icon={skill.icon as unknown as IconProp}
                         className="block align-middle w-full! h-full!"
                       />
                     </div>
@@ -222,7 +232,7 @@ const AboutPage = ({ className = "" }) => {
                       className={"mx-10 size-10 md:size-14 lg:size-16"}
                     >
                       <FontAwesomeIcon
-                        icon={skill.icon}
+                        icon={skill.icon as unknown as IconProp}
                         className="block align-middle w-full! h-full!"
                       />
                     </div>
@@ -247,7 +257,7 @@ const AboutPage = ({ className = "" }) => {
                       className={"mx-10 size-10 md:size-14 lg:size-16"}
                     >
                       <FontAwesomeIcon
-                        icon={skill.icon}
+                        icon={skill.icon as unknown as IconProp}
                         className="block align-middle w-full! h-full!"
                       />
                     </div>

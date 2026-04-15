@@ -2,13 +2,34 @@ import React, { useRef, useEffect, useCallback } from "react";
 import { useInViewport } from "../common/use-in-viewport";
 import { usePageVisible } from "../common/use-page-visible";
 
-const getRandom = (min, max) => Math.random() * (max - min) + min;
+const getRandom = (min: number, max: number): number =>
+  Math.random() * (max - min) + min;
+
+interface ParticleRefs {
+  followModeRef: React.MutableRefObject<boolean>;
+  lumRef: React.MutableRefObject<string>;
+  mouseRef: React.MutableRefObject<{ x: number | undefined; y: number | undefined }>;
+  speedRef: React.MutableRefObject<string>;
+  colorRef: React.MutableRefObject<boolean>;
+}
 
 class Particle {
+  x: number;
+  y: number;
+  size: number;
+  speedX: number;
+  speedY: number;
+  hue: number;
+  private _followModeRef: React.MutableRefObject<boolean>;
+  private _lumRef: React.MutableRefObject<string>;
+  private _mouseRef: React.MutableRefObject<{ x: number | undefined; y: number | undefined }>;
+  private _speedRef: React.MutableRefObject<string>;
+  private _colorRef: React.MutableRefObject<boolean>;
+
   constructor(
-    width,
-    height,
-    { followModeRef, lumRef, mouseRef, speedRef, colorRef }
+    width: number,
+    height: number,
+    { followModeRef, lumRef, mouseRef, speedRef, colorRef }: ParticleRefs
   ) {
     this._followModeRef = followModeRef;
     this._lumRef = lumRef;
@@ -18,8 +39,8 @@ class Particle {
 
     const fm = this._followModeRef.current;
     const mouse = this._mouseRef.current;
-    this.x = fm ? mouse.x : getRandom(0, width);
-    this.y = fm ? mouse.y : getRandom(0, height);
+    this.x = fm ? (mouse.x ?? 0) : getRandom(0, width);
+    this.y = fm ? (mouse.y ?? 0) : getRandom(0, height);
     this.size = Math.random() * 2.5;
 
     this.speedX = Math.random() * 2;
@@ -28,7 +49,7 @@ class Particle {
     this.hue = Math.floor(Math.random() * 360);
   }
 
-  update(width, height) {
+  update(width: number, height: number): void {
     if (this._followModeRef.current) {
       this.x += this.speedX;
       this.y += this.speedY;
@@ -72,7 +93,7 @@ class Particle {
     }
   }
 
-  getColor() {
+  getColor(): string {
     const lum = this._lumRef.current;
 
     if (this._colorRef.current) {
@@ -82,17 +103,28 @@ class Particle {
     return `hsl(0, 0%, ${lum})`;
   }
 
-  getStrokeColor() {
+  getStrokeColor(): string {
     return this.getColor();
   }
 
-  draw(ctx) {
+  draw(ctx: CanvasRenderingContext2D): void {
     ctx.fillStyle = this.getColor();
     ctx.beginPath();
     ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
     ctx.fill();
   }
 }
+
+type Props = {
+  followMode?: boolean;
+  lum?: string;
+  color?: boolean;
+  maxParticlesFollowMode?: number;
+  className?: string;
+  style?: React.CSSProperties;
+  speed?: string;
+  pauseWhenOffScreen?: boolean;
+};
 
 const ParticleField = ({
   followMode = false,
@@ -103,19 +135,22 @@ const ParticleField = ({
   style = {},
   speed = "normal",
   pauseWhenOffScreen = true,
-}) => {
-  const canvasRef = useRef(null);
-  const sizeRef = useRef({ w: 1, h: 1 });
-  const ctxRef = useRef(null);
-  const rafRef = useRef(null);
-  const spotsRef = useRef([]);
-  const mouseRef = useRef({ x: undefined, y: undefined });
+}: Props) => {
+  const canvasRef = useRef<HTMLCanvasElement>(null);
+  const sizeRef = useRef<{ w: number; h: number }>({ w: 1, h: 1 });
+  const ctxRef = useRef<CanvasRenderingContext2D | null>(null);
+  const rafRef = useRef<number | null>(null);
+  const spotsRef = useRef<Particle[]>([]);
+  const mouseRef = useRef<{ x: number | undefined; y: number | undefined }>({
+    x: undefined,
+    y: undefined,
+  });
 
-  const followModeRef = useRef(followMode);
-  const lumRef = useRef(lum);
-  const speedRef = useRef(speed);
-  const maxFollowRef = useRef(maxParticlesFollowMode);
-  const colorRef = useRef(color);
+  const followModeRef = useRef<boolean>(followMode);
+  const lumRef = useRef<string>(lum);
+  const speedRef = useRef<string>(speed);
+  const maxFollowRef = useRef<number>(maxParticlesFollowMode);
+  const colorRef = useRef<boolean>(color);
 
   const inView = useInViewport(canvasRef, { threshold: 0 });
   const pageVisible = usePageVisible();
@@ -126,7 +161,7 @@ const ParticleField = ({
   const shouldRun =
     !prefersReducedMotion && (!pauseWhenOffScreen || (inView && pageVisible));
 
-  const shouldRunRef = useRef(shouldRun);
+  const shouldRunRef = useRef<boolean>(shouldRun);
   useEffect(() => {
     shouldRunRef.current = shouldRun;
   }, [shouldRun]);
@@ -163,24 +198,27 @@ const ParticleField = ({
     ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
   };
 
-  const handleParticles = (ctx, width, height) => {
+  const handleParticles = (ctx: CanvasRenderingContext2D, width: number, height: number) => {
     const spots = spotsRef.current;
 
     for (let i = 0; i < spots.length; i++) {
       const p = spots[i];
+      if (!p) continue;
       p.update(width, height);
       p.draw(ctx);
 
       for (let j = i; j < spots.length; j++) {
-        const dx = p.x - spots[j].x;
-        const dy = p.y - spots[j].y;
+        const q = spots[j];
+        if (!q) continue;
+        const dx = p.x - q.x;
+        const dy = p.y - q.y;
         const distance = Math.hypot(dx, dy);
         if (distance < 90) {
           ctx.beginPath();
           ctx.strokeStyle = p.getStrokeColor();
           ctx.lineWidth = p.size / 10;
           ctx.moveTo(p.x, p.y);
-          ctx.lineTo(spots[j].x, spots[j].y);
+          ctx.lineTo(q.x, q.y);
           ctx.stroke();
         }
       }
@@ -266,7 +304,7 @@ const ParticleField = ({
     const canvas = canvasRef.current;
     if (!canvas) return;
 
-    const handleMouseMove = (e) => {
+    const handleMouseMove = (e: PointerEvent) => {
       if (!shouldRunRef.current) return;
       const rect = canvas.getBoundingClientRect();
       mouseRef.current.x = e.clientX - rect.left;
@@ -296,7 +334,7 @@ const ParticleField = ({
 
   useEffect(() => {
     if (!followMode && spotsRef.current.length === 0) {
-      const { w, h } = sizeRef.current; // use cached size
+      const { w, h } = sizeRef.current;
       for (let i = 0; i < maxFollowRef.current; i++) {
         spotsRef.current.push(
           new Particle(w, h, {

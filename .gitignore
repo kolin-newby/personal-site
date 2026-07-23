@@ -4,4 +4,3 @@ dist/
 .vscode/
 yarn.lock
 .env
-src/generated/

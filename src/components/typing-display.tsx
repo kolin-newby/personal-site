@@ -3,15 +3,15 @@ import { usePageVisible } from "../common/use-page-visible";
 import { useInViewport } from "../common/use-in-viewport";
 
 type Props = {
-  words?: string[];
+  typingTerms?: string[];
   typingSpeed?: number;
   deletingSpeed?: number;
   pauseTime?: number;
   pauseWhenOffScreen?: boolean;
 };
 
-const Typer = ({
-  words = [
+export const TypingDisplay = ({
+  typingTerms = [
     "Developer",
     "Climber",
     "UX Designer",
@@ -51,13 +51,13 @@ const Typer = ({
 
     if (!shouldRun) return;
 
-    const currentWord = words[wordIndex] ?? "";
+    const currentWord = typingTerms[wordIndex] ?? "";
 
     // Default plan: schedule a type/delete step
     let delay = isDeleting ? deletingSpeed : typingSpeed;
     let nextTimer = setTimeout(() => {
       setText((prev) =>
-        isDeleting ? prev.slice(0, -1) : currentWord.slice(0, prev.length + 1)
+        isDeleting ? prev.slice(0, -1) : currentWord.slice(0, prev.length + 1),
       );
     }, delay);
 
@@ -70,7 +70,7 @@ const Typer = ({
       // finished deleting → advance word immediately (no timer needed here)
       clearTimeout(nextTimer);
       setIsDeleting(false);
-      setWordIndex((prev) => (prev + 1) % words.length);
+      setWordIndex((prev) => (prev + 1) % typingTerms.length);
       return; // nothing else to schedule this tick
     }
 
@@ -86,7 +86,7 @@ const Typer = ({
     text,
     isDeleting,
     wordIndex,
-    words,
+    typingTerms,
     typingSpeed,
     deletingSpeed,
     pauseTime,
@@ -96,7 +96,7 @@ const Typer = ({
   // Be polite to users who prefer reduced motion
   useEffect(() => {
     if (prefersReducedMotion) {
-      setText(words[0] ?? "");
+      setText(typingTerms[0] ?? "");
       setIsDeleting(false);
       setWordIndex(0);
       if (timeoutRef.current) {
@@ -108,11 +108,13 @@ const Typer = ({
   }, [prefersReducedMotion]);
 
   return (
-    <span ref={containerRef} className="word-typer pl-2 text-center">
+    <span
+      ref={containerRef}
+      className="word-typer pl-2 text-center"
+      aria-hidden="true"
+    >
       {text}
       <span className="cursor">|</span>
     </span>
   );
 };
-
-export default Typer;

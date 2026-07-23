@@ -1,0 +1,14 @@
+query GetIconDisplay {
+  iconDisplay {
+    icon {
+      label
+      svg {
+        title
+        altText
+        file {
+          url
+        }
+      }
+    }
+  }
+}

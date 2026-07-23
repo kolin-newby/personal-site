@@ -1,0 +1,8 @@
+query GetIntroduction {
+  introduction {
+    heading
+    typingTerms {
+      name
+    }
+  }
+}

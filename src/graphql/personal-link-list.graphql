@@ -1,0 +1,28 @@
+query GetPersonalLinkList {
+  personalLinkList {
+    links {
+      label
+      url
+      newTab
+      isDownload
+      downloadValue
+      downloadFile {
+        title
+        altText
+        file {
+          url
+        }
+      }
+      icon {
+        label
+        svg {
+          file {
+            url
+          }
+          title
+          altText
+        }
+      }
+    }
+  }
+}

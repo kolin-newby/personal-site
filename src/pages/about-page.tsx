@@ -1,59 +1,60 @@
-import PhotoCarousel from "../components/photo-carousel";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import type { IconProp } from "@fortawesome/fontawesome-svg-core";
-import IdleScrollArea from "../components/idle-scroll-area";
-import TextHighlighterContainer from "../components/text-highlighter-container";
-import Button from "../components/common/button";
-
-type Skill = {
-  title: string;
-  icon: string;
-};
+import PhotoCarousel from "@/components/photo-carousel";
+import IdleScrollArea from "@/components/idle-scroll-area";
+import TextHighlighterContainer from "@/components/text-highlighter-container";
+import Button from "@/components/common/button";
+import { useGetBio } from "@/hooks/useGetBio";
+import {
+  renderDocumentNodes,
+  type Element as DocumentElement,
+} from "@/components/document-renderer";
+import { useGetPersonalLinkList } from "@/hooks/useGetPersonalLinkList";
+import { useGetIconDisplay } from "@/hooks/useGetIconDisplay";
+import { CustomSvg } from "@/components/custom-svg";
+import type { Icon } from "@/generated/graphql";
 
 type Props = {
   className?: string;
 };
 
 const AboutPage = ({ className = "" }: Props) => {
-  const skills1: Skill[] = [
-    { title: "Golang", icon: "fa-brands fa-golang" },
-    { title: "JavaScript", icon: "fa-brands fa-js" },
-    { title: "React", icon: "fa-brands fa-react" },
-    { title: "Python", icon: "fa-brands fa-python" },
-    { title: "HTML5", icon: "fa-brands fa-html5" },
-  ];
-  const skills2: Skill[] = [
-    { title: "CSS3", icon: "fa-brands fa-css3" },
-    { title: "Git", icon: "fa-brands fa-git-alt" },
-    { title: "Docker", icon: "fa-brands fa-docker" },
-    { title: "Java", icon: "fa-brands fa-java" },
-    { title: "Linux", icon: "fa-brands fa-linux" },
-  ];
-  const skills3: Skill[] = [
-    { title: "Hubspot", icon: "fa-brands fa-hubspot" },
-    { title: "Ubuntu", icon: "fa-brands fa-ubuntu" },
-    { title: "Github", icon: "fa-brands fa-github" },
-    { title: "Confluence", icon: "fa-brands fa-confluence" },
-    { title: "Bash", icon: "fa-solid fa-terminal" },
-  ];
+  const { data: bioData, error: bioError, isError: isBioError } = useGetBio();
+  const {
+    data: iconDisplayData,
+    error: iconDisplayError,
+    isError: isIconDisplayError,
+  } = useGetIconDisplay();
+  const {
+    data: linkListData,
+    error: linkListError,
+    isError: isLinkListError,
+  } = useGetPersonalLinkList();
 
-  const allSkills: Skill[] = [
-    { title: "Golang", icon: "fa-brands fa-golang" },
-    { title: "JavaScript", icon: "fa-brands fa-js" },
-    { title: "React", icon: "fa-brands fa-react" },
-    { title: "Python", icon: "fa-brands fa-python" },
-    { title: "HTML5", icon: "fa-brands fa-html5" },
-    { title: "CSS3", icon: "fa-brands fa-css3" },
-    { title: "Git", icon: "fa-brands fa-git-alt" },
-    { title: "Docker", icon: "fa-brands fa-docker" },
-    { title: "Java", icon: "fa-brands fa-java" },
-    { title: "Linux", icon: "fa-brands fa-linux" },
-    { title: "Hubspot", icon: "fa-brands fa-hubspot" },
-    { title: "Ubuntu", icon: "fa-brands fa-ubuntu" },
-    { title: "Github", icon: "fa-brands fa-github" },
-    { title: "Confluence", icon: "fa-brands fa-confluence" },
-    { title: "Bash", icon: "fa-solid fa-terminal" },
-  ];
+  if (isBioError) console.error("useGetBio error: ", bioError);
+  if (isLinkListError) console.error("useGetLinkList error: ", linkListError);
+  if (isIconDisplayError)
+    console.error("useGetIconDisplay error: ", iconDisplayError);
+
+  const sectionIconDisplayList = (
+    input: Icon[],
+    rows: number,
+    // starts at 1.
+    position: number,
+  ) => {
+    if (position > rows) return [];
+    const remainder = input?.length % rows;
+    const sectionLengths = (input?.length - remainder) / rows;
+
+    let final = input?.slice(
+      (position - 1) * sectionLengths,
+      position * sectionLengths,
+    );
+
+    if (!final) return [];
+
+    if (remainder === 0 || position > remainder) return final;
+
+    return [...final, input[rows * sectionLengths + (position - 1)]];
+  };
 
   return (
     <div
@@ -67,81 +68,57 @@ const AboutPage = ({ className = "" }: Props) => {
       >
         <div
           className={
-            "flex flex-col space-y-4 text-xs md:text-sm text-shadow p-6 lg:px-12 items-start justify-end max-w-[900px] lg:min-h-1/2 pb-4 pt-10 lg:pb-0 lg:pt-10"
+            "flex flex-col space-y-4 text-xs md:text-sm text-shadow p-6 lg:px-12 items-start justify-end max-w-225 lg:min-h-1/2 pb-4 pt-10 lg:pb-0 lg:pt-10"
           }
         >
-          <TextHighlighterContainer
-            className="flex flex-col space-y-2"
-            terms={[
-              "backend",
-              "frontend",
-              "API calls",
-              "full-stack",
-              "web applications",
-              "hire me",
-              "startup",
-              "enterprise",
-              "thousands of users",
-            ]}
-            caseSensitive
-            holdAfterAllSec={10}
-            perWordFillSec={0.45}
-          >
-            <span>
-              I&#39;m a full-stack software engineer based in Denver. I have
-              experience building performant, reliable, and user-focused web
-              applications from the ground up. My background spans both startup
-              and enterprise environments, with a focus on crafting clean,
-              maintainable code and developing products that make complex
-              systems intuitive to use.
-            </span>
-            <span>
-              At Resurface Labs, I led the design and development of the user
-              experience and user interface, working across backend
-              infrastructure and frontend services to ship production-ready
-              features. At Graylog, I collaborated with the core team across
-              time zones to implement new features, build interfaces, and
-              optimize API calls, improving performance and usability for
-              thousands of users.
-            </span>
-            <span>
-              I'm currently looking for my next role as a developer. Want to
-              hire me?
-            </span>
-          </TextHighlighterContainer>
+          <div>
+            <TextHighlighterContainer
+              className="flex flex-col space-y-2"
+              terms={bioData?.bio?.textToHighlight?.map(
+                (item) => item.name ?? "",
+              )}
+              caseSensitive
+              holdAfterAllSec={10}
+              perWordFillSec={0.45}
+            >
+              {bioData?.bio?.content &&
+                renderDocumentNodes(
+                  (bioData.bio.content.document as DocumentElement[]) ?? [],
+                )}
+            </TextHighlighterContainer>
+          </div>
 
           <div className="flex justify-evenly items-center w-full pt-3 space-x-2">
-            <Button
-              buttonText="My Resume"
-              href={"/resume.pdf"}
-              download={"resume_newby"}
-              icon={
-                <FontAwesomeIcon
-                  icon={"fa-solid fa-file-lines" as unknown as IconProp}
-                  className="size-5! md:size-7!"
+            {linkListData?.personalLinkList?.links?.map((link) => {
+              const {
+                label,
+                url,
+                newTab,
+                icon,
+                isDownload,
+                downloadValue,
+                downloadFile,
+              } = link;
+
+              return (
+                <Button
+                  buttonText={label}
+                  aria-label={label}
+                  href={
+                    isDownload && downloadFile?.file?.url
+                      ? downloadFile?.file?.url
+                      : url
+                  }
+                  newTab={newTab}
+                  download={isDownload && downloadValue ? downloadValue : null}
+                  icon={
+                    icon?.svg?.file?.url && (
+                      <CustomSvg source={icon?.svg?.file?.url ?? ""} />
+                    )
+                  }
                 />
-              }
-            />
-            <Button
-              buttonText="My LinkedIn"
-              href={"https://www.linkedin.com/in/knewby/"}
-              icon={
-                <FontAwesomeIcon
-                  icon={"fa-brands fa-linkedin" as unknown as IconProp}
-                  className="size-5! md:size-7!"
-                />
-              }
-            />
-            <Button
-              buttonText="My GitHub"
-              href={"https://github.com/kolin-newby"}
-              icon={
-                <FontAwesomeIcon
-                  icon={"fa-brands fa-github" as unknown as IconProp}
-                  className="size-5! md:size-7!"
-                />
-              }
-            />
+              );
+            })}
           </div>
         </div>
         <div
@@ -151,9 +128,7 @@ const AboutPage = ({ className = "" }: Props) => {
         >
           {/* ====================================================== */}
           <div
-            className={
-              "relative flex lg:hidden flex-col space-y-3 lg:max-w-[450px] w-full text-black/40 py-3 shadow-inner bg-linear-to-br from-black/10 to-gray-200/50 lg:rounded-lg"
-            }
+            className={`relative flex flex-col space-y-3 lg:max-w-112.5 w-full text-black/40 py-3 shadow-inner bg-linear-to-br from-black/10 to-gray-200/50 lg:rounded-lg ${iconDisplayData?.iconDisplay?.icon?.length && iconDisplayData?.iconDisplay?.icon?.length >= 12 && "lg:hidden"}`}
           >
             <div key={"skills-row-all"} className={"overflow-hidden w-full"}>
               <IdleScrollArea
@@ -166,16 +141,14 @@ const AboutPage = ({ className = "" }: Props) => {
                 className="scrollbar-display-none w-full h-full leading-0"
               >
                 <div className="inline-flex items-center">
-                  {allSkills.map((skill, index) => (
-                    <div
-                      key={`skill-all-${index}-${skill.title}`}
-                      className={"mx-10 size-10 md:size-14 lg:size-16"}
-                    >
-                      <FontAwesomeIcon
-                        icon={skill.icon as unknown as IconProp}
-                        className="block align-middle w-full! h-full!"
-                      />
-                    </div>
+                  {iconDisplayData?.iconDisplay?.icon?.map((icon, index) => (
+                    <CustomSvg
+                      source={icon?.svg?.file?.url ?? ""}
+                      key={`skill-all-${index}-${icon?.label}`}
+                      className={
+                        "mx-10 size-10 md:size-14 lg:size-16 opacity-50 hover:opacity-100 transition-opacity"
+                      }
+                    />
                   ))}
                 </div>
               </IdleScrollArea>
@@ -186,9 +159,7 @@ const AboutPage = ({ className = "" }: Props) => {
           {/* triple line skill scroller below \/ */}
 
           <div
-            className={
-              "relative hidden lg:flex flex-col space-y-3 lg:max-w-[450px] w-full text-black/40 py-4 shadow-inner bg-linear-to-br from-black/10 to-gray-200/50 lg:rounded-lg"
-            }
+            className={`relative hidden flex-col space-y-3 lg:max-w-112.5 w-full text-black/40 py-4 shadow-inner bg-linear-to-br from-black/10 to-gray-200/50 lg:rounded-lg ${iconDisplayData?.iconDisplay?.icon?.length && iconDisplayData?.iconDisplay?.icon?.length >= 12 && "lg:flex"}`}
           >
             <div key={"skills-row-1"} className={"overflow-hidden w-full"}>
               <IdleScrollArea
@@ -201,16 +172,18 @@ const AboutPage = ({ className = "" }: Props) => {
                 className="scrollbar-display-none w-full leading-0"
               >
                 <div className="inline-flex items-center">
-                  {skills1.map((skill, index) => (
-                    <div
-                      key={`skill-r1-${index}-${skill.title}`}
-                      className={"mx-10 size-10 md:size-14 lg:size-16"}
-                    >
-                      <FontAwesomeIcon
-                        icon={skill.icon as unknown as IconProp}
-                        className="block align-middle w-full! h-full!"
-                      />
-                    </div>
+                  {sectionIconDisplayList(
+                    iconDisplayData?.iconDisplay?.icon as Icon[],
+                    3,
+                    1,
+                  ).map((icon, index) => (
+                    <CustomSvg
+                      source={icon?.svg?.file?.url ?? ""}
+                      key={`skill-all-${index}-${icon?.label}`}
+                      className={
+                        "mx-10 size-10 md:size-14 lg:size-16 opacity-50 hover:opacity-100 transition-opacity"
+                      }
+                    />
                   ))}
                 </div>
               </IdleScrollArea>
@@ -226,16 +199,18 @@ const AboutPage = ({ className = "" }: Props) => {
                 className="scrollbar-display-none w-full leading-0"
               >
                 <div className="inline-flex items-center">
-                  {skills2.map((skill, index) => (
-                    <div
-                      key={`skill-r2-${index}-${skill.title}`}
-                      className={"mx-10 size-10 md:size-14 lg:size-16"}
-                    >
-                      <FontAwesomeIcon
-                        icon={skill.icon as unknown as IconProp}
-                        className="block align-middle w-full! h-full!"
-                      />
-                    </div>
+                  {sectionIconDisplayList(
+                    iconDisplayData?.iconDisplay?.icon as Icon[],
+                    3,
+                    2,
+                  ).map((icon, index) => (
+                    <CustomSvg
+                      source={icon?.svg?.file?.url ?? ""}
+                      key={`skill-all-${index}-${icon?.label}`}
+                      className={
+                        "mx-10 size-10 md:size-14 lg:size-16 opacity-50 hover:opacity-100 transition-opacity"
+                      }
+                    />
                   ))}
                 </div>
               </IdleScrollArea>
@@ -251,16 +226,18 @@ const AboutPage = ({ className = "" }: Props) => {
                 className="scrollbar-display-none w-full h-full leading-0"
               >
                 <div className="inline-flex items-center">
-                  {skills3.map((skill, index) => (
-                    <div
-                      key={`skill-r3-${index}-${skill.title}`}
-                      className={"mx-10 size-10 md:size-14 lg:size-16"}
-                    >
-                      <FontAwesomeIcon
-                        icon={skill.icon as unknown as IconProp}
-                        className="block align-middle w-full! h-full!"
-                      />
-                    </div>
+                  {sectionIconDisplayList(
+                    iconDisplayData?.iconDisplay?.icon as Icon[],
+                    3,
+                    3,
+                  ).map((icon, index) => (
+                    <CustomSvg
+                      source={icon?.svg?.file?.url ?? ""}
+                      key={`skill-all-${index}-${icon?.label}`}
+                      className={
+                        "mx-10 size-10 md:size-14 lg:size-16 opacity-50 hover:opacity-100 transition-opacity"
+                      }
+                    />
                   ))}
                 </div>
               </IdleScrollArea>
@@ -270,16 +247,7 @@ const AboutPage = ({ className = "" }: Props) => {
         </div>
       </div>
       <PhotoCarousel
-        className={
-          "flex lg:max-w-1/2 lg:min-w-[200px] w-full h-1/2 lg:h-full grow"
-        }
-        imageSourceList={[
-          "https://s1.darkroom.com/x0bhc9o374iyukfue2r0w16eylx6",
-          "https://s2.darkroom.com/j62muwmn0qscmt0vrdlizmtod0nc",
-          "https://s0.darkroom.com/rb69qelblbux7vzc6z96tx8zqq5n",
-          "https://s1.darkroom.com/vya81fp2tnfae5mg7tjm6ed1t87w",
-          "https://s3.darkroom.com/syt12jq96c9jxcw7etw93xplnpr6",
-        ]}
+        className={"flex lg:max-w-1/2 lg:min-w-50 w-full h-1/2 lg:h-full grow"}
       />
     </div>
   );

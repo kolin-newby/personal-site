@@ -1,0 +1,30 @@
+query GetProjectDisplay {
+  projectDisplay {
+    projects {
+      id
+      title
+      projectContext
+      description {
+        document
+      }
+      skills {
+        name
+      }
+      gallery {
+        id
+        altText
+        image {
+          url
+        }
+      }
+      repository {
+        title
+        type
+        link {
+          label
+          url
+        }
+      }
+    }
+  }
+}

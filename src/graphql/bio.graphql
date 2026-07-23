@@ -1,0 +1,10 @@
+query GetBio {
+  bio {
+    content {
+      document
+    }
+    textToHighlight {
+      name
+    }
+  }
+}

@@ -1,22 +1,22 @@
 import React from "react";
-import WorkListItem from "./work-list-item";
-import type { WorkItem } from "../../types/work";
+import { ProjectListItem } from "./project";
+import type { Project } from "@/generated/graphql";
 
 type Props = {
-  workItemList?: WorkItem[];
+  projectList?: Project[];
   modalOpen: boolean;
   setModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
-  setSelectedWork: React.Dispatch<React.SetStateAction<WorkItem | null>>;
+  setSelectedProject: React.Dispatch<React.SetStateAction<Project | null>>;
 };
 
-const WorkList = ({
-  workItemList,
+export const ProjectList = ({
+  projectList,
   modalOpen,
   setModalOpen,
-  setSelectedWork,
+  setSelectedProject,
 }: Props) => {
-  const handleOpenClick = (workItem: WorkItem) => {
-    setSelectedWork(workItem);
+  const handleOpenClick = (project: Project) => {
+    setSelectedProject(project);
     setModalOpen(true);
   };
 
@@ -26,15 +26,13 @@ const WorkList = ({
         modalOpen ? "-translate-x-full" : "translate-x-0"
       }`}
     >
-      {workItemList?.map((item, index) => (
-        <WorkListItem
+      {projectList?.map((item, index) => (
+        <ProjectListItem
           key={item.title + "-" + index}
-          workItem={item}
+          project={item}
           handleOpenClick={() => handleOpenClick(item)}
         />
       ))}
     </ul>
   );
 };
-
-export default WorkList;

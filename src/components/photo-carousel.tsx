@@ -1,16 +1,20 @@
 import { useEffect, useRef, useState } from "react";
 import Arrow from "./common/arrow";
 import { Camera } from "lucide-react";
+import { useGetGallery } from "@/hooks/useGetGallery";
 
 type Props = {
-  imageSourceList?: string[];
   className?: string;
 };
 
-const PhotoCarousel = ({ imageSourceList, className }: Props) => {
+const PhotoCarousel = ({ className }: Props) => {
   const [active, setActive] = useState<number | null>(null);
   const [photoInfoOpen, setPhotoInfoOpen] = useState(false);
   const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  const { data, isError, error } = useGetGallery();
+
+  if (isError) console.error(`Error fetching gallery: ${error}`);
 
   const handlePhotoInfoClick = () => {
     if (timeoutRef.current) {
@@ -67,22 +71,22 @@ const PhotoCarousel = ({ imageSourceList, className }: Props) => {
                     photoInfoOpen ? "w-64" : "w-0 group-hover:w-64"
                   }`}
                 >
-                  how I like to spend my free time
+                  {data?.gallery?.tagline ?? ""}
                 </span>
               </div>
             </div>
-            {imageSourceList?.map((source, index) => (
+            {data?.gallery?.photos?.map((image, index) => (
               <div
-                key={`image-${source}-${index}`}
+                key={`image-${image.id}-${index}`}
                 className={`flex ${
                   active === index
                     ? "basis-full z-10 shadow-2xl"
                     : active === null
-                    ? "flex-col overflow-hidden basis-24 hover:basis-1/2 shadow-xl z-0"
-                    : "basis-0"
+                      ? "flex-col overflow-hidden basis-24 hover:basis-1/2 shadow-xl z-0"
+                      : "basis-0"
                 } bg-center bg-cover bg-no-repeat h-full transition-all duration-700 rounded-lg transform justify-end items-end`}
                 style={{
-                  backgroundImage: `url('${source}')`,
+                  backgroundImage: `url('${image.image?.url}')`,
                 }}
                 onClick={() => {
                   if (active !== index) setActive(index);
@@ -93,13 +97,9 @@ const PhotoCarousel = ({ imageSourceList, className }: Props) => {
             ))}
           </div>
           <div className="hidden lg:flex inset-x-0 bottom-full transform -rotate-3 justify-center text-xl text-black/60 items-end">
-            <Arrow
-              className={"flex transform rotate-180 opacity-60"}
-            />
+            <Arrow className={"flex transform rotate-180 opacity-60"} />
             <div className="pb-2 text-nowrap flex space-x-1.5">
-              <span className="hand-written">
-                how I like to spend my free time
-              </span>
+              <p className="hand-written">{data?.gallery?.tagline ?? ""}</p>
             </div>
           </div>
         </div>

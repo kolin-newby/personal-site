@@ -1,0 +1,12 @@
+query GetGallery {
+  gallery {
+    photos {
+      id
+      altText
+      image {
+        url
+      }
+    }
+    tagline
+  }
+}

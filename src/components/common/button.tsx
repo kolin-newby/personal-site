@@ -17,6 +17,7 @@ type Props = {
   icon?: React.ReactNode | null;
   download?: string | null;
   ringColors?: string[];
+  newTab?: boolean | null;
 };
 
 const Button = ({
@@ -26,6 +27,7 @@ const Button = ({
   icon = null,
   download = null,
   ringColors = ["#FFF176", "#A5D6A7", "#81D4FA", "#FFAB91", "#F8BBD0"],
+  newTab = true,
 }: Props) => {
   const colorPairRef = useRef(getRandomColorPair(ringColors));
   const [ringColor1, ringColor2] = colorPairRef.current;
@@ -42,8 +44,8 @@ const Button = ({
     return (
       <a
         href={href}
-        target="_blank"
-        rel="noreferrer"
+        target={newTab ? "_blank" : undefined}
+        rel={newTab ? "noreferrer" : undefined}
         download={download ?? undefined}
         className={baseClasses}
         style={baseStyles}
@@ -54,7 +56,11 @@ const Button = ({
     );
 
   return (
-    <button onClick={onClick ?? undefined} className={baseClasses} style={baseStyles}>
+    <button
+      onClick={onClick ?? undefined}
+      className={baseClasses}
+      style={baseStyles}
+    >
       {icon !== null && <>{icon}</>}
       {buttonText && <span>{buttonText}</span>}
     </button>

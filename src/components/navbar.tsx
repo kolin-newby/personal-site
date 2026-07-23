@@ -1,12 +1,10 @@
-import React, { useEffect, useState } from "react";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import type { IconProp } from "@fortawesome/fontawesome-svg-core";
-import { ChevronDown } from "lucide-react";
+import React, { useEffect, useState, type ReactElement } from "react";
+import { BriefcaseBusiness, ChevronDown, House, User } from "lucide-react";
 
 type NavbarItem = {
   id: string;
   title: string;
-  icon: IconProp;
+  icon: ReactElement;
 };
 
 type Props = {
@@ -29,9 +27,9 @@ const Navbar = ({
   const [active, setActive] = useState("home");
 
   const navbarItems: NavbarItem[] = [
-    { id: "home", title: "Home", icon: "home" },
-    { id: "about", title: "About", icon: "user" },
-    { id: "projects", title: "Projects", icon: "briefcase" },
+    { id: "home", title: "Home", icon: <House /> },
+    { id: "about", title: "About", icon: <User /> },
+    { id: "projects", title: "Projects", icon: <BriefcaseBusiness /> },
   ];
 
   useEffect(() => {
@@ -80,7 +78,7 @@ const Navbar = ({
       {navbarItems.map((item, index) => (
         <div
           key={`nav-item-${index}-${item.id}`}
-          className={`group/item relative flex w-1/3 items-center h-full bg-transparent backdrop-blur-2xl space-x-4 transform transition-transform duration-500 -translate-y-full cursor-pointer ${
+          className={`group/item relative flex w-1/3 items-center justify-center h-full bg-transparent backdrop-blur-2xl space-x-4 transform transition-transform duration-500 -translate-y-full cursor-pointer ${
             touch
               ? barOpen
                 ? "translate-y-0"
@@ -97,11 +95,7 @@ const Navbar = ({
               "absolute top-0 h-3 w-full bg-black/30 transform transition-transform -translate-y-full group-hover/item:translate-y-0"
             }
           />
-          <FontAwesomeIcon
-            icon={item.icon}
-            size={"xl"}
-            className={"hidden lg:flex"}
-          />
+          {item.icon && item.icon}
           <span className={"flex"}>{item.title}</span>
         </div>
       ))}

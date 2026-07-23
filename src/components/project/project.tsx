@@ -1,14 +1,14 @@
 import { ChevronLeft } from "lucide-react";
 import IdleScrollArea from "../idle-scroll-area";
 import ParticleField from "../particle-field";
-import type { WorkItem } from "../../types/work";
+import type { Keyword, Project } from "@/generated/graphql";
 
 type Props = {
-  workItem: WorkItem;
+  project: Project;
   handleOpenClick: () => void;
 };
 
-const WorkListItem = ({ workItem, handleOpenClick }: Props) => {
+export const ProjectListItem = ({ project, handleOpenClick }: Props) => {
   return (
     <li className="flex relative w-full pl-6">
       <div
@@ -24,9 +24,9 @@ const WorkListItem = ({ workItem, handleOpenClick }: Props) => {
           color
         />
         <div className="flex flex-col w-3/4 space-y-3 px-12 py-10 z-10">
-          <h2 className={"flex text-lg md:text-2xl"}>{workItem.title}</h2>
+          <h2 className={"flex text-lg md:text-2xl"}>{project.title}</h2>
           <h2 className="flex text-base md:text-lg opacity-50">
-            {workItem.role}
+            {project.projectContext}
           </h2>
           <div className={"flex flex-row gap-2 text-sm md:text-base"}>
             <IdleScrollArea
@@ -34,17 +34,15 @@ const WorkListItem = ({ workItem, handleOpenClick }: Props) => {
               speed={30}
               idleDelay={3000}
               startDirection="forward"
-              className="scrollbar-display-none w-[640px]"
+              className="scrollbar-display-none w-160"
             >
-              {workItem.skills.map((skill, index) => (
+              {project.skills?.map((skill: Keyword, index: number) => (
                 <div
                   className="inline-block"
                   key={`skill-item-${index}-${skill}`}
                 >
-                  <span>{skill}</span>
-                  {index !== workItem.skills.length - 1 && (
-                    <span>&nbsp;-&nbsp;</span>
-                  )}
+                  {index !== 0 && <span>&nbsp;-&nbsp;</span>}
+                  <span>{skill.name}</span>
                 </div>
               ))}
             </IdleScrollArea>
@@ -64,5 +62,3 @@ const WorkListItem = ({ workItem, handleOpenClick }: Props) => {
     </li>
   );
 };
-
-export default WorkListItem;

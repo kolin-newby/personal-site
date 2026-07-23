@@ -4,7 +4,7 @@ import { useInViewport } from "../common/use-in-viewport";
 
 type Props = {
   children: React.ReactNode;
-  terms: string[];
+  terms: string[] | undefined;
   colors?: string[];
   caseSensitive?: boolean;
   wholeWord?: boolean;
@@ -31,7 +31,7 @@ const TextHighlighterContainer = ({
   className = "",
   pauseWhenOffScreen = true,
 }: Props) => {
-  if (!terms || terms.length === 0) return <>{children}</>;
+  const hasTerms = !!terms && terms.length > 0;
 
   const containerRef = useRef<HTMLDivElement>(null);
   const inView = useInViewport(containerRef, { threshold: 0.1 });
@@ -65,7 +65,7 @@ const TextHighlighterContainer = ({
   };
 
   const config = useMemo(() => {
-    const cfg = makeTermRegex(terms, { wholeWord, caseSensitive });
+    const cfg = makeTermRegex(terms ?? [], { wholeWord, caseSensitive });
     const sortedTermsNorm = cfg.sortedTerms.map((t) =>
       caseSensitive ? t : t.toLowerCase()
     );
@@ -191,6 +191,8 @@ const TextHighlighterContainer = ({
 
     return node;
   };
+
+  if (!hasTerms) return <>{children}</>;
 
   return (
     <div

@@ -1,8 +1,9 @@
 import { useEffect, useMemo, useState } from "react";
 import ParticleField from "./particle-field";
 import { Link2 } from "lucide-react";
+import { SiGithub, SiGitlab } from "@icons-pack/react-simple-icons";
 
-interface GitHubRepo {
+type GitHubRepo = {
   html_url: string;
   full_name: string;
   description: string | null;
@@ -12,17 +13,54 @@ interface GitHubRepo {
   updated_at: string;
   archived: boolean;
   organization?: { avatar_url: string } | null;
-}
+};
 
-const parseOwnerRepo = (url: string): { owner: string; repo: string } | null => {
+type GitLabRepo = {
+  name: string;
+  path_with_namespace: string;
+  description: string | null;
+  avatar_url: string | null;
+  web_url: string;
+  forks_count: number;
+  star_count: number;
+  last_activity_at: string;
+  archived: boolean;
+};
+
+type NormalizedRepo = {
+  name: string;
+  description: string | null;
+  avatar_url: string | null;
+  web_url: string;
+  forks_count: number;
+  star_count: number;
+  last_activity_at: string;
+  archived: boolean;
+  organization: { avatar_url: string } | null;
+  language: string | null;
+};
+
+const parseGitHubUrl = (url: string): string => {
   try {
     const u = new URL(url);
-    if (!/github\.com$/i.test(u.hostname)) return null;
+    if (!/github\.com$/i.test(u.hostname)) return "";
     const [owner, repo] = u.pathname.replace(/^\/+/, "").split("/");
-    if (!owner || !repo) return null;
-    return { owner, repo };
+    if (!owner || !repo) return "";
+    return `https://api.github.com/repos/${owner}/${repo}`;
   } catch {
-    return null;
+    return "";
+  }
+};
+
+const parseGitLabProjectPath = (url: string): string => {
+  try {
+    const u = new URL(url);
+    if (!/gitlab\.com$/i.test(u.hostname)) return "";
+    const path = u.pathname.replace(/^\/+|\/+$/g, "");
+    if (!path) return "";
+    return encodeURIComponent(path);
+  } catch {
+    return "";
   }
 };
 
@@ -32,45 +70,96 @@ const formatCount = (n: number): string => {
 
 type Props = {
   url: string;
+  type: string;
   className?: string;
 };
 
-const RepoPreview = ({ url, className = "" }: Props) => {
-  const parsed = useMemo(() => parseOwnerRepo(url), [url]);
-  const [data, setData] = useState<GitHubRepo | null>(null);
+export const RepoPreview = ({ url, type, className = "" }: Props) => {
+  const parsedGitHubUrl = useMemo(() => parseGitHubUrl(url), [url]);
+  const parsedGitLabPath = useMemo(() => parseGitLabProjectPath(url), [url]);
+  const [data, setData] = useState<NormalizedRepo | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
+
+  const normalizeData = (rawData: GitHubRepo | GitLabRepo): NormalizedRepo => {
+    if ("full_name" in rawData) {
+      return {
+        name: rawData.full_name,
+        description: rawData.description,
+        avatar_url: null,
+        web_url: rawData.html_url,
+        forks_count: rawData.forks_count,
+        star_count: rawData.stargazers_count,
+        last_activity_at: rawData.updated_at,
+        archived: rawData.archived,
+        organization: rawData.organization ?? null,
+        language: rawData.language,
+      };
+    } else {
+      return {
+        name: rawData.path_with_namespace,
+        description: rawData.description,
+        avatar_url: rawData.avatar_url,
+        web_url: rawData.web_url,
+        forks_count: rawData.forks_count,
+        star_count: rawData.star_count,
+        last_activity_at: rawData.last_activity_at,
+        archived: rawData.archived,
+        organization: null,
+        language: null,
+      };
+    }
+  };
 
   useEffect(() => {
     let abort = false;
     async function go() {
-      if (!parsed) {
+      if (type === "github" && !parsedGitHubUrl) {
         setError("Invalid GitHub URL");
+        setLoading(false);
+        return;
+      }
+      if (type === "gitlab" && !parsedGitLabPath) {
+        setError("Invalid GitLab URL");
         setLoading(false);
         return;
       }
       setLoading(true);
       setError(null);
-      try {
-        const res = await fetch(
-          `https://api.github.com/repos/${parsed.owner}/${parsed.repo}`,
-          { headers: { Accept: "application/vnd.github+json" } },
-        );
-        if (!res.ok) throw new Error(`GitHub API error: ${res.status}`);
-        const json = await res.json();
-        console.log(json);
-        if (!abort) setData(json as GitHubRepo);
-      } catch (e) {
-        if (!abort) setError((e as Error)?.message ?? "Failed to load repo");
-      } finally {
-        if (!abort) setLoading(false);
+      if (type === "github") {
+        try {
+          const res = await fetch(parsedGitHubUrl, {
+            headers: { Accept: "application/vnd.github+json" },
+          });
+          if (!res.ok) throw new Error(`GitHub API error: ${res.status}`);
+          const json = await res.json();
+          if (!abort) setData(normalizeData(json as GitHubRepo));
+        } catch (e) {
+          if (!abort) setError((e as Error)?.message ?? "Failed to load repo");
+        } finally {
+          if (!abort) setLoading(false);
+        }
+      } else if (type === "gitlab") {
+        try {
+          const res = await fetch(
+            `https://gitlab.com/api/v4/projects/${parsedGitLabPath}`,
+            { headers: { Accept: "application/json" } },
+          );
+          if (!res.ok) throw new Error(`GitLab API error: ${res.status}`);
+          const json = await res.json();
+          if (!abort) setData(normalizeData(json as GitLabRepo));
+        } catch (e) {
+          if (!abort) setError((e as Error)?.message ?? "Failed to load repo");
+        } finally {
+          if (!abort) setLoading(false);
+        }
       }
     }
     go();
     return () => {
       abort = true;
     };
-  }, [parsed]);
+  }, [type, parsedGitHubUrl, parsedGitLabPath]);
 
   if (!loading && error) {
     return (
@@ -79,7 +168,7 @@ const RepoPreview = ({ url, className = "" }: Props) => {
         target="_blank"
         rel="noreferrer"
         className={
-          "relative flex flex-col text-sm items-center justify-between p-4 max-w-[500px] overflow-hidden rounded-lg bg-linear-to-br from-black/10 to-gray-200/50 shadow-inner " +
+          "relative flex flex-col text-sm items-center justify-between p-4 max-w-125 overflow-hidden rounded-lg bg-linear-to-br from-black/10 to-gray-200/50 shadow-inner " +
           className
         }
         aria-busy="true"
@@ -130,11 +219,11 @@ const RepoPreview = ({ url, className = "" }: Props) => {
 
   return (
     <a
-      href={data.html_url}
+      href={data.web_url}
       target="_blank"
       rel="noopener noreferrer"
       className={`flex flex-col relative max-w-[500px] overflow-hidden p-4 mx-4 rounded-lg shadow-inner bg-linear-to-br from-black/10 to-gray-200/50 ${className}`}
-      aria-label={`Open ${data.full_name} on GitHub`}
+      aria-label={`Open ${data.name} on ${type === "gitlab" ? "GitLab" : "GitHub"}`}
     >
       <ParticleField
         lum="70%"
@@ -147,17 +236,15 @@ const RepoPreview = ({ url, className = "" }: Props) => {
         <div className="flex space-x-4 items-center">
           <div className="flex flex-col justify-center space-y-3">
             <div className="flex items-center space-x-4">
-              <GitHubIcon className="h-5 w-5 text-black/80" />
+              {type === "github" ? <SiGithub /> : <SiGitlab />}
               <span className="font-medium text-black/90">
-                <span>{data.full_name.split("/")[0]}</span>/
-                <span className="font-bold">
-                  {data.full_name.split("/")[1]}
-                </span>
+                <span>{data.name.split("/")[0]}</span>/
+                <span className="font-bold">{data.name.split("/")[1]}</span>
               </span>
               {isArchived && (
-                <span className="ml-1 rounded-full bg-amber-100 px-2 py-0.5 text-xs text-amber-800">
+                <p className="ml-1 rounded-full bg-amber-100 px-2 py-0.5 text-xs text-amber-800">
                   Archived
-                </span>
+                </p>
               )}
             </div>
 
@@ -167,56 +254,34 @@ const RepoPreview = ({ url, className = "" }: Props) => {
               </p>
             )}
             <div className="flex items-center space-x-4 text-xs text-black/60">
-              <span aria-label="stars">
-                ★ {formatCount(data.stargazers_count)}
-              </span>
-              <span aria-label="forks">⑂ {formatCount(data.forks_count)}</span>
+              <p aria-label="stars">★ {formatCount(data.star_count)}</p>
+              <p aria-label="forks">⑂ {formatCount(data.forks_count)}</p>
               {data.language && (
-                <span className="inline-flex items-center gap-1">
+                <p className="inline-flex items-center gap-1">
                   <span className="h-2 w-2 rounded-full bg-black/40" />
                   {data.language}
-                </span>
+                </p>
               )}
-              <span>
-                Updated {new Date(data.updated_at).toLocaleDateString()}
-              </span>
+              <p>
+                Updated {new Date(data.last_activity_at).toLocaleDateString()}
+              </p>
             </div>
           </div>
-          {data?.organization && (
+          {type === "github" && data?.organization ? (
             <img
               src={data.organization.avatar_url}
               alt="org_avatar"
-              className="h-[100px] rounded-lg"
+              className="h-25 rounded-lg"
             />
-          )}
+          ) : type === "gitlab" && data.avatar_url ? (
+            <img
+              src={data.avatar_url}
+              alt="org_avatar"
+              className="h-25 rounded-lg"
+            />
+          ) : null}
         </div>
       </div>
     </a>
   );
 };
-
-type GitHubIconProps = { className?: string };
-
-const GitHubIcon = ({ className = "" }: GitHubIconProps) => {
-  return (
-    <svg
-      viewBox="0 0 16 16"
-      aria-hidden="true"
-      className={className}
-      role="img"
-    >
-      <path
-        fill="currentColor"
-        d="M8 0C3.58 0 0 3.58 0 8a8 8 0 0 0 5.47 7.59c.4.07.55-.17.55-.38
-        0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52
-        -.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95
-        0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82a7.6 7.6 0 0 1 2-.27c.68 0 1.36.09 2 .27
-        1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15
-        0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.49 0 1.07-.01 1.93-.01 2.19
-        0 .21.15.45.55.38A8 8 0 0 0 16 8c0-4.42-3.58-8-8-8Z"
-      />
-    </svg>
-  );
-};
-
-export default RepoPreview;

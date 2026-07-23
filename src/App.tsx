@@ -1,11 +1,10 @@
 import "./App.css";
 import React, { useEffect, useState, Suspense, useCallback } from "react";
-import { loadIcons } from "./config/iconLoader";
 import LoadingCover from "./components/loading-cover";
 import Navbar from "./components/navbar";
 import AboutPage from "./pages/about-page";
 import HomePage from "./pages/home-page";
-import WorkPage from "./pages/work-page";
+import { ProjectPage } from "./pages/project-page";
 
 const App = () => {
   const [darkMode, setDarkMode] = useState(false);
@@ -37,11 +36,6 @@ const App = () => {
 
   useEffect(() => {
     try {
-      loadIcons();
-    } catch (error) {
-      console.error("Failed to load icons: ", error);
-    }
-    try {
       setHasTouch(isTouchDevice());
     } catch (error) {
       console.error("Failed to detect touchscreen: ", error);
@@ -70,7 +64,7 @@ const App = () => {
         />
         <HomePage className={"snap-start my-0.5"} touch={hasTouch} />
         <AboutPage className={"snap-start my-0.5"} />
-        <WorkPage className={"snap-start my-0.5"} />
+        <ProjectPage className={"snap-start my-0.5"} />
       </Suspense>
     </div>
   );

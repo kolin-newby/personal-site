@@ -6,5 +6,5 @@ const endpoint = new URL(
 ).toString();
 
 export const client = new GraphQLClient(endpoint, {
-  credentials: "include",
+  credentials: "omit",
 });

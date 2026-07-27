@@ -154,10 +154,10 @@ const IdleScrollArea = ({
 
     if (infinite && span > 0) {
       isProgrammaticScrollRef.current = true;
-      setPos(el, span);
+      setPos(el, physFromVirtual(virtualPosRef.current));
       requestAnimationFrame(() => (isProgrammaticScrollRef.current = false));
     }
-  }, [axis, infinite, setPos]);
+  }, [axis, infinite, setPos, physFromVirtual]);
 
   useLayoutEffect(() => {
     updateSpan();
@@ -301,13 +301,16 @@ const IdleScrollArea = ({
   );
 
   useEffect(() => {
-    if (shouldRun) {
-      if (!rafRef.current) rafRef.current = requestAnimationFrame(animate);
-    } else if (rafRef.current) {
+    if (!shouldRun) {
+      lastTsRef.current = 0;
+      return;
+    }
+
+    rafRef.current = requestAnimationFrame(animate);
+    return () => {
       cancelAnimationFrame(rafRef.current);
       rafRef.current = 0;
-      lastTsRef.current = 0;
-    }
+    };
   }, [shouldRun, animate]);
 
   useEffect(() => {

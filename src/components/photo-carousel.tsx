@@ -1,20 +1,19 @@
 import { useEffect, useRef, useState } from "react";
 import Arrow from "./common/arrow";
 import { Camera } from "lucide-react";
-import { useGetGallery } from "@/hooks/useGetGallery";
+import type { GetSiteDataQuery } from "@/generated/graphql";
 
 type Props = {
   className?: string;
+  data?: GetSiteDataQuery | undefined;
 };
 
-const PhotoCarousel = ({ className }: Props) => {
+const PhotoCarousel = ({ className, data }: Props) => {
   const [active, setActive] = useState<number | null>(null);
   const [photoInfoOpen, setPhotoInfoOpen] = useState(false);
   const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
-  const { data, isError, error } = useGetGallery();
-
-  if (isError) console.error(`Error fetching gallery: ${error}`);
+  const { gallery } = data ?? {};
 
   const handlePhotoInfoClick = () => {
     if (timeoutRef.current) {
@@ -71,11 +70,11 @@ const PhotoCarousel = ({ className }: Props) => {
                     photoInfoOpen ? "w-64" : "w-0 group-hover:w-64"
                   }`}
                 >
-                  {data?.gallery?.tagline ?? ""}
+                  {gallery?.tagline ?? ""}
                 </span>
               </div>
             </div>
-            {data?.gallery?.photos?.map((image, index) => (
+            {gallery?.photos?.map((image, index) => (
               <div
                 key={`image-${image.id}-${index}`}
                 className={`flex ${
@@ -99,7 +98,7 @@ const PhotoCarousel = ({ className }: Props) => {
           <div className="hidden lg:flex inset-x-0 bottom-full transform -rotate-3 justify-center text-xl text-black/60 items-end">
             <Arrow className={"flex transform rotate-180 opacity-60"} />
             <div className="pb-2 text-nowrap flex space-x-1.5">
-              <p className="hand-written">{data?.gallery?.tagline ?? ""}</p>
+              <p className="hand-written">{gallery?.tagline ?? ""}</p>
             </div>
           </div>
         </div>

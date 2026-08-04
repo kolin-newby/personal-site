@@ -1,5 +1,10 @@
 @import "tailwindcss";
 
+@theme {
+  --navbar-height: 3.5rem;
+  --mobile-navbar-height: 0.75rem;
+}
+
 @keyframes wiggle {
   0%,
   100% {

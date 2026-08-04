@@ -4,24 +4,28 @@ import { ProjectModal } from "../components/project/project-modal";
 import { ProjectList } from "../components/project/project-list";
 
 import { useInViewport } from "../common/use-in-viewport";
-import { useGetProjects } from "@/hooks/useGetProjects";
-import type { Project } from "@/generated/graphql";
+import type { Project, GetSiteDataQuery } from "@/generated/graphql";
 
 type Props = {
   darkMode?: boolean;
   className?: string;
+  touch: boolean;
+  data?: GetSiteDataQuery | undefined;
 };
 
-export const ProjectPage = ({ darkMode, className = "" }: Props) => {
+export const ProjectPage = ({
+  darkMode,
+  className = "",
+  touch,
+  data,
+}: Props) => {
   const containerRef = useRef<HTMLDivElement>(null);
   const isInViewport = useInViewport(containerRef, { threshold: 0 });
 
   const [modalOpen, setModalOpen] = useState(false);
   const [selectedProject, setSelectedProject] = useState<Project | null>(null);
 
-  const { data, isError, error } = useGetProjects();
-
-  if (isError) console.error("useGetBio failed:", error);
+  const { projectDisplay } = data ?? {};
 
   useEffect(() => {
     if (modalOpen && !isInViewport) {
@@ -31,9 +35,9 @@ export const ProjectPage = ({ darkMode, className = "" }: Props) => {
   }, [isInViewport, modalOpen]);
 
   return (
-    <div
+    <section
       ref={containerRef}
-      className={`flex flex-col h-screen relative w-full justify-center ${className}`}
+      className={`flex flex-col relative w-full justify-center h-dvh ${touch ? "pt-(--mobile-navbar-height)" : "pt-(--navbar-height)"} ${className}`}
       id="projects"
       aria-label="projects"
     >
@@ -44,11 +48,11 @@ export const ProjectPage = ({ darkMode, className = "" }: Props) => {
         setSelectedProject={setSelectedProject}
       />
       <ProjectList
-        projectList={(data?.projectDisplay?.projects as Project[]) ?? []}
+        projectList={(projectDisplay?.projects as Project[]) ?? []}
         modalOpen={modalOpen}
         setModalOpen={setModalOpen}
         setSelectedProject={setSelectedProject}
       />
-    </div>
+    </section>
   );
 };

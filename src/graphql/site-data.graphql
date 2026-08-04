@@ -1,0 +1,92 @@
+query GetSiteData {
+  introduction {
+    heading
+    typingTerms {
+      name
+    }
+  }
+  bio {
+    content {
+      document
+    }
+    textToHighlight {
+      name
+    }
+  }
+  iconDisplay {
+    icon {
+      label
+      svg {
+        title
+        altText
+        file {
+          url
+        }
+      }
+    }
+  }
+  personalLinkList {
+    links {
+      label
+      url
+      newTab
+      isDownload
+      downloadValue
+      downloadFile {
+        title
+        altText
+        file {
+          url
+        }
+      }
+      icon {
+        label
+        svg {
+          file {
+            url
+          }
+          title
+          altText
+        }
+      }
+    }
+  }
+  gallery {
+    photos {
+      id
+      altText
+      image {
+        url
+      }
+    }
+    tagline
+  }
+  projectDisplay {
+    projects {
+      id
+      title
+      projectContext
+      description {
+        document
+      }
+      skills {
+        name
+      }
+      gallery {
+        id
+        altText
+        image {
+          url
+        }
+      }
+      repository {
+        title
+        type
+        link {
+          label
+          url
+        }
+      }
+    }
+  }
+}

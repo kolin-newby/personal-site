@@ -35,7 +35,7 @@ const Navbar = ({ scrollPosition, touch, barOpen, setBarOpen }: Props) => {
   return (
     <div
       className={
-        "group/bar fixed z-50 items-start justify-start flex top-0 left-0 right-0 h-14 bg-transparent"
+        "group/bar fixed z-50 items-start justify-start flex top-0 left-0 right-0 h-(--navbar-height) bg-transparent"
       }
     >
       <div

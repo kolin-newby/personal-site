@@ -1,20 +1,19 @@
 import { TypingDisplay } from "@/components/typing-display";
 import ParticleField from "@/components/particle-field";
-import { useGetIntroduction } from "@/hooks/useGetIntroduction";
+import type { GetSiteDataQuery } from "@/generated/graphql";
 
 type Props = {
   className?: string;
   touch?: boolean;
+  data?: GetSiteDataQuery | undefined;
 };
 
-const HomePage = ({ className = "", touch }: Props) => {
-  const { data, isError, error } = useGetIntroduction();
-
-  if (isError) console.error(`Error fetching introduction: ${error}`);
+const HomePage = ({ className = "", touch, data }: Props) => {
+  const { introduction } = data ?? {};
 
   return (
     <section
-      className={`w-full h-[calc()] overflow-hidden relative ${className}`}
+      className={`w-full overflow-hidden relative h-dvh ${touch ? "pt-(--mobile-navbar-height)" : "pt-(--navbar-height)"} ${className}`}
       id="home"
     >
       <ParticleField
@@ -37,13 +36,11 @@ const HomePage = ({ className = "", touch }: Props) => {
             }
           >
             <span className={"flex text-center rounded-2xl relative px-4 py-3"}>
-              {data?.introduction?.heading ?? ""}
+              {introduction?.heading ?? ""}
             </span>
             <TypingDisplay
               typingTerms={
-                data?.introduction?.typingTerms?.map(
-                  (term) => term.name ?? "",
-                ) ?? []
+                introduction?.typingTerms?.map((term) => term.name ?? "") ?? []
               }
             />
           </h1>

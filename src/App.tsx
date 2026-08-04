@@ -5,12 +5,21 @@ import Navbar from "./components/navbar";
 import AboutPage from "./pages/about-page";
 import HomePage from "./pages/home-page";
 import { ProjectPage } from "./pages/project-page";
+import { useGetSiteData } from "@/hooks/useGetSiteData";
 
 const App = () => {
   const [scrollPosition, setScrollPosition] = useState(0);
   const [navBarOpen, setNavBarOpen] = useState(false);
 
   const [hasTouch, setHasTouch] = useState(false);
+
+  const {
+    data: siteData,
+    isError: isSiteDataError,
+    error: siteDataError,
+  } = useGetSiteData();
+
+  if (isSiteDataError) console.error("useGetSiteData error: ", siteDataError);
 
   function handleScroll(event: React.UIEvent<HTMLDivElement>) {
     let container = event.target as HTMLDivElement;
@@ -53,9 +62,21 @@ const App = () => {
           barOpen={navBarOpen}
           setBarOpen={setNavBarOpen}
         />
-        <HomePage className={"snap-start my-0.5"} touch={hasTouch} />
-        <AboutPage className={"snap-start my-0.5"} />
-        <ProjectPage className={"snap-start my-0.5"} />
+        <HomePage
+          className={"snap-start my-0.5"}
+          touch={hasTouch}
+          data={siteData}
+        />
+        <AboutPage
+          className={"snap-start my-0.5"}
+          touch={hasTouch}
+          data={siteData}
+        />
+        <ProjectPage
+          className={"snap-start my-0.5"}
+          touch={hasTouch}
+          data={siteData}
+        />
       </Suspense>
     </div>
   );

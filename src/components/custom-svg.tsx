@@ -1,8 +1,11 @@
-import { useEffect, useState, type SVGProps } from "react";
+import { useEffect, useState, type CSSProperties, type SVGProps } from "react";
 import DOMPurify from "dompurify";
 
 type CustomSvgProps = {
   source: string;
+  // Sets both width and height and prevents flex-shrink from crushing the
+  // icon, regardless of whatever size the source SVG file happens to carry.
+  size?: number | string;
 } & SVGProps<SVGSVGElement>;
 
 type ParsedSvg = {
@@ -12,7 +15,7 @@ type ParsedSvg = {
 
 const cache = new Map<string, ParsedSvg>();
 
-export const CustomSvg = ({ source, ...rest }: CustomSvgProps) => {
+export const CustomSvg = ({ source, size, style, ...rest }: CustomSvgProps) => {
   const [parsed, setParsed] = useState<ParsedSvg | null>(
     () => cache.get(source) ?? null,
   );
@@ -48,10 +51,16 @@ export const CustomSvg = ({ source, ...rest }: CustomSvgProps) => {
 
   if (!parsed) return null;
 
+  const sizeStyle: CSSProperties | undefined =
+    size !== undefined
+      ? { width: size, height: size, flexShrink: 0 }
+      : undefined;
+
   return (
     <svg
       {...(parsed.attributes as unknown as SVGProps<SVGSVGElement>)}
       {...rest}
+      style={{ ...sizeStyle, ...style }}
       dangerouslySetInnerHTML={{ __html: parsed.innerHTML }}
     />
   );
@@ -74,7 +83,11 @@ function parseSvg(raw: string): ParsedSvg | null {
   const attributes: Record<string, string> = {};
   for (const attr of Array.from(svg.attributes)) {
     if (attr.name.startsWith("xmlns")) continue;
-    attributes[attr.name] = attr.value;
+    const name =
+      attr.name === "class"
+        ? "className"
+        : attr.name.replace(/-([a-z])/g, (_, c: string) => c.toUpperCase());
+    attributes[name] = attr.value;
   }
 
   return { attributes, innerHTML: svg.innerHTML };

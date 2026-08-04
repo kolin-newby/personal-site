@@ -13,16 +13,16 @@ const HomePage = ({ className = "", touch }: Props) => {
   if (isError) console.error(`Error fetching introduction: ${error}`);
 
   return (
-    <div
-      className={`w-full h-screen overflow-hidden relative ${className}`}
+    <section
+      className={`w-full h-[calc()] overflow-hidden relative ${className}`}
       id="home"
     >
       <ParticleField
         followMode={!touch}
         lum="50%"
-        maxParticlesFollowMode={100}
         className="absolute top-0 left-0 w-full h-full z-0"
         color
+        particleDensity={20}
       />
       <div className={"relative w-full h-screen pointer-events-none"}>
         <div className={"wrapper relative h-full"}>
@@ -49,7 +49,7 @@ const HomePage = ({ className = "", touch }: Props) => {
           </h1>
         </div>
       </div>
-    </div>
+    </section>
   );
 };
 

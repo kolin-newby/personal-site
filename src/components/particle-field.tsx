@@ -1,4 +1,4 @@
-import React, { useRef, useEffect, useCallback } from "react";
+import React, { useRef, useEffect, useCallback, useState } from "react";
 import { useInViewport } from "../common/use-in-viewport";
 import { usePageVisible } from "../common/use-page-visible";
 
@@ -6,11 +6,11 @@ const getRandom = (min: number, max: number): number =>
   Math.random() * (max - min) + min;
 
 interface ParticleRefs {
-  followModeRef: React.MutableRefObject<boolean>;
-  lumRef: React.MutableRefObject<string>;
-  mouseRef: React.MutableRefObject<{ x: number | undefined; y: number | undefined }>;
-  speedRef: React.MutableRefObject<string>;
-  colorRef: React.MutableRefObject<boolean>;
+  followModeRef: React.RefObject<boolean>;
+  lumRef: React.RefObject<string>;
+  mouseRef: React.RefObject<{ x: number | undefined; y: number | undefined }>;
+  speedRef: React.RefObject<string>;
+  colorRef: React.RefObject<boolean>;
 }
 
 class Particle {
@@ -20,16 +20,19 @@ class Particle {
   speedX: number;
   speedY: number;
   hue: number;
-  private _followModeRef: React.MutableRefObject<boolean>;
-  private _lumRef: React.MutableRefObject<string>;
-  private _mouseRef: React.MutableRefObject<{ x: number | undefined; y: number | undefined }>;
-  private _speedRef: React.MutableRefObject<string>;
-  private _colorRef: React.MutableRefObject<boolean>;
+  private _followModeRef: React.RefObject<boolean>;
+  private _lumRef: React.RefObject<string>;
+  private _mouseRef: React.RefObject<{
+    x: number | undefined;
+    y: number | undefined;
+  }>;
+  private _speedRef: React.RefObject<string>;
+  private _colorRef: React.RefObject<boolean>;
 
   constructor(
     width: number,
     height: number,
-    { followModeRef, lumRef, mouseRef, speedRef, colorRef }: ParticleRefs
+    { followModeRef, lumRef, mouseRef, speedRef, colorRef }: ParticleRefs,
   ) {
     this._followModeRef = followModeRef;
     this._lumRef = lumRef;
@@ -43,8 +46,8 @@ class Particle {
     this.y = fm ? (mouse.y ?? 0) : getRandom(0, height);
     this.size = Math.random() * 2.5;
 
-    this.speedX = Math.random() * 2;
-    this.speedY = Math.random() * 2;
+    this.speedX = getRandom(-1, 1);
+    this.speedY = getRandom(-1, 1);
 
     this.hue = Math.floor(Math.random() * 360);
   }
@@ -103,10 +106,6 @@ class Particle {
     return `hsl(0, 0%, ${lum})`;
   }
 
-  getStrokeColor(): string {
-    return this.getColor();
-  }
-
   draw(ctx: CanvasRenderingContext2D): void {
     ctx.fillStyle = this.getColor();
     ctx.beginPath();
@@ -115,11 +114,13 @@ class Particle {
   }
 }
 
+const PARTICLE_DENSITY_AREA = 100_000;
+
 type Props = {
   followMode?: boolean;
   lum?: string;
   color?: boolean;
-  maxParticlesFollowMode?: number;
+  particleDensity?: number;
   className?: string;
   style?: React.CSSProperties;
   speed?: string;
@@ -130,7 +131,7 @@ const ParticleField = ({
   followMode = false,
   lum = "0%",
   color = false,
-  maxParticlesFollowMode = 100,
+  particleDensity = 10,
   className = "",
   style = {},
   speed = "normal",
@@ -149,14 +150,27 @@ const ParticleField = ({
   const followModeRef = useRef<boolean>(followMode);
   const lumRef = useRef<string>(lum);
   const speedRef = useRef<string>(speed);
-  const maxFollowRef = useRef<number>(maxParticlesFollowMode);
+  const densityRef = useRef<number>(particleDensity);
   const colorRef = useRef<boolean>(color);
 
   const inView = useInViewport(canvasRef, { threshold: 0 });
   const pageVisible = usePageVisible();
-  const prefersReducedMotion =
-    typeof window !== "undefined" &&
-    window.matchMedia?.("(prefers-reduced-motion: reduce)")?.matches;
+
+  const [prefersReducedMotion, setPrefersReducedMotion] = useState(
+    () =>
+      typeof window !== "undefined" &&
+      (window.matchMedia?.("(prefers-reduced-motion: reduce)")?.matches ??
+        false),
+  );
+
+  useEffect(() => {
+    const mql = window.matchMedia?.("(prefers-reduced-motion: reduce)");
+    if (!mql) return;
+
+    const handleChange = () => setPrefersReducedMotion(mql.matches);
+    mql.addEventListener("change", handleChange);
+    return () => mql.removeEventListener("change", handleChange);
+  }, []);
 
   const shouldRun =
     !prefersReducedMotion && (!pauseWhenOffScreen || (inView && pageVisible));
@@ -176,8 +190,8 @@ const ParticleField = ({
     speedRef.current = speed;
   }, [speed]);
   useEffect(() => {
-    maxFollowRef.current = maxParticlesFollowMode;
-  }, [maxParticlesFollowMode]);
+    densityRef.current = particleDensity;
+  }, [particleDensity]);
   useEffect(() => {
     colorRef.current = color;
   }, [color]);
@@ -198,7 +212,17 @@ const ParticleField = ({
     ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
   };
 
-  const handleParticles = (ctx: CanvasRenderingContext2D, width: number, height: number) => {
+  const getTargetParticleCount = (width: number, height: number): number =>
+    Math.max(
+      0,
+      Math.round((densityRef.current * width * height) / PARTICLE_DENSITY_AREA),
+    );
+
+  const handleParticles = (
+    ctx: CanvasRenderingContext2D,
+    width: number,
+    height: number,
+  ) => {
     const spots = spotsRef.current;
 
     for (let i = 0; i < spots.length; i++) {
@@ -207,7 +231,7 @@ const ParticleField = ({
       p.update(width, height);
       p.draw(ctx);
 
-      for (let j = i; j < spots.length; j++) {
+      for (let j = i + 1; j < spots.length; j++) {
         const q = spots[j];
         if (!q) continue;
         const dx = p.x - q.x;
@@ -215,7 +239,7 @@ const ParticleField = ({
         const distance = Math.hypot(dx, dy);
         if (distance < 90) {
           ctx.beginPath();
-          ctx.strokeStyle = p.getStrokeColor();
+          ctx.strokeStyle = p.getColor();
           ctx.lineWidth = p.size / 10;
           ctx.moveTo(p.x, p.y);
           ctx.lineTo(q.x, q.y);
@@ -263,7 +287,7 @@ const ParticleField = ({
 
     if (!followModeRef.current) {
       const { w, h } = sizeRef.current;
-      for (let i = 0; i < maxFollowRef.current; i++) {
+      for (let i = 0; i < getTargetParticleCount(w, h); i++) {
         spotsRef.current.push(
           new Particle(w, h, {
             followModeRef,
@@ -271,7 +295,7 @@ const ParticleField = ({
             mouseRef,
             speedRef,
             colorRef,
-          })
+          }),
         );
       }
     }
@@ -311,7 +335,11 @@ const ParticleField = ({
       mouseRef.current.y = e.clientY - rect.top;
 
       const { w, h } = sizeRef.current;
-      for (let i = 0; i < 2; i++) {
+      for (
+        let i = 0;
+        i < 2 && spotsRef.current.length < getTargetParticleCount(w, h);
+        i++
+      ) {
         spotsRef.current.push(
           new Particle(w, h, {
             followModeRef,
@@ -319,7 +347,7 @@ const ParticleField = ({
             mouseRef,
             speedRef,
             colorRef,
-          })
+          }),
         );
       }
     };
@@ -335,7 +363,7 @@ const ParticleField = ({
   useEffect(() => {
     if (!followMode && spotsRef.current.length === 0) {
       const { w, h } = sizeRef.current;
-      for (let i = 0; i < maxFollowRef.current; i++) {
+      for (let i = 0; i < getTargetParticleCount(w, h); i++) {
         spotsRef.current.push(
           new Particle(w, h, {
             followModeRef,
@@ -343,7 +371,7 @@ const ParticleField = ({
             mouseRef,
             speedRef,
             colorRef,
-          })
+          }),
         );
       }
     }

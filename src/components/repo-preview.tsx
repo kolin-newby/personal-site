@@ -175,9 +175,9 @@ export const RepoPreview = ({ url, type, className = "" }: Props) => {
       >
         <ParticleField
           lum="70%"
-          maxParticlesFollowMode={20}
           className="absolute top-0 left-0 w-full h-full z-0"
           speed="slow"
+          particleDensity={12}
         />
         <div className="flex flex-col z-10">
           <span>Failed to load repository...</span>
@@ -201,9 +201,9 @@ export const RepoPreview = ({ url, type, className = "" }: Props) => {
       >
         <ParticleField
           lum="70%"
-          maxParticlesFollowMode={20}
           className="absolute top-0 left-0 w-full h-full z-0"
           speed="slow"
+          particleDensity={12}
         />
         <div className="space-y-2">
           <div className="h-5 w-56 rounded-lg bg-black/10 animate-pulse" />
@@ -227,9 +227,9 @@ export const RepoPreview = ({ url, type, className = "" }: Props) => {
     >
       <ParticleField
         lum="70%"
-        maxParticlesFollowMode={20}
         className="absolute top-0 left-0 w-full h-full z-0"
         speed="slow"
+        particleDensity={12}
       />
 
       <div className="p-4 z-10">

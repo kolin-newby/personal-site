@@ -1,5 +1,5 @@
 import React, { useEffect, useRef } from "react";
-import { ChevronRight } from "lucide-react";
+import { ChevronRight, Dot } from "lucide-react";
 import IdleScrollArea from "../idle-scroll-area";
 import { RepoPreview } from "../repo-preview";
 import type { Project } from "@/generated/graphql";
@@ -133,21 +133,13 @@ export const ProjectModal = ({
           />
         )}
       </div>
-      <div className="flex flex-col items-center px-2">
-        <IdleScrollArea
-          axis="x"
-          speed={35}
-          idleDelay={2000}
-          startDirection="forward"
-          className="scrollbar-display-none py-2 w-full text-center"
-        >
-          {selectedProject?.skills?.map((skill, index) => (
-            <p className="inline-flex" key={skill.id}>
-              {index !== 0 && <span>&nbsp;-&nbsp;</span>}
-              <span>{skill.name}</span>
-            </p>
-          ))}
-        </IdleScrollArea>
+      <div className="flex flex-wrap items-center justify-center px-2">
+        {selectedProject?.skills?.map((skill, index) => (
+          <p className="inline-flex" key={skill.id}>
+            {index !== 0 && <Dot />}
+            <span>{skill.name}</span>
+          </p>
+        ))}
       </div>
     </div>
   );

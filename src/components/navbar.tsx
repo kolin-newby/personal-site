@@ -8,34 +8,27 @@ type NavbarItem = {
 };
 
 type Props = {
-  darkMode: boolean;
-  setDarkMode: React.Dispatch<React.SetStateAction<boolean>>;
   scrollPosition: number;
   touch: boolean;
   barOpen: boolean;
   setBarOpen: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
-const Navbar = ({
-  darkMode,
-  setDarkMode,
-  scrollPosition,
-  touch,
-  barOpen,
-  setBarOpen,
-}: Props) => {
-  const [active, setActive] = useState("home");
+const navbarItems: NavbarItem[] = [
+  { id: "home", title: "Home", icon: <House /> },
+  { id: "about", title: "About", icon: <User /> },
+  { id: "projects", title: "Projects", icon: <BriefcaseBusiness /> },
+];
 
-  const navbarItems: NavbarItem[] = [
-    { id: "home", title: "Home", icon: <House /> },
-    { id: "about", title: "About", icon: <User /> },
-    { id: "projects", title: "Projects", icon: <BriefcaseBusiness /> },
-  ];
+const navbarItemWidth = (1 / navbarItems.length) * 100;
+
+const Navbar = ({ scrollPosition, touch, barOpen, setBarOpen }: Props) => {
+  const [active, setActive] = useState("home");
 
   useEffect(() => {
     if (active && ["home", "about", "projects"].includes(active)) {
       const el = document.getElementById(active);
-      el?.scrollIntoView();
+      el?.scrollIntoView({ behavior: "smooth" });
     }
   }, [active]);
 
@@ -46,10 +39,11 @@ const Navbar = ({
       }
     >
       <div
-        className={"absolute top-0 w-1/3 bg-black/90 h-3 z-10"}
         style={{
+          width: `${navbarItemWidth}%`,
           left: `${scrollPosition}%`,
         }}
+        className={"absolute top-0 bg-black/90 h-3 z-10"}
       >
         <div
           className={
@@ -57,7 +51,8 @@ const Navbar = ({
           }
         >
           {touch && (
-            <div
+            <button
+              type="button"
               className={`flex w-full transform transition-all duration-500 rounded-b-sm ${
                 barOpen ? "translate-y-10 backdrop-blur-sm" : "translate-y-0"
               }`}
@@ -71,14 +66,16 @@ const Navbar = ({
                 }`}
                 size={"36px"}
               />
-            </div>
+            </button>
           )}
         </div>
       </div>
       {navbarItems.map((item, index) => (
-        <div
+        <button
           key={`nav-item-${index}-${item.id}`}
-          className={`group/item relative flex w-1/3 items-center justify-center h-full bg-transparent backdrop-blur-2xl space-x-4 transform transition-transform duration-500 -translate-y-full cursor-pointer ${
+          type="button"
+          style={{ width: `${navbarItemWidth}%` }}
+          className={`group/item relative flex items-center justify-center h-full bg-transparent backdrop-blur-2xl space-x-0 transform transition-transform duration-500 -translate-y-full cursor-pointer ${
             touch
               ? barOpen
                 ? "translate-y-0"
@@ -95,9 +92,9 @@ const Navbar = ({
               "absolute top-0 h-3 w-full bg-black/30 transform transition-transform -translate-y-full group-hover/item:translate-y-0"
             }
           />
-          {item.icon && item.icon}
+          {item.icon}
           <span className={"flex"}>{item.title}</span>
-        </div>
+        </button>
       ))}
     </div>
   );

@@ -18,10 +18,10 @@ export const ProjectListItem = ({ project, handleOpenClick }: Props) => {
       >
         <ParticleField
           lum="70%"
-          maxParticlesFollowMode={40}
           className="absolute top-0 left-0 w-full h-full z-0"
           speed="slow"
           color
+          particleDensity={12}
         />
         <div className="flex flex-col w-3/4 space-y-3 px-12 py-10 z-10">
           <h2 className={"flex text-lg md:text-2xl"}>{project.title}</h2>

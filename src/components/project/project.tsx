@@ -10,22 +10,22 @@ type Props = {
 
 export const ProjectListItem = ({ project, handleOpenClick }: Props) => {
   return (
-    <li className="flex relative w-full pl-6">
+    <li className="relative flex w-full pl-4">
       <div
         className={
-          "flex flex-row w-full justify-between relative shadow-inner bg-linear-to-br from-black/10 to-gray-200/50 rounded-l-lg items-center"
+          "relative flex w-full flex-row items-center justify-between rounded-l-lg bg-linear-to-br from-black/10 to-gray-200/50 shadow-inner"
         }
       >
         <ParticleField
           lum="70%"
-          className="absolute top-0 left-0 w-full h-full z-0"
+          className="absolute top-0 left-0 z-0 h-full w-full"
           speed="slow"
           color
           particleDensity={12}
         />
-        <div className="flex flex-col w-3/4 space-y-3 px-12 py-10 z-10">
+        <div className="z-10 flex w-3/4 flex-col space-y-3 px-6 py-8">
           <h2 className={"flex text-lg md:text-2xl"}>{project.title}</h2>
-          <h2 className="flex text-base md:text-lg opacity-50">
+          <h2 className="flex text-base opacity-50 md:text-lg">
             {project.projectContext}
           </h2>
           <div className={"flex flex-row gap-2 text-sm md:text-base"}>
@@ -51,10 +51,10 @@ export const ProjectListItem = ({ project, handleOpenClick }: Props) => {
         <button
           onClick={handleOpenClick}
           className={
-            "relative group flex h-full py-1 transition-all duration-300 basis-44 hover:basis-64 z-10"
+            "group relative z-10 flex h-full basis-44 py-1 transition-all duration-300 hover:basis-64"
           }
         >
-          <div className="flex h-full w-full p-4 justify-center items-center cursor-pointer shadow bg-linear-to-br from-gray-200 to-gray-100 rounded-l-lg">
+          <div className="flex h-full w-full cursor-pointer items-center justify-center rounded-l-lg bg-linear-to-br from-gray-200 to-gray-100 p-4 shadow">
             <ChevronLeft size={"44px"} className={"flex"} />
           </div>
         </button>

@@ -17,7 +17,7 @@ export const ProjectPage = ({
   darkMode,
   className = "",
   touch,
-  data,
+  data
 }: Props) => {
   const containerRef = useRef<HTMLDivElement>(null);
   const isInViewport = useInViewport(containerRef, { threshold: 0 });
@@ -37,7 +37,7 @@ export const ProjectPage = ({
   return (
     <section
       ref={containerRef}
-      className={`flex flex-col relative w-full justify-center h-dvh ${touch ? "pt-(--mobile-navbar-height)" : "pt-(--navbar-height)"} ${className}`}
+      className="relative flex min-h-dvh w-full snap-start flex-col justify-center overflow-x-clip pt-(--nav-h)"
       id="projects"
       aria-label="projects"
     >

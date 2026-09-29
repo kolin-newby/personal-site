@@ -1,19 +1,30 @@
-import { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import Arrow from "./common/arrow";
-import { Camera } from "lucide-react";
+import { Camera, ChevronLeft, ChevronRight } from "lucide-react";
 import type { GetSiteDataQuery } from "@/generated/graphql";
 
 type Props = {
   className?: string;
   data?: GetSiteDataQuery | undefined;
+  activePhotoIndex: number | null;
+  setActivePhotoIndex: React.Dispatch<React.SetStateAction<number | null>>;
 };
 
-const PhotoCarousel = ({ className, data }: Props) => {
-  const [active, setActive] = useState<number | null>(null);
+const PhotoCarousel = ({
+  className,
+  data,
+  activePhotoIndex,
+  setActivePhotoIndex
+}: Props) => {
   const [photoInfoOpen, setPhotoInfoOpen] = useState(false);
   const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   const { gallery } = data ?? {};
+  const photoCount = gallery?.photos?.length ?? 0;
+
+  const showAdjacentPhoto = (index: number, step: 1 | -1) => {
+    setActivePhotoIndex(index + step);
+  };
 
   const handlePhotoInfoClick = () => {
     if (timeoutRef.current) {
@@ -40,64 +51,113 @@ const PhotoCarousel = ({ className, data }: Props) => {
     <div className={className}>
       <div
         className={
-          "flex lg:items-center items-start pt-4 justify-center relative w-full"
+          "flex w-full items-start justify-center py-2 md:py-4 lg:items-center"
         }
       >
-        <div className="flex flex-col h-5/6 w-full">
+        <div className="flex h-full w-full flex-col">
           <div
             className={
-              "flex w-full px-4 h-full items-center justify-center relative space-x-1"
+              "flex h-full w-full items-center justify-center space-x-1 px-2 md:px-4"
             }
           >
-            <div
-              onClick={handlePhotoInfoClick}
-              className={`group absolute lg:hidden bottom-0 inset-x-1/2 transform -translate-x-1/2 flex items-center justify-center h-8 w-full mb-2 z-20`}
-            >
-              <div
-                className={`flex flex-row overflow-hidden items-center justify-center h-full bg-white/90 transition-all duration-300 rounded-lg ${
-                  photoInfoOpen ? "px-3" : "px-1"
-                }`}
-              >
-                <Camera
-                  className={`flex transition-all duration-300 ${
-                    photoInfoOpen
-                      ? "opacity-0 w-0"
-                      : "opacity-100 group-hover:opacity-0 group-hover:w-0"
-                  }`}
-                />
-                <span
-                  className={`hand-written text-sm flex flex-nowrap text-nowrap items-center justify-center overflow-hidden transition-all duration-300 ${
-                    photoInfoOpen ? "w-64" : "w-0 group-hover:w-64"
-                  }`}
-                >
-                  {gallery?.tagline ?? ""}
-                </span>
-              </div>
-            </div>
             {gallery?.photos?.map((image, index) => (
               <div
                 key={`image-${image.id}-${index}`}
-                className={`flex ${
-                  active === index
-                    ? "basis-full z-10 shadow-2xl"
-                    : active === null
-                      ? "flex-col overflow-hidden basis-24 hover:basis-1/2 shadow-xl z-0"
+                className={`relative flex overflow-hidden ${
+                  activePhotoIndex === index
+                    ? "z-10 basis-full shadow-2xl"
+                    : activePhotoIndex === null
+                      ? "z-0 basis-24 flex-col shadow-xl hover:basis-1/2"
                       : "basis-0"
-                } bg-center bg-cover bg-no-repeat h-full transition-all duration-700 rounded-lg transform justify-end items-end`}
+                } h-full transform items-end justify-end rounded-lg bg-cover bg-center bg-no-repeat transition-all duration-700`}
                 style={{
-                  backgroundImage: `url('${image.image?.url}')`,
+                  backgroundImage: `url('${image.image?.url}')`
                 }}
                 onClick={() => {
-                  if (active !== index) setActive(index);
-                  else setActive(null);
+                  if (activePhotoIndex !== index) setActivePhotoIndex(index);
+                  else setActivePhotoIndex(null);
                 }}
-                onMouseLeave={() => setActive(null)}
-              />
+              >
+                {index > 0 && (
+                  <button
+                    type="button"
+                    aria-label="Previous photo"
+                    tabIndex={activePhotoIndex === index ? 0 : -1}
+                    onClick={(event) => {
+                      event.stopPropagation();
+                      showAdjacentPhoto(index, -1);
+                    }}
+                    className={`absolute top-1/2 left-0 flex -translate-y-1/2 items-center justify-center rounded-r-lg bg-white/90 py-2 pr-0.5 pl-1 transition-opacity duration-300 ${
+                      activePhotoIndex === index
+                        ? "opacity-100 delay-500"
+                        : "pointer-events-none opacity-0"
+                    }`}
+                  >
+                    <ChevronLeft size={20} />
+                  </button>
+                )}
+                {index < photoCount - 1 && (
+                  <button
+                    type="button"
+                    aria-label="Next photo"
+                    tabIndex={activePhotoIndex === index ? 0 : -1}
+                    onClick={(event) => {
+                      event.stopPropagation();
+                      showAdjacentPhoto(index, 1);
+                    }}
+                    className={`absolute top-1/2 right-0 flex -translate-y-1/2 items-center justify-center rounded-l-lg bg-white/90 py-2 pr-1 pl-0.5 transition-opacity duration-300 ${
+                      activePhotoIndex === index
+                        ? "opacity-100 delay-500"
+                        : "pointer-events-none opacity-0"
+                    }`}
+                  >
+                    <ChevronRight size={20} />
+                  </button>
+                )}
+                <div
+                  onClick={(event) => {
+                    event.stopPropagation();
+                    handlePhotoInfoClick();
+                  }}
+                  className={`group absolute right-0 bottom-0 flex transition-opacity duration-300 ${
+                    activePhotoIndex === index
+                      ? "opacity-100 delay-500"
+                      : "pointer-events-none opacity-0"
+                  }`}
+                >
+                  <div className="flex flex-row items-center justify-center overflow-hidden rounded-tl-lg bg-white/90 px-1 py-0.5 transition-all duration-300">
+                    <Camera
+                      className={`flex pr-0.5 transition-all duration-300 ${
+                        photoInfoOpen
+                          ? "w-0 opacity-0"
+                          : "opacity-100 group-hover:w-0 group-hover:opacity-0"
+                      }`}
+                      size={18}
+                    />
+                    <span
+                      className={`transition-all duration-300 ${
+                        photoInfoOpen
+                          ? "w-0 opacity-0"
+                          : "opacity-100 group-hover:w-0 group-hover:opacity-0"
+                      }`}
+                    >
+                      ?
+                    </span>
+                    <span
+                      className={`hand-written flex flex-nowrap items-center justify-center overflow-hidden text-sm text-nowrap transition-all duration-300 ${
+                        photoInfoOpen ? "w-64" : "w-0 group-hover:w-64"
+                      }`}
+                    >
+                      {image.altText ?? ""}
+                    </span>
+                  </div>
+                </div>
+              </div>
             ))}
           </div>
-          <div className="hidden lg:flex inset-x-0 bottom-full transform -rotate-3 justify-center text-xl text-black/60 items-end">
-            <Arrow className={"flex transform rotate-180 opacity-60"} />
-            <div className="pb-2 text-nowrap flex space-x-1.5">
+          <div className="inset-x-0 bottom-full hidden -rotate-3 transform items-end justify-center text-xl text-black/60 lg:flex">
+            <Arrow className={"flex rotate-180 transform opacity-60"} />
+            <div className="flex space-x-1.5 pb-2 text-nowrap">
               <p className="hand-written">{gallery?.tagline ?? ""}</p>
             </div>
           </div>

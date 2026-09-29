@@ -1,4 +1,4 @@
-import React, { useEffect, useState, type ReactElement } from "react";
+import React, { type ReactElement } from "react";
 import { BriefcaseBusiness, ChevronDown, House, User } from "lucide-react";
 
 type NavbarItem = {
@@ -12,49 +12,47 @@ type Props = {
   touch: boolean;
   barOpen: boolean;
   setBarOpen: React.Dispatch<React.SetStateAction<boolean>>;
+  className?: string;
 };
 
 const navbarItems: NavbarItem[] = [
   { id: "home", title: "Home", icon: <House /> },
   { id: "about", title: "About", icon: <User /> },
-  { id: "projects", title: "Projects", icon: <BriefcaseBusiness /> },
+  { id: "projects", title: "Projects", icon: <BriefcaseBusiness /> }
 ];
 
 const navbarItemWidth = (1 / navbarItems.length) * 100;
 
-const Navbar = ({ scrollPosition, touch, barOpen, setBarOpen }: Props) => {
-  const [active, setActive] = useState("home");
-
-  useEffect(() => {
-    if (active && ["home", "about", "projects"].includes(active)) {
-      const el = document.getElementById(active);
-      el?.scrollIntoView({ behavior: "smooth" });
-    }
-  }, [active]);
-
+const Navbar = ({
+  scrollPosition,
+  touch,
+  barOpen,
+  setBarOpen,
+  className = ""
+}: Props) => {
   return (
     <div
-      className={
-        "group/bar fixed z-50 items-start justify-start flex top-0 left-0 right-0 h-(--navbar-height) bg-transparent"
-      }
+      className={`group/bar sticky top-0 z-50 -mb-(--nav-h) flex h-(--nav-h) w-full ${className}`}
     >
       <div
         style={{
           width: `${navbarItemWidth}%`,
-          left: `${scrollPosition}%`,
+          left: `${(scrollPosition / 100) * (100 - navbarItemWidth)}%`
         }}
-        className={"absolute top-0 bg-black/90 h-3 z-10"}
+        className={"absolute top-0 z-10 h-3 rounded-sm bg-black/80"}
       >
         <div
           className={
-            "absolute w-full top-0 h-10 flex items-end justify-center text-black/50"
+            "pointer-events-none absolute top-3 flex h-[calc(var(--nav-h)-0.75rem)] w-full items-end justify-center text-black/50"
           }
         >
           {touch && (
             <button
               type="button"
-              className={`flex w-full transform transition-all duration-500 rounded-b-sm ${
-                barOpen ? "translate-y-10 backdrop-blur-sm" : "translate-y-0"
+              className={`pointer-events-auto flex w-full transform rounded-sm transition-all duration-500 ${
+                barOpen
+                  ? "translate-y-full bg-black/80 text-white backdrop-blur-md"
+                  : "translate-y-0 text-black/80"
               }`}
               onClick={() => {
                 setBarOpen(!barOpen);
@@ -75,7 +73,7 @@ const Navbar = ({ scrollPosition, touch, barOpen, setBarOpen }: Props) => {
           key={`nav-item-${index}-${item.id}`}
           type="button"
           style={{ width: `${navbarItemWidth}%` }}
-          className={`group/item relative flex items-center justify-center h-full bg-transparent backdrop-blur-2xl space-x-0 transform transition-transform duration-500 -translate-y-full cursor-pointer ${
+          className={`group/item relative flex h-full -translate-y-full transform cursor-pointer items-center justify-center gap-1.5 bg-transparent pt-3 text-sm whitespace-nowrap transition-transform duration-500 group-has-focus-visible/bar:translate-y-0 md:gap-2 md:text-base ${
             touch
               ? barOpen
                 ? "translate-y-0"
@@ -83,13 +81,15 @@ const Navbar = ({ scrollPosition, touch, barOpen, setBarOpen }: Props) => {
               : "group-hover/bar:translate-y-0"
           }`}
           onClick={() => {
-            setActive(item.id);
+            document
+              .getElementById(item.id)
+              ?.scrollIntoView({ behavior: "smooth" });
             setBarOpen(false);
           }}
         >
           <div
             className={
-              "absolute top-0 h-3 w-full bg-black/30 transform transition-transform -translate-y-full group-hover/item:translate-y-0"
+              "absolute top-0 h-3 w-full -translate-y-full transform bg-black/30 transition-transform group-hover/item:translate-y-0 group-focus-visible/item:translate-y-0"
             }
           />
           {item.icon}

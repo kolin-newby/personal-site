@@ -13,7 +13,7 @@ export const ProjectList = ({
   projectList,
   modalOpen,
   setModalOpen,
-  setSelectedProject,
+  setSelectedProject
 }: Props) => {
   const handleOpenClick = (project: Project) => {
     setSelectedProject(project);
@@ -22,7 +22,7 @@ export const ProjectList = ({
 
   return (
     <ul
-      className={`flex flex-col space-y-6 w-full items-center justify-center transform transition-transform duration-500 ${
+      className={`w-full transform items-center justify-center space-y-4 transition-transform duration-500 ${
         modalOpen ? "-translate-x-full" : "translate-x-0"
       }`}
     >

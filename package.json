@@ -5,6 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
+    "dev:prod": "test -n \"$API_PROXY_TARGET\" || { echo 'Set API_PROXY_TARGET to the prod API origin'; exit 1; }; vite",
     "build": "vite build",
     "lint": "eslint .",
     "preview": "vite preview",
@@ -41,6 +42,8 @@
     "eslint-plugin-react-hooks": "^5.2.0",
     "eslint-plugin-react-refresh": "^0.4.22",
     "globals": "^16.4.0",
+    "prettier": "^3.9.9",
+    "prettier-plugin-tailwindcss": "^0.8.1",
     "typescript": "^6.0.2",
     "vite": "^7.1.12"
   }

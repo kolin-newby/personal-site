@@ -13,29 +13,29 @@ const HomePage = ({ className = "", touch, data }: Props) => {
 
   return (
     <section
-      className={`w-full overflow-hidden relative h-dvh ${touch ? "pt-(--mobile-navbar-height)" : "pt-(--navbar-height)"} ${className}`}
+      className="relative h-dvh w-full snap-start overflow-hidden"
       id="home"
     >
       <ParticleField
         followMode={!touch}
         lum="50%"
-        className="absolute top-0 left-0 w-full h-full z-0"
+        className="absolute top-0 left-0 z-0 h-full w-full"
         color
         particleDensity={20}
       />
-      <div className={"relative w-full h-screen pointer-events-none"}>
+      <div className={"pointer-events-none relative h-full w-full"}>
         <div className={"wrapper relative h-full"}>
           <canvas
             id={"homePage"}
-            className={"absolute inset-0 dark:effect-color-light"}
+            className={"dark:effect-color-light absolute inset-0"}
           />
           <h1
             className={
-              "absolute inset-0 flex flex-col text-4xl sm:text-5xl lg:text-6xl 2xl:text-7xl font-bold bg-clip-text bg-transparent pointer-events-none " +
+              "pointer-events-none absolute inset-0 flex flex-col bg-transparent bg-clip-text text-4xl font-bold sm:text-5xl lg:text-6xl 2xl:text-7xl " +
               "items-center justify-center space-y-1"
             }
           >
-            <span className={"flex text-center rounded-2xl relative px-4 py-3"}>
+            <span className={"relative flex rounded-2xl px-4 py-3 text-center"}>
               {introduction?.heading ?? ""}
             </span>
             <TypingDisplay

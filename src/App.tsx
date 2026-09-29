@@ -16,16 +16,20 @@ const App = () => {
   const {
     data: siteData,
     isError: isSiteDataError,
-    error: siteDataError,
+    error: siteDataError
   } = useGetSiteData();
 
   if (isSiteDataError) console.error("useGetSiteData error: ", siteDataError);
 
   function handleScroll(event: React.UIEvent<HTMLDivElement>) {
-    let container = event.target as HTMLDivElement;
+    let container = event.currentTarget;
+    let maxScroll = container.scrollHeight - container.clientHeight;
     let scrollPositionTemp =
-      Number((container.scrollTop / container.scrollHeight).toFixed(5)) * 100;
+      maxScroll > 0
+        ? Number((container.scrollTop / maxScroll).toFixed(5)) * 100
+        : 0;
     setScrollPosition(scrollPositionTemp);
+    if (navBarOpen) setNavBarOpen(false);
   }
 
   const isTouchDevice = useCallback((): boolean => {
@@ -46,39 +50,29 @@ const App = () => {
   }, [hasTouch, isTouchDevice, scrollPosition]);
 
   return (
-    <div
-      className={
-        "bg-linear-to-br from-gray-100 via-gray-200 to-gray-100 h-dvh snap-y snap-always snap overflow-y-scroll overflow-x-hidden scroll-smooth scrollbar-display-none"
-      }
-      onScroll={handleScroll}
-      onClick={() => {
-        if (navBarOpen) setNavBarOpen(false);
-      }}
-    >
-      <Suspense fallback={<LoadingCover />}>
+    <Suspense fallback={<LoadingCover />}>
+      <div
+        className={
+          "relative h-dvh snap-y snap-mandatory overflow-x-hidden overflow-y-auto bg-linear-to-br from-gray-100 via-gray-200 to-gray-100"
+        }
+        onScroll={handleScroll}
+        onClick={() => {
+          if (navBarOpen) setNavBarOpen(false);
+        }}
+      >
         <Navbar
           scrollPosition={scrollPosition}
           touch={hasTouch}
           barOpen={navBarOpen}
           setBarOpen={setNavBarOpen}
         />
-        <HomePage
-          className={"snap-start my-0.5"}
-          touch={hasTouch}
-          data={siteData}
-        />
-        <AboutPage
-          className={"snap-start my-0.5"}
-          touch={hasTouch}
-          data={siteData}
-        />
-        <ProjectPage
-          className={"snap-start my-0.5"}
-          touch={hasTouch}
-          data={siteData}
-        />
-      </Suspense>
-    </div>
+        <div className="w-full">
+          <HomePage touch={hasTouch} data={siteData} />
+          <AboutPage touch={hasTouch} data={siteData} />
+          <ProjectPage touch={hasTouch} data={siteData} />
+        </div>
+      </div>
+    </Suspense>
   );
 };
 

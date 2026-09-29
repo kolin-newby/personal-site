@@ -48,11 +48,11 @@ export const ProjectModal = ({
       role="dialog"
       aria-hidden={!open}
       inert={!open}
-      className={`absolute top-0 left-0 flex flex-col pb-20 justify-start w-full h-screen bg-linear-to-br from-gray-100 to-gray-200 transform transition-transform duration-500 ${
+      className={`absolute inset-0 flex flex-col pt-(--nav-h) pb-20 justify-start bg-linear-to-br from-gray-100 to-gray-200 transform transition-transform duration-500 ${
         open ? "translate-x-0" : "translate-x-full"
       }`}
     >
-      <div className="flex min-h-16" />
+      <div className="flex min-h-6" />
       <div className="flex flex-row space-x-10">
         <button
           onClick={handleCloseClick}

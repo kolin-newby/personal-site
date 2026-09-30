@@ -136,7 +136,7 @@ const AboutPage = ({ className = "", touch, data }: Props) => {
           <div className="flex min-h-0 items-center justify-center overflow-hidden">
             {/* ====================================================== */}
             <div
-              className={`relative flex w-full flex-col space-y-3 bg-linear-to-br from-black/10 to-gray-200/50 py-2 text-black/40 shadow-inner lg:max-w-112.5 lg:rounded-lg ${iconDisplay?.icon?.length && iconDisplay?.icon?.length >= 12 && "lg:hidden"}`}
+              className={`inset-card relative flex w-full flex-col space-y-3 py-2 text-black/40 lg:max-w-112.5 lg:rounded-lg ${iconDisplay?.icon?.length && iconDisplay?.icon?.length >= 12 && "lg:hidden"}`}
             >
               <div key={"skills-row-all"} className={"w-full overflow-hidden"}>
                 <IdleScrollArea
@@ -167,7 +167,7 @@ const AboutPage = ({ className = "", touch, data }: Props) => {
             {/* triple line skill scroller below \/ */}
 
             <div
-              className={`relative hidden w-full flex-col space-y-2 bg-linear-to-br from-black/10 to-gray-200/50 py-2.5 text-black/40 shadow-inner lg:max-w-112.5 lg:rounded-lg ${iconDisplay?.icon?.length && iconDisplay?.icon?.length >= 12 && "lg:flex"}`}
+              className={`inset-card relative hidden w-full flex-col space-y-2 py-2.5 text-black/40 lg:max-w-112.5 lg:rounded-lg ${iconDisplay?.icon?.length && iconDisplay?.icon?.length >= 12 && "lg:flex"}`}
             >
               <div key={"skills-row-1"} className={"w-full overflow-hidden"}>
                 <IdleScrollArea

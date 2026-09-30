@@ -33,6 +33,10 @@
   animation: spin 10s linear infinite;
 }
 
+@utility inset-card {
+  @apply bg-linear-to-br from-gray-200 to-gray-50 shadow-inner;
+}
+
 @utility scale-98 {
   scale: 0.98;
 }

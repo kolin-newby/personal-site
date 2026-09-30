@@ -56,7 +56,7 @@ export const ProjectModal = ({
       <div className="flex flex-row space-x-10">
         <button
           onClick={handleCloseClick}
-          className="flex items-center justify-center p-5 shadow-inner rounded-r-lg bg-linear-to-br from-black/10 to-gray-200/50 transition-all duration-300 basis-20 hover:basis-32"
+          className="flex items-center justify-center p-5 inset-card rounded-r-lg transition-all duration-300 basis-20 hover:basis-32"
         >
           <ChevronRight size={"44px"} className="flex" />
         </button>

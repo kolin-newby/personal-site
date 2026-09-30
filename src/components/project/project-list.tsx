@@ -1,5 +1,6 @@
 import React from "react";
-import { ProjectListItem } from "./project";
+import { ProjectDisplay } from "./project-display";
+import { DriftBoard, DriftItem } from "../common/drift-board";
 import type { Project } from "@/generated/graphql";
 
 type Props = {
@@ -7,13 +8,18 @@ type Props = {
   modalOpen: boolean;
   setModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
   setSelectedProject: React.Dispatch<React.SetStateAction<Project | null>>;
+  dragBoundsRef: React.RefObject<HTMLElement | null>;
+  touch: boolean;
 };
 
+// Desktop list - cards drift around and can be dragged and thrown.
 export const ProjectList = ({
   projectList,
   modalOpen,
   setModalOpen,
-  setSelectedProject
+  setSelectedProject,
+  dragBoundsRef,
+  touch
 }: Props) => {
   const handleOpenClick = (project: Project) => {
     setSelectedProject(project);
@@ -21,18 +27,26 @@ export const ProjectList = ({
   };
 
   return (
-    <ul
-      className={`w-full transform items-center justify-center space-y-4 transition-transform duration-500 ${
+    <DriftBoard
+      as="ul"
+      boundsRef={dragBoundsRef}
+      paused={modalOpen}
+      touch={touch}
+      className={`grid w-full transform grid-cols-[repeat(auto-fill,minmax(min(100%,18rem),1fr))] items-start gap-4 transition-transform duration-500 ${
         modalOpen ? "-translate-x-full" : "translate-x-0"
       }`}
     >
-      {projectList?.map((item, index) => (
-        <ProjectListItem
-          key={item.title + "-" + index}
-          project={item}
-          handleOpenClick={() => handleOpenClick(item)}
-        />
-      ))}
-    </ul>
+      {projectList?.map((item, index) => {
+        const key = item.title + "-" + index;
+        return (
+          <DriftItem key={key} id={key} className="rounded-2xl bg-gray-200">
+            <ProjectDisplay
+              project={item}
+              handleOpenClick={() => handleOpenClick(item)}
+            />
+          </DriftItem>
+        );
+      })}
+    </DriftBoard>
   );
 };

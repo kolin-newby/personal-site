@@ -70,6 +70,7 @@ query GetSiteData {
         document
       }
       skills {
+        id
         name
       }
       gallery {

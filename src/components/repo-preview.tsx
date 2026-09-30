@@ -64,52 +64,70 @@ const parseGitLabProjectPath = (url: string): string => {
   }
 };
 
-const formatCount = (n: number): string => {
+export const formatCount = (n: number): string => {
   return new Intl.NumberFormat(undefined, { notation: "compact" }).format(n);
 };
 
-type Props = {
-  url: string;
-  type: string;
-  className?: string;
+const normalizeData = (rawData: GitHubRepo | GitLabRepo): NormalizedRepo => {
+  if ("full_name" in rawData) {
+    return {
+      name: rawData.full_name,
+      description: rawData.description,
+      avatar_url: null,
+      web_url: rawData.html_url,
+      forks_count: rawData.forks_count,
+      star_count: rawData.stargazers_count,
+      last_activity_at: rawData.updated_at,
+      archived: rawData.archived,
+      organization: rawData.organization ?? null,
+      language: rawData.language,
+    };
+  } else {
+    return {
+      name: rawData.path_with_namespace,
+      description: rawData.description,
+      avatar_url: rawData.avatar_url,
+      web_url: rawData.web_url,
+      forks_count: rawData.forks_count,
+      star_count: rawData.star_count,
+      last_activity_at: rawData.last_activity_at,
+      archived: rawData.archived,
+      organization: null,
+      language: null,
+    };
+  }
 };
 
-export const RepoPreview = ({ url, type, className = "" }: Props) => {
+// Shared so a repo shown in several places (every mobile card, then the
+// modal) only costs one request against the unauthenticated rate limit.
+// Failed requests are dropped so the next caller retries.
+const repoCache = new Map<string, Promise<NormalizedRepo>>();
+
+const fetchRepo = (
+  apiUrl: string,
+  accept: string,
+  source: string,
+): Promise<NormalizedRepo> => {
+  let request = repoCache.get(apiUrl);
+  if (!request) {
+    request = fetch(apiUrl, { headers: { Accept: accept } }).then(
+      async (res) => {
+        if (!res.ok) throw new Error(`${source} API error: ${res.status}`);
+        return normalizeData(await res.json());
+      },
+    );
+    request.catch(() => repoCache.delete(apiUrl));
+    repoCache.set(apiUrl, request);
+  }
+  return request;
+};
+
+export const useRepoData = (url: string, type: string) => {
   const parsedGitHubUrl = useMemo(() => parseGitHubUrl(url), [url]);
   const parsedGitLabPath = useMemo(() => parseGitLabProjectPath(url), [url]);
   const [data, setData] = useState<NormalizedRepo | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
-
-  const normalizeData = (rawData: GitHubRepo | GitLabRepo): NormalizedRepo => {
-    if ("full_name" in rawData) {
-      return {
-        name: rawData.full_name,
-        description: rawData.description,
-        avatar_url: null,
-        web_url: rawData.html_url,
-        forks_count: rawData.forks_count,
-        star_count: rawData.stargazers_count,
-        last_activity_at: rawData.updated_at,
-        archived: rawData.archived,
-        organization: rawData.organization ?? null,
-        language: rawData.language,
-      };
-    } else {
-      return {
-        name: rawData.path_with_namespace,
-        description: rawData.description,
-        avatar_url: rawData.avatar_url,
-        web_url: rawData.web_url,
-        forks_count: rawData.forks_count,
-        star_count: rawData.star_count,
-        last_activity_at: rawData.last_activity_at,
-        archived: rawData.archived,
-        organization: null,
-        language: null,
-      };
-    }
-  };
 
   useEffect(() => {
     let abort = false;
@@ -124,35 +142,27 @@ export const RepoPreview = ({ url, type, className = "" }: Props) => {
         setLoading(false);
         return;
       }
+      if (type !== "github" && type !== "gitlab") return;
       setLoading(true);
       setError(null);
-      if (type === "github") {
-        try {
-          const res = await fetch(parsedGitHubUrl, {
-            headers: { Accept: "application/vnd.github+json" },
-          });
-          if (!res.ok) throw new Error(`GitHub API error: ${res.status}`);
-          const json = await res.json();
-          if (!abort) setData(normalizeData(json as GitHubRepo));
-        } catch (e) {
-          if (!abort) setError((e as Error)?.message ?? "Failed to load repo");
-        } finally {
-          if (!abort) setLoading(false);
-        }
-      } else if (type === "gitlab") {
-        try {
-          const res = await fetch(
-            `https://gitlab.com/api/v4/projects/${parsedGitLabPath}`,
-            { headers: { Accept: "application/json" } },
-          );
-          if (!res.ok) throw new Error(`GitLab API error: ${res.status}`);
-          const json = await res.json();
-          if (!abort) setData(normalizeData(json as GitLabRepo));
-        } catch (e) {
-          if (!abort) setError((e as Error)?.message ?? "Failed to load repo");
-        } finally {
-          if (!abort) setLoading(false);
-        }
+      try {
+        const repo =
+          type === "github"
+            ? await fetchRepo(
+                parsedGitHubUrl,
+                "application/vnd.github+json",
+                "GitHub",
+              )
+            : await fetchRepo(
+                `https://gitlab.com/api/v4/projects/${parsedGitLabPath}`,
+                "application/json",
+                "GitLab",
+              );
+        if (!abort) setData(repo);
+      } catch (e) {
+        if (!abort) setError((e as Error)?.message ?? "Failed to load repo");
+      } finally {
+        if (!abort) setLoading(false);
       }
     }
     go();
@@ -161,6 +171,18 @@ export const RepoPreview = ({ url, type, className = "" }: Props) => {
     };
   }, [type, parsedGitHubUrl, parsedGitLabPath]);
 
+  return { data, error, loading };
+};
+
+type Props = {
+  url: string;
+  type: string;
+  className?: string;
+};
+
+export const RepoPreview = ({ url, type, className = "" }: Props) => {
+  const { data, error, loading } = useRepoData(url, type);
+
   if (!loading && error) {
     return (
       <a
@@ -168,7 +190,7 @@ export const RepoPreview = ({ url, type, className = "" }: Props) => {
         target="_blank"
         rel="noreferrer"
         className={
-          "relative flex flex-col text-sm items-center justify-between p-4 max-w-125 overflow-hidden rounded-lg bg-linear-to-br from-black/10 to-gray-200/50 shadow-inner " +
+          "relative flex flex-col text-sm items-center justify-between p-4 max-w-125 overflow-hidden rounded-lg inset-card " +
           className
         }
         aria-busy="true"
@@ -194,7 +216,7 @@ export const RepoPreview = ({ url, type, className = "" }: Props) => {
     return (
       <div
         className={
-          "relative flex items-center justify-between p-4 w-full max-w-[500px] overflow-hidden rounded-lg bg-linear-to-br from-black/10 to-gray-200/50 shadow-inner " +
+          "relative flex items-center justify-between p-4 w-full max-w-[500px] overflow-hidden rounded-lg inset-card " +
           className
         }
         aria-busy="true"
@@ -222,7 +244,7 @@ export const RepoPreview = ({ url, type, className = "" }: Props) => {
       href={data.web_url}
       target="_blank"
       rel="noopener noreferrer"
-      className={`flex flex-col relative max-w-[500px] overflow-hidden p-4 mx-4 rounded-lg shadow-inner bg-linear-to-br from-black/10 to-gray-200/50 ${className}`}
+      className={`flex flex-col relative max-w-[500px] overflow-hidden p-4 mx-4 rounded-lg inset-card ${className}`}
       aria-label={`Open ${data.name} on ${type === "gitlab" ? "GitLab" : "GitHub"}`}
     >
       <ParticleField

@@ -1,6 +1,6 @@
 import type { Project } from "@/generated/graphql";
 import { useGradientColor } from "@/common/gradient-color";
-import { RepoIcon } from "../repo-preview";
+import { RepoIcon } from "../repo";
 
 type Props = {
   project: Project;

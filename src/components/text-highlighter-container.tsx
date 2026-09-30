@@ -15,6 +15,7 @@ type Props = {
   autoLoop?: boolean;
   className?: string;
   pauseWhenOffScreen?: boolean;
+  manualPause?: boolean;
 };
 
 const TextHighlighterContainer = ({
@@ -30,6 +31,7 @@ const TextHighlighterContainer = ({
   autoLoop = true,
   className = "",
   pauseWhenOffScreen = true,
+  manualPause = false
 }: Props) => {
   const hasTerms = !!terms && terms.length > 0;
 
@@ -41,7 +43,9 @@ const TextHighlighterContainer = ({
     window.matchMedia?.("(prefers-reduced-motion: reduce)")?.matches;
 
   const shouldRun =
-    !prefersReducedMotion && (!pauseWhenOffScreen || (inView && pageVisible));
+    !prefersReducedMotion &&
+    (!pauseWhenOffScreen || (inView && pageVisible)) &&
+    !manualPause;
 
   const escapeRegex = (s: string): string =>
     s.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
@@ -83,8 +87,10 @@ const TextHighlighterContainer = ({
     const walk = (node: React.ReactNode): number => {
       if (typeof node === "string") return countInString(node);
       if (typeof node === "number") return countInString(String(node));
-      if (Array.isArray(node)) return node.reduce((a: number, n: React.ReactNode) => a + walk(n), 0);
-      if (React.isValidElement(node)) return walk((node.props as { children?: React.ReactNode }).children);
+      if (Array.isArray(node))
+        return node.reduce((a: number, n: React.ReactNode) => a + walk(n), 0);
+      if (React.isValidElement(node))
+        return walk((node.props as { children?: React.ReactNode }).children);
       return 0;
     };
     return walk(children);
@@ -147,16 +153,18 @@ const TextHighlighterContainer = ({
           <span
             key={`hl-${cycle}-${order}-${start}`}
             className="hl-mark relative inline-block"
-            style={{
-              "--loopSec": `${loopSec}s`,
-              "--fadeSec": `${fadeSec}s`,
-              "--fillSec": `${perWordFillSec}s`,
-              "--delay": `${delaySec}s`,
-              "--hlColor": color,
-              "--bodySkewDeg": bodySkewDeg,
-              "--globalTiltDeg": tiltDeg,
-              "--jitterY": jitterY,
-            } as React.CSSProperties}
+            style={
+              {
+                "--loopSec": `${loopSec}s`,
+                "--fadeSec": `${fadeSec}s`,
+                "--fillSec": `${perWordFillSec}s`,
+                "--delay": `${delaySec}s`,
+                "--hlColor": color,
+                "--bodySkewDeg": bodySkewDeg,
+                "--globalTiltDeg": tiltDeg,
+                "--jitterY": jitterY
+              } as React.CSSProperties
+            }
           >
             <span className="relative z-1">{matched}</span>
           </span>

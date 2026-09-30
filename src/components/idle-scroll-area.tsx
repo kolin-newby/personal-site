@@ -6,8 +6,7 @@ import React, {
   useState,
 } from "react";
 
-import { useInViewport } from "../common/use-in-viewport";
-import { usePageVisible } from "../common/use-page-visible";
+import { useShouldAnimate } from "../common/use-should-animate";
 
 type Props = {
   children: React.ReactNode;
@@ -47,13 +46,7 @@ const IdleScrollArea = ({
   const speedRef = useRef<number>(speed);
   const idleScrollRampDurationRef = useRef<number>(idleScrollRampDuration);
 
-  const inView = useInViewport(containerRef, { threshold: 0 });
-  const pageVisible = usePageVisible();
-  const prefersReducedMotion =
-    typeof window !== "undefined" &&
-    window.matchMedia?.("(prefers-reduced-motion: reduce)")?.matches;
-
-  const shouldRun = !prefersReducedMotion && inView && pageVisible;
+  const shouldRun = useShouldAnimate(containerRef);
   const shouldRunRef = useRef<boolean>(shouldRun);
   useEffect(() => {
     shouldRunRef.current = shouldRun;

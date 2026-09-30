@@ -1,4 +1,28 @@
 import { useEffect, useMemo, useState } from "react";
+import { Folder } from "lucide-react";
+import { SiGithub, SiGitlab } from "@icons-pack/react-simple-icons";
+
+export type RepoType = "github" | "gitlab";
+
+// Whether `type` is a host useRepoData can fetch from.
+export const isRepoType = (type: string | null | undefined): type is RepoType =>
+  type === "github" || type === "gitlab";
+
+// The host's logo, or a plain folder when there's no supported repo.
+export const RepoIcon = ({
+  type,
+  className
+}: {
+  type: string | null | undefined;
+  className?: string;
+}) =>
+  type === "github" ? (
+    <SiGithub className={className} />
+  ) : type === "gitlab" ? (
+    <SiGitlab className={className} />
+  ) : (
+    <Folder size={24} className={className} />
+  );
 
 type GitHubRepo = {
   html_url: string;
@@ -124,11 +148,16 @@ export const useRepoData = (url: string, type: string) => {
   const parsedGitLabPath = useMemo(() => parseGitLabProjectPath(url), [url]);
   const [data, setData] = useState<NormalizedRepo | null>(null);
   const [error, setError] = useState<string | null>(null);
-  const [loading, setLoading] = useState(true);
+  // Nothing to load for an unsupported type.
+  const [loading, setLoading] = useState(() => isRepoType(type));
 
   useEffect(() => {
     let abort = false;
     async function go() {
+      if (!isRepoType(type)) {
+        setLoading(false);
+        return;
+      }
       if (type === "github" && !parsedGitHubUrl) {
         setError("Invalid GitHub URL");
         setLoading(false);
@@ -139,7 +168,6 @@ export const useRepoData = (url: string, type: string) => {
         setLoading(false);
         return;
       }
-      if (type !== "github" && type !== "gitlab") return;
       setLoading(true);
       setError(null);
       try {

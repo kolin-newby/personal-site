@@ -1,6 +1,6 @@
 import type { Project } from "@/generated/graphql";
 import { useGradientColor } from "@/common/gradient-color";
-import { SiGithub, SiGitlab } from "@icons-pack/react-simple-icons";
+import { RepoIcon } from "../repo-preview";
 
 type Props = {
   project: Project;
@@ -13,11 +13,7 @@ export const ProjectDisplay = ({ project }: Props) => {
     <div className={`relative flex flex-col rounded-2xl p-1 ${bgColor}`}>
       <div className="flex flex-col rounded-2xl bg-white p-4 shadow-lg">
         <div className="flex flex-row items-center gap-2">
-          {project.repository?.type === "github" ? (
-            <SiGithub className="inline" />
-          ) : (
-            <SiGitlab className="inline" />
-          )}
+          <RepoIcon type={project.repository?.type} className="inline" />
           <h2 className="inline font-bold">{project.title}</h2>
         </div>
       </div>

@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from "react";
-import { usePageVisible } from "../common/use-page-visible";
-import { useInViewport } from "../common/use-in-viewport";
+import { usePrefersReducedMotion } from "../common/use-media-query";
+import { useShouldAnimate } from "../common/use-should-animate";
 
 type Props = {
   typingTerms?: string[];
@@ -31,13 +31,8 @@ export const TypingDisplay = ({
   const containerRef = useRef<HTMLSpanElement>(null);
   const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
-  const inView = useInViewport(containerRef, { threshold: 0 });
-  const pageVisible = usePageVisible();
-  const prefersReducedMotion =
-    typeof window !== "undefined" &&
-    window.matchMedia?.("(prefers-reduced-motion: reduce)")?.matches;
-
-  const shouldRun = !prefersReducedMotion && inView && pageVisible;
+  const prefersReducedMotion = usePrefersReducedMotion();
+  const shouldRun = useShouldAnimate(containerRef);
 
   useEffect(() => {
     // Always clear the previous timer before scheduling a new one

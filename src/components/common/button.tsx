@@ -1,11 +1,7 @@
 import React, { useRef, useState } from "react";
-import {
-  motion,
-  useMotionValue,
-  useReducedMotion,
-  useSpring
-} from "motion/react";
+import { motion, useMotionValue, useSpring } from "motion/react";
 import { useGradientColor } from "@/common/gradient-color";
+import { usePrefersReducedMotion } from "@/common/use-media-query";
 
 type Props = Omit<React.HTMLAttributes<HTMLElement>, "children"> & {
   href?: string | null;
@@ -60,7 +56,7 @@ const Button = ({
   onClick,
   ...props
 }: Props) => {
-  const prefersReducedMotion = useReducedMotion();
+  const prefersReducedMotion = usePrefersReducedMotion();
   const [hovered, setHovered] = useState(false);
   const x = useMotionValue(0);
   const y = useMotionValue(0);

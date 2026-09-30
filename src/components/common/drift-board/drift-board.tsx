@@ -7,8 +7,8 @@ import {
   type ReactNode,
   type RefObject
 } from "react";
-import { useInViewport } from "@/common/use-in-viewport";
-import { usePageVisible } from "@/common/use-page-visible";
+import { useIsVisible } from "@/common/use-should-animate";
+import { usePrefersReducedMotion } from "@/common/use-media-query";
 import {
   clampToBounds,
   randomVelocity,
@@ -105,28 +105,12 @@ export const DriftBoard = ({
   const boardRef = useRef<HTMLElement>(null);
   const resolvedBoundsRef = boundsRef ?? boardRef;
 
-  const inView = useInViewport(resolvedBoundsRef, { threshold: 0 });
-  const pageVisible = usePageVisible();
-
-  const [prefersReducedMotion, setPrefersReducedMotion] = useState(
-    () =>
-      typeof window !== "undefined" &&
-      (window.matchMedia?.("(prefers-reduced-motion: reduce)")?.matches ??
-        false)
-  );
-
-  useEffect(() => {
-    const mql = window.matchMedia?.("(prefers-reduced-motion: reduce)");
-    if (!mql) return;
-
-    const handleChange = () => setPrefersReducedMotion(mql.matches);
-    mql.addEventListener("change", handleChange);
-    return () => mql.removeEventListener("change", handleChange);
-  }, []);
+  const visible = useIsVisible(resolvedBoundsRef);
+  const prefersReducedMotion = usePrefersReducedMotion();
 
   // Reduced motion: nothing drifts, but a thrown item still slides to rest.
   const driftSpeed = prefersReducedMotion ? 0 : speed;
-  const canRun = !paused && inView && pageVisible;
+  const canRun = !paused && visible;
 
   // Latest settings for the loop and callbacks, which are created once.
   // Seeded here because items register (child effects) before this board's

@@ -1,6 +1,5 @@
 import React, { useMemo, useEffect, useState, useRef } from "react";
-import { usePageVisible } from "../common/use-page-visible";
-import { useInViewport } from "../common/use-in-viewport";
+import { useShouldAnimate } from "../common/use-should-animate";
 
 type Props = {
   children: React.ReactNode;
@@ -29,14 +28,8 @@ const TextHighlighterContainer = ({
   const hasTerms = !!terms && terms.length > 0;
 
   const containerRef = useRef<HTMLDivElement>(null);
-  const inView = useInViewport(containerRef, { threshold: 0.1 });
-  const pageVisible = usePageVisible();
-  const prefersReducedMotion =
-    typeof window !== "undefined" &&
-    window.matchMedia?.("(prefers-reduced-motion: reduce)")?.matches;
-
   const shouldRun =
-    !prefersReducedMotion && inView && pageVisible && !manualPause;
+    useShouldAnimate(containerRef, { threshold: 0.1 }) && !manualPause;
 
   const escapeRegex = (s: string): string =>
     s.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");

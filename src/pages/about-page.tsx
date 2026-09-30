@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import PhotoCarousel from "@/components/photo-carousel";
 import IdleScrollArea from "@/components/idle-scroll-area";
 import TextHighlighterContainer from "@/components/text-highlighter-container";
@@ -8,6 +8,7 @@ import {
   type Element as DocumentElement
 } from "@/components/document-renderer";
 import { CustomSvg } from "@/components/custom-svg";
+import { useIsLg } from "@/common/use-media-query";
 import type { Icon, GetSiteDataQuery } from "@/generated/graphql";
 
 type Props = {
@@ -21,17 +22,7 @@ const AboutPage = ({ touch, data }: Props) => {
   const [activePhotoIndex, setActivePhotoIndex] = useState<number | null>(null);
   const isPhotoOpen = activePhotoIndex !== null;
 
-  const [isLg, setIsLg] = useState(
-    () => window.matchMedia?.("(min-width: 1024px)")?.matches ?? false
-  );
-
-  useEffect(() => {
-    const mql = window.matchMedia?.("(min-width: 1024px)");
-    if (!mql) return;
-    const onChange = (e: MediaQueryListEvent) => setIsLg(e.matches);
-    mql.addEventListener("change", onChange);
-    return () => mql.removeEventListener("change", onChange);
-  }, []);
+  const isLg = useIsLg();
 
   const sectionIconDisplayList = (
     input: Icon[],

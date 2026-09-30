@@ -3,7 +3,7 @@ import { useRef } from "react";
 import { ProjectList } from "../components/project/project-list";
 import { ProjectListMobile } from "../components/project/project-list-mobile";
 
-import { useMediaQuery } from "../common/use-media-query";
+import { useIsLg } from "../common/use-media-query";
 import type { Project, GetSiteDataQuery } from "@/generated/graphql";
 
 type Props = {
@@ -14,7 +14,7 @@ type Props = {
 export const ProjectPage = ({ touch, data }: Props) => {
   const containerRef = useRef<HTMLDivElement>(null);
   // Drifting drag-and-drop cards on desktop (lg and up), a static list below.
-  const isDesktop = useMediaQuery("(min-width: 1024px)");
+  const isDesktop = useIsLg();
 
   const { projectDisplay } = data ?? {};
   const projectList = (projectDisplay?.projects as Project[]) ?? [];

@@ -1,6 +1,5 @@
-import React, { useRef, useEffect, useCallback, useState } from "react";
-import { useInViewport } from "../common/use-in-viewport";
-import { usePageVisible } from "../common/use-page-visible";
+import React, { useRef, useEffect, useCallback } from "react";
+import { useShouldAnimate } from "../common/use-should-animate";
 
 const getRandom = (min: number, max: number): number =>
   Math.random() * (max - min) + min;
@@ -151,26 +150,7 @@ const ParticleField = ({
   const densityRef = useRef<number>(particleDensity);
   const colorRef = useRef<boolean>(color);
 
-  const inView = useInViewport(canvasRef, { threshold: 0 });
-  const pageVisible = usePageVisible();
-
-  const [prefersReducedMotion, setPrefersReducedMotion] = useState(
-    () =>
-      typeof window !== "undefined" &&
-      (window.matchMedia?.("(prefers-reduced-motion: reduce)")?.matches ??
-        false),
-  );
-
-  useEffect(() => {
-    const mql = window.matchMedia?.("(prefers-reduced-motion: reduce)");
-    if (!mql) return;
-
-    const handleChange = () => setPrefersReducedMotion(mql.matches);
-    mql.addEventListener("change", handleChange);
-    return () => mql.removeEventListener("change", handleChange);
-  }, []);
-
-  const shouldRun = !prefersReducedMotion && inView && pageVisible;
+  const shouldRun = useShouldAnimate(canvasRef);
 
   const shouldRunRef = useRef<boolean>(shouldRun);
   useEffect(() => {

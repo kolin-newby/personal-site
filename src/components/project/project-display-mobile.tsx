@@ -1,15 +1,15 @@
 import { useId, useLayoutEffect, useRef, useState } from "react";
 import type { Project } from "@/generated/graphql";
 import { useGradientColor } from "@/common/gradient-color";
-import { SiGithub, SiGitlab } from "@icons-pack/react-simple-icons";
 import {
   renderDocumentNodes,
   type Element as DocumentElement
 } from "@/components/document-renderer";
 import TextHighlighterContainer from "../text-highlighter-container";
 import Button from "../common/button";
-import { Dot, Folder, GitFork, Link2, Star } from "lucide-react";
-import { formatCount, useRepoData } from "../repo-preview";
+import { Dot, GitFork, Link2, Star } from "lucide-react";
+import { formatCount, RepoIcon, useRepoData } from "../repo-preview";
+import { prefersReducedMotion } from "@/common/use-media-query";
 import PhotoCarousel from "../photo-carousel";
 
 type Props = {
@@ -37,13 +37,8 @@ export const ProjectDisplayMobile = ({
     project.repository?.type ?? ""
   );
   // The repo card takes priority, so the gallery only shows once there's no
-  // repo to wait for: none linked, or it failed to load. The hook never
-  // clears loading for unsupported types, so check the type too.
-  const repoPending =
-    repoLoading &&
-    (project.repository?.type === "github" ||
-      project.repository?.type === "gitlab");
-  const showGallery = !repo && !repoPending && !!project.gallery?.length;
+  // repo to wait for: none linked, or it failed to load.
+  const showGallery = !repo && !repoLoading && !!project.gallery?.length;
 
   // Only fade the description's last line when it's actually cut off.
   const descriptionRef = useRef<HTMLDivElement>(null);
@@ -82,9 +77,7 @@ export const ProjectDisplayMobile = ({
   const toggleExpanded = () => {
     // Reduced motion skips the transition, so there's no transition end to
     // clear this.
-    setCollapsing(
-      expanded && !window.matchMedia("(prefers-reduced-motion: reduce)").matches
-    );
+    setCollapsing(expanded && !prefersReducedMotion());
     // Collapsing shows the start of the description again.
     if (expanded && descriptionRef.current)
       descriptionRef.current.scrollTop = 0;
@@ -122,12 +115,9 @@ export const ProjectDisplayMobile = ({
       naturalTop += (prev as HTMLElement).offsetHeight + marginTop(prev);
     const stuckTop = parseFloat(getComputedStyle(card).top);
 
-    const reduceMotion = window.matchMedia(
-      "(prefers-reduced-motion: reduce)"
-    ).matches;
     scroller.scrollBy({
       top: naturalTop - stuckTop,
-      behavior: reduceMotion ? "auto" : "smooth"
+      behavior: prefersReducedMotion() ? "auto" : "smooth"
     });
   };
 
@@ -210,13 +200,7 @@ export const ProjectDisplayMobile = ({
         </div>
         <div className="inset-card flex min-h-0 grow flex-col rounded-2xl px-3 py-1">
           <div className="mb-3 flex shrink-0 flex-row items-center gap-4">
-            {project.repository?.type === "github" ? (
-              <SiGithub className="inline" />
-            ) : project.repository?.type === "gitlab" ? (
-              <SiGitlab className="inline" />
-            ) : (
-              <Folder size={24} />
-            )}
+            <RepoIcon type={project.repository?.type} className="inline" />
             <h2 className="flex flex-col font-bold">
               <span>{project.title}</span>
               <span className="opacity-60">{project.projectContext}</span>

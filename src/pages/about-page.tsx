@@ -140,9 +140,7 @@ const AboutPage = ({ className = "", touch, data }: Props) => {
             >
               <div key={"skills-row-all"} className={"w-full overflow-hidden"}>
                 <IdleScrollArea
-                  infinite
                   axis="x"
-                  minStepPx={1}
                   speed={70}
                   idleDelay={2000}
                   startDirection="forward"
@@ -171,9 +169,7 @@ const AboutPage = ({ className = "", touch, data }: Props) => {
             >
               <div key={"skills-row-1"} className={"w-full overflow-hidden"}>
                 <IdleScrollArea
-                  infinite
                   axis="x"
-                  minStepPx={1}
                   speed={80}
                   idleDelay={2000}
                   startDirection="forward"
@@ -198,9 +194,7 @@ const AboutPage = ({ className = "", touch, data }: Props) => {
               </div>
               <div key={"skills-row-2"} className={"w-full overflow-hidden"}>
                 <IdleScrollArea
-                  infinite
                   axis="x"
-                  minStepPx={1}
                   speed={60}
                   idleDelay={2000}
                   startDirection="backward"
@@ -225,9 +219,7 @@ const AboutPage = ({ className = "", touch, data }: Props) => {
               </div>
               <div key={"skills-row-3"} className={"w-full overflow-hidden"}>
                 <IdleScrollArea
-                  infinite
                   axis="x"
-                  minStepPx={1}
                   speed={50}
                   idleDelay={2000}
                   startDirection="forward"

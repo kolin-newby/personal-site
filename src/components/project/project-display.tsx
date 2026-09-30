@@ -1,21 +1,12 @@
-import { ChevronLeft } from "lucide-react";
-import IdleScrollArea from "../idle-scroll-area";
-import ParticleField from "../particle-field";
 import type { Project } from "@/generated/graphql";
 import { useGradientColor } from "@/common/gradient-color";
 import { SiGithub, SiGitlab } from "@icons-pack/react-simple-icons";
-import {
-  renderDocumentNodes,
-  type Element as DocumentElement
-} from "@/components/document-renderer";
-import TextHighlighterContainer from "../text-highlighter-container";
 
 type Props = {
   project: Project;
-  handleOpenClick: () => void;
 };
 
-export const ProjectDisplay = ({ project, handleOpenClick }: Props) => {
+export const ProjectDisplay = ({ project }: Props) => {
   const bgColor = useGradientColor();
 
   return (

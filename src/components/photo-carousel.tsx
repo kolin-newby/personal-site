@@ -1,26 +1,41 @@
 import React, { useEffect, useRef, useState } from "react";
 import Arrow from "./common/arrow";
 import { Camera, ChevronLeft, ChevronRight } from "lucide-react";
-import type { GetSiteDataQuery } from "@/generated/graphql";
+
+// Matches both the site gallery's photos and a project's gallery.
+export type CarouselPhoto = {
+  id: string;
+  altText?: string | null | undefined;
+  image?: { url: string } | null | undefined;
+};
 
 type Props = {
   className?: string;
-  data?: GetSiteDataQuery | undefined;
+  photos?: CarouselPhoto[] | null | undefined;
+  tagline?: string | null | undefined;
+  // Show the whole photo when expanded, leaving bars, instead of cropping it
+  // to fill the frame.
+  fitExpanded?: boolean;
+  // Background class for the open photo, e.g. "bg-black/80", which is what
+  // fills the bars left by fitExpanded.
+  expandedBgClassName?: string;
   activePhotoIndex: number | null;
   setActivePhotoIndex: React.Dispatch<React.SetStateAction<number | null>>;
 };
 
 const PhotoCarousel = ({
   className,
-  data,
+  photos,
+  tagline,
+  fitExpanded = false,
+  expandedBgClassName = "",
   activePhotoIndex,
   setActivePhotoIndex
 }: Props) => {
   const [photoInfoOpen, setPhotoInfoOpen] = useState(false);
   const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
-  const { gallery } = data ?? {};
-  const photoCount = gallery?.photos?.length ?? 0;
+  const photoCount = photos?.length ?? 0;
 
   const showAdjacentPhoto = (index: number, step: 1 | -1) => {
     setActivePhotoIndex(index + step);
@@ -60,16 +75,20 @@ const PhotoCarousel = ({
               "flex h-full w-full items-center justify-center space-x-1 px-2 md:px-4"
             }
           >
-            {gallery?.photos?.map((image, index) => (
+            {photos?.map((image, index) => (
               <div
                 key={`image-${image.id}-${index}`}
                 className={`relative flex overflow-hidden ${
                   activePhotoIndex === index
-                    ? "z-10 basis-full shadow-2xl"
+                    ? `z-10 basis-full shadow-2xl ${expandedBgClassName}`
                     : activePhotoIndex === null
-                      ? "z-0 basis-24 flex-col shadow-xl hover:basis-1/2"
+                      ? "z-0 basis-24 flex-col shadow hover:basis-1/2"
                       : "basis-0"
-                } h-full transform items-end justify-end rounded-lg bg-cover bg-center bg-no-repeat transition-all duration-700`}
+                } ${
+                  fitExpanded && activePhotoIndex === index
+                    ? "bg-contain"
+                    : "bg-cover"
+                } h-full transform items-end justify-end rounded-lg bg-center bg-no-repeat transition-all duration-700`}
                 style={{
                   backgroundImage: `url('${image.image?.url}')`
                 }}
@@ -155,12 +174,14 @@ const PhotoCarousel = ({
               </div>
             ))}
           </div>
-          <div className="inset-x-0 bottom-full hidden -rotate-3 transform items-end justify-center text-xl text-black/60 lg:flex">
-            <Arrow className={"flex rotate-180 transform opacity-60"} />
-            <div className="flex space-x-1.5 pb-2 text-nowrap">
-              <p className="hand-written">{gallery?.tagline ?? ""}</p>
+          {tagline && (
+            <div className="inset-x-0 bottom-full hidden -rotate-3 transform items-end justify-center text-xl text-black/60 lg:flex">
+              <Arrow className={"flex rotate-180 transform opacity-60"} />
+              <div className="flex space-x-1.5 pb-2 text-nowrap">
+                <p className="hand-written">{tagline}</p>
+              </div>
             </div>
-          </div>
+          )}
         </div>
       </div>
     </div>

@@ -258,7 +258,8 @@ const AboutPage = ({ className = "", touch, data }: Props) => {
       <div className="flex w-full grow lg:min-h-[600px] lg:max-w-1/2 lg:min-w-50">
         <PhotoCarousel
           className={"flex w-full grow"}
-          data={data}
+          photos={data?.gallery?.photos}
+          tagline={data?.gallery?.tagline}
           activePhotoIndex={activePhotoIndex}
           setActivePhotoIndex={setActivePhotoIndex}
         />

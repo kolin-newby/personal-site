@@ -15,7 +15,8 @@ type Props = {
   className?: string;
 };
 
-const navbarItems: NavbarItem[] = [
+// Each id is also the id of the page section it scrolls to.
+export const navbarItems: NavbarItem[] = [
   { id: "home", title: "Home", icon: <House /> },
   { id: "about", title: "About", icon: <User /> },
   { id: "projects", title: "Projects", icon: <BriefcaseBusiness /> }

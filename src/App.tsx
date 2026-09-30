@@ -1,7 +1,7 @@
 import "./App.css";
 import React, { useEffect, useState, Suspense, useCallback } from "react";
 import LoadingCover from "./components/loading-cover";
-import Navbar from "./components/navbar";
+import Navbar, { navbarItems } from "./components/navbar";
 import AboutPage from "./pages/about-page";
 import HomePage from "./pages/home-page";
 import { ProjectPage } from "./pages/project-page";
@@ -21,14 +21,26 @@ const App = () => {
 
   if (isSiteDataError) console.error("useGetSiteData error: ", siteDataError);
 
+  // Sections can be any height (the mobile project stack is several screens
+  // tall), so progress is measured per section rather than over the whole
+  // page. Each section adds its share over the last screen of scrolling
+  // before its top reaches the top, so the indicator rests on a slot while
+  // inside a section and slides between slots on the handoff.
   function handleScroll(event: React.UIEvent<HTMLDivElement>) {
-    let container = event.currentTarget;
-    let maxScroll = container.scrollHeight - container.clientHeight;
-    let scrollPositionTemp =
-      maxScroll > 0
-        ? Number((container.scrollTop / maxScroll).toFixed(5)) * 100
-        : 0;
-    setScrollPosition(scrollPositionTemp);
+    const { scrollTop, clientHeight, scrollHeight } = event.currentTarget;
+    const maxScroll = scrollHeight - clientHeight;
+
+    let position = 0;
+    for (const { id } of navbarItems.slice(1)) {
+      const section = document.getElementById(id);
+      if (!section || clientHeight <= 0) continue;
+      // A section that can't scroll all the way to the top still counts
+      // as reached once the page bottoms out.
+      const top = Math.min(section.offsetTop, maxScroll);
+      const progress = (scrollTop - (top - clientHeight)) / clientHeight;
+      position += Math.min(Math.max(progress, 0), 1);
+    }
+    setScrollPosition((position / (navbarItems.length - 1)) * 100);
     if (navBarOpen) setNavBarOpen(false);
   }
 
@@ -53,7 +65,7 @@ const App = () => {
     <Suspense fallback={<LoadingCover />}>
       <div
         className={
-          "relative h-dvh snap-y snap-mandatory overflow-x-hidden overflow-y-auto bg-linear-to-br from-gray-100 via-gray-200 to-gray-100"
+          "scrollbar-display-none relative h-dvh snap-y snap-mandatory overflow-x-hidden overflow-y-auto bg-linear-to-br from-gray-100 via-gray-200 to-gray-100"
         }
         onScroll={handleScroll}
         onClick={() => {

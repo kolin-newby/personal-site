@@ -83,8 +83,18 @@ export const defaultRenderers: Renderers = {
   block: {
     block: "div",
     blockquote: "blockquote",
+    // mb/last:mb-0 restores paragraph spacing stripped by Tailwind's preflight;
+    // min-h keeps empty paragraphs (blank lines in the editor) from collapsing;
+    // pre-line keeps soft breaks (shift+enter, stored as "\n") visible.
     paragraph: ({ children, textAlign }) => {
-      return <p style={{ textAlign }}>{children}</p>;
+      return (
+        <p
+          className="mb-[0.75em] min-h-lh whitespace-pre-line last:mb-0"
+          style={{ textAlign }}
+        >
+          {children}
+        </p>
+      );
     },
     divider: "hr",
     heading: ({ level, children, textAlign }) => {

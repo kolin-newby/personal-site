@@ -3,12 +3,11 @@ import ParticleField from "@/components/particle-field";
 import type { GetSiteDataQuery } from "@/generated/graphql";
 
 type Props = {
-  className?: string;
   touch?: boolean;
   data?: GetSiteDataQuery | undefined;
 };
 
-const HomePage = ({ className = "", touch, data }: Props) => {
+const HomePage = ({ touch, data }: Props) => {
   const { introduction } = data ?? {};
 
   return (
@@ -24,27 +23,21 @@ const HomePage = ({ className = "", touch, data }: Props) => {
         particleDensity={20}
       />
       <div className={"pointer-events-none relative h-full w-full"}>
-        <div className={"wrapper relative h-full"}>
-          <canvas
-            id={"homePage"}
-            className={"dark:effect-color-light absolute inset-0"}
-          />
-          <h1
-            className={
-              "pointer-events-none absolute inset-0 flex flex-col bg-transparent bg-clip-text text-4xl font-bold sm:text-5xl lg:text-6xl 2xl:text-7xl " +
-              "items-center justify-center space-y-1"
+        <h1
+          className={
+            "pointer-events-none absolute inset-0 flex flex-col text-4xl font-bold sm:text-5xl lg:text-6xl 2xl:text-7xl " +
+            "items-center justify-center space-y-1"
+          }
+        >
+          <span className={"relative flex rounded-2xl px-4 py-3 text-center"}>
+            {introduction?.heading ?? ""}
+          </span>
+          <TypingDisplay
+            typingTerms={
+              introduction?.typingTerms?.map((term) => term.name ?? "") ?? []
             }
-          >
-            <span className={"relative flex rounded-2xl px-4 py-3 text-center"}>
-              {introduction?.heading ?? ""}
-            </span>
-            <TypingDisplay
-              typingTerms={
-                introduction?.typingTerms?.map((term) => term.name ?? "") ?? []
-              }
-            />
-          </h1>
-        </div>
+          />
+        </h1>
       </div>
     </section>
   );

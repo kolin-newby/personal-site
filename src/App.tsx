@@ -1,6 +1,5 @@
 import "./App.css";
-import React, { useEffect, useState, Suspense, useCallback } from "react";
-import LoadingCover from "./components/loading-cover";
+import React, { useState } from "react";
 import Navbar, { navbarItems } from "./components/navbar";
 import AboutPage from "./pages/about-page";
 import HomePage from "./pages/home-page";
@@ -11,7 +10,9 @@ const App = () => {
   const [scrollPosition, setScrollPosition] = useState(0);
   const [navBarOpen, setNavBarOpen] = useState(false);
 
-  const [hasTouch, setHasTouch] = useState(false);
+  const [hasTouch] = useState(
+    () => "ontouchstart" in window || navigator.maxTouchPoints > 0
+  );
 
   const {
     data: siteData,
@@ -44,47 +45,28 @@ const App = () => {
     if (navBarOpen) setNavBarOpen(false);
   }
 
-  const isTouchDevice = useCallback((): boolean => {
-    return (
-      "ontouchstart" in window ||
-      navigator.maxTouchPoints > 0 ||
-      (navigator as Navigator & { msMaxTouchPoints?: number })
-        .msMaxTouchPoints! > 0
-    );
-  }, []);
-
-  useEffect(() => {
-    try {
-      setHasTouch(isTouchDevice());
-    } catch (error) {
-      console.error("Failed to detect touchscreen: ", error);
-    }
-  }, [hasTouch, isTouchDevice, scrollPosition]);
-
   return (
-    <Suspense fallback={<LoadingCover />}>
-      <div
-        className={
-          "scrollbar-display-none relative h-dvh snap-y snap-mandatory overflow-x-hidden overflow-y-auto bg-linear-to-br from-gray-100 via-gray-200 to-gray-100"
-        }
-        onScroll={handleScroll}
-        onClick={() => {
-          if (navBarOpen) setNavBarOpen(false);
-        }}
-      >
-        <Navbar
-          scrollPosition={scrollPosition}
-          touch={hasTouch}
-          barOpen={navBarOpen}
-          setBarOpen={setNavBarOpen}
-        />
-        <div className="w-full">
-          <HomePage touch={hasTouch} data={siteData} />
-          <AboutPage touch={hasTouch} data={siteData} />
-          <ProjectPage touch={hasTouch} data={siteData} />
-        </div>
+    <div
+      className={
+        "scrollbar-display-none relative h-dvh snap-y snap-mandatory overflow-x-hidden overflow-y-auto bg-linear-to-br from-gray-100 via-gray-200 to-gray-100"
+      }
+      onScroll={handleScroll}
+      onClick={() => {
+        if (navBarOpen) setNavBarOpen(false);
+      }}
+    >
+      <Navbar
+        scrollPosition={scrollPosition}
+        touch={hasTouch}
+        barOpen={navBarOpen}
+        setBarOpen={setNavBarOpen}
+      />
+      <div className="w-full">
+        <HomePage touch={hasTouch} data={siteData} />
+        <AboutPage touch={hasTouch} data={siteData} />
+        <ProjectPage touch={hasTouch} data={siteData} />
       </div>
-    </Suspense>
+    </div>
   );
 };
 

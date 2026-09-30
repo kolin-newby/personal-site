@@ -7,7 +7,6 @@ type Props = {
   typingSpeed?: number;
   deletingSpeed?: number;
   pauseTime?: number;
-  pauseWhenOffScreen?: boolean;
 };
 
 export const TypingDisplay = ({
@@ -24,7 +23,6 @@ export const TypingDisplay = ({
   typingSpeed = 130,
   deletingSpeed = 70,
   pauseTime = 1400,
-  pauseWhenOffScreen = true,
 }: Props) => {
   const [text, setText] = useState("");
   const [isDeleting, setIsDeleting] = useState(false);
@@ -39,8 +37,7 @@ export const TypingDisplay = ({
     typeof window !== "undefined" &&
     window.matchMedia?.("(prefers-reduced-motion: reduce)")?.matches;
 
-  const shouldRun =
-    !prefersReducedMotion && (!pauseWhenOffScreen || (inView && pageVisible));
+  const shouldRun = !prefersReducedMotion && inView && pageVisible;
 
   useEffect(() => {
     // Always clear the previous timer before scheduling a new one
@@ -110,7 +107,7 @@ export const TypingDisplay = ({
   return (
     <span
       ref={containerRef}
-      className="word-typer pl-2 text-center"
+      className="pl-2 text-center"
       aria-hidden="true"
     >
       {text}

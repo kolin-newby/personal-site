@@ -19,24 +19,6 @@
    size containers named "card"; this reveals extras on tall phones. */
 @custom-variant tall-card (@container card (min-height: 600px));
 
-@keyframes wiggle {
-  0%,
-  100% {
-    transform: rotate(-2deg);
-  }
-  50% {
-    transform: rotate(2deg);
-  }
-}
-
-@utility animate-wiggle {
-  animation: wiggle 0.5s ease-in-out infinite;
-}
-
-@utility animate-spin-slow {
-  animation: spin 10s linear infinite;
-}
-
 @utility inset-card {
   @apply bg-linear-to-br from-gray-200 to-gray-50 shadow-inner;
 }
@@ -56,13 +38,6 @@
     transparent
   );
   transition: --fade-b-size 300ms ease-out;
-}
-
-@utility scale-98 {
-  scale: 0.98;
-}
-@utility scale-99 {
-  scale: 0.99;
 }
 
 body {

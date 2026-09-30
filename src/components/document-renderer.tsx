@@ -1,5 +1,6 @@
 // Vendored from @keystone-6/document-renderer (MIT) rather than installed as a
 // dependency, since its React peer range (16-18) conflicts with this project's React 19.
+// Trimmed to the default renderers - no overrides or component blocks.
 import { cloneElement, Fragment, type JSX, type ReactElement, type ReactNode } from "react";
 
 export type Node = Element | Text;
@@ -47,7 +48,6 @@ interface Renderers {
     }>;
   } & MarkRenderers;
   block: {
-    block: OnlyChildrenComponent;
     paragraph: Component<{
       children: ReactNode;
       textAlign: "center" | "end" | undefined;
@@ -65,7 +65,7 @@ interface Renderers {
   };
 }
 
-export const defaultRenderers: Renderers = {
+const renderers: Renderers = {
   inline: {
     bold: "strong",
     code: "code",
@@ -81,7 +81,6 @@ export const defaultRenderers: Renderers = {
     },
   },
   block: {
-    block: "div",
     blockquote: "blockquote",
     // mb/last:mb-0 restores paragraph spacing stripped by Tailwind's preflight;
     // min-h keeps empty paragraphs (blank lines in the editor) from collapsing;
@@ -129,15 +128,7 @@ export const defaultRenderers: Renderers = {
   },
 };
 
-function DocumentNode({
-  node: _node,
-  componentBlocks,
-  renderers,
-}: {
-  node: Element | Text;
-  renderers: Renderers;
-  componentBlocks: Record<string, Component<any>>;
-}): ReactElement {
+function DocumentNode({ node: _node }: { node: Element | Text }): ReactElement {
   if (typeof _node.text === "string") {
     let child = <Fragment>{_node.text}</Fragment>;
     (Object.keys(renderers.inline) as (keyof typeof renderers.inline)[]).forEach(
@@ -153,10 +144,7 @@ function DocumentNode({
   }
   const node = _node as Element;
   const children = node.children.map((x, i) =>
-    cloneElement(
-      DocumentNode({ node: x, componentBlocks, renderers }),
-      { key: i },
-    ),
+    cloneElement(DocumentNode({ node: x }), { key: i }),
   );
   switch (node.type as string) {
     case "blockquote": {
@@ -190,18 +178,6 @@ function DocumentNode({
         />
       );
     }
-    case "component-block": {
-      const Comp = componentBlocks[node.component as string];
-      if (Comp) {
-        const props = createComponentBlockProps(node, children);
-        return (
-          <renderers.block.block>
-            <Comp {...props} />
-          </renderers.block.block>
-        );
-      }
-      break;
-    }
     case "ordered-list":
     case "unordered-list": {
       return (
@@ -227,67 +203,9 @@ function DocumentNode({
   return <Fragment>{children}</Fragment>;
 }
 
-function set(obj: Record<string, any>, propPath: (string | number)[], value: any) {
-  if (propPath.length === 1) {
-    obj[propPath[0] ?? 0] = value;
-  } else {
-    const firstElement = propPath.shift()!;
-    set(obj[firstElement], propPath, value);
-  }
-}
-
-function createComponentBlockProps(node: Element, children: ReactElement[]) {
-  const formProps = JSON.parse(JSON.stringify(node.props));
-  node.children.forEach((child, i) => {
-    if (child.propPath) {
-      const propPath = [...(child.propPath as any)];
-      set(formProps, propPath, children[i]);
-    }
-  });
-  return formProps;
-}
-
-type RendererOverrides<ComponentBlocks extends Record<string, Component<any>>> = {
-  renderers?: { inline?: Partial<Renderers["inline"]>; block?: Partial<Renderers["block"]> };
-  componentBlocks?: ComponentBlocks;
-};
-
-function resolveRenderers<ComponentBlocks extends Record<string, Component<any>>>(
-  overrides?: RendererOverrides<ComponentBlocks>,
-) {
-  return {
-    renderers: {
-      inline: { ...defaultRenderers.inline, ...overrides?.renderers?.inline },
-      block: { ...defaultRenderers.block, ...overrides?.renderers?.block },
-    },
-    componentBlocks: overrides?.componentBlocks || {},
-  };
-}
-
 // Renders each top-level document node to a React element array, so callers can
 // splice the result directly into another element's children (e.g. for text-scanning
 // wrappers that need to see the actual text nodes, not a nested component).
-export function renderDocumentNodes<ComponentBlocks extends Record<string, Component<any>>>(
-  document: Element[],
-  overrides?: RendererOverrides<ComponentBlocks>,
-): ReactElement[] {
-  const { renderers, componentBlocks } = resolveRenderers(overrides);
-  return document.map((x, i) =>
-    cloneElement(
-      DocumentNode({ node: x, componentBlocks, renderers }),
-      { key: i },
-    ),
-  );
-}
-
-export type DocumentRendererProps<
-  ComponentBlocks extends Record<string, Component<any>> = Record<string, Component<any>>,
-> = {
-  document: Element[];
-} & RendererOverrides<ComponentBlocks>;
-
-export function DocumentRenderer<ComponentBlocks extends Record<string, Component<any>>>(
-  props: DocumentRendererProps<ComponentBlocks>,
-) {
-  return <Fragment>{renderDocumentNodes(props.document, props)}</Fragment>;
+export function renderDocumentNodes(document: Element[]): ReactElement[] {
+  return document.map((x, i) => cloneElement(DocumentNode({ node: x }), { key: i }));
 }

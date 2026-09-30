@@ -124,7 +124,6 @@ type Props = {
   className?: string;
   style?: React.CSSProperties;
   speed?: string;
-  pauseWhenOffScreen?: boolean;
 };
 
 const ParticleField = ({
@@ -135,7 +134,6 @@ const ParticleField = ({
   className = "",
   style = {},
   speed = "normal",
-  pauseWhenOffScreen = true,
 }: Props) => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const sizeRef = useRef<{ w: number; h: number }>({ w: 1, h: 1 });
@@ -172,8 +170,7 @@ const ParticleField = ({
     return () => mql.removeEventListener("change", handleChange);
   }, []);
 
-  const shouldRun =
-    !prefersReducedMotion && (!pauseWhenOffScreen || (inView && pageVisible));
+  const shouldRun = !prefersReducedMotion && inView && pageVisible;
 
   const shouldRunRef = useRef<boolean>(shouldRun);
   useEffect(() => {

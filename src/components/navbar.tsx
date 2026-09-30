@@ -12,7 +12,6 @@ type Props = {
   touch: boolean;
   barOpen: boolean;
   setBarOpen: React.Dispatch<React.SetStateAction<boolean>>;
-  className?: string;
 };
 
 // Each id is also the id of the page section it scrolls to.
@@ -24,17 +23,9 @@ export const navbarItems: NavbarItem[] = [
 
 const navbarItemWidth = (1 / navbarItems.length) * 100;
 
-const Navbar = ({
-  scrollPosition,
-  touch,
-  barOpen,
-  setBarOpen,
-  className = ""
-}: Props) => {
+const Navbar = ({ scrollPosition, touch, barOpen, setBarOpen }: Props) => {
   return (
-    <div
-      className={`group/bar sticky top-0 z-50 -mb-(--nav-h) flex h-(--nav-h) w-full ${className}`}
-    >
+    <div className="group/bar sticky top-0 z-50 -mb-(--nav-h) flex h-(--nav-h) w-full">
       <div
         style={{
           width: `${navbarItemWidth}%`,

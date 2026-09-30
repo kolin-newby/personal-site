@@ -11,12 +11,11 @@ import { CustomSvg } from "@/components/custom-svg";
 import type { Icon, GetSiteDataQuery } from "@/generated/graphql";
 
 type Props = {
-  className?: string;
   data?: GetSiteDataQuery | undefined;
   touch: boolean;
 };
 
-const AboutPage = ({ className = "", touch, data }: Props) => {
+const AboutPage = ({ touch, data }: Props) => {
   const { bio, iconDisplay, personalLinkList } = data ?? {};
 
   const [activePhotoIndex, setActivePhotoIndex] = useState<number | null>(null);

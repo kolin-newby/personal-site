@@ -5,32 +5,25 @@ import { useInViewport } from "../common/use-in-viewport";
 type Props = {
   children: React.ReactNode;
   terms: string[] | undefined;
-  colors?: string[];
   caseSensitive?: boolean;
-  wholeWord?: boolean;
   perWordFillSec?: number;
-  gapSec?: number;
   holdAfterAllSec?: number;
-  fadeSec?: number;
-  autoLoop?: boolean;
   className?: string;
-  pauseWhenOffScreen?: boolean;
   manualPause?: boolean;
 };
+
+const COLORS = ["#FFF176", "#A5D6A7", "#81D4FA", "#FFAB91", "#F8BBD0"];
+// Pause between one word finishing and the next starting, in s.
+const GAP_SEC = 0.1;
+const FADE_SEC = 0.6;
 
 const TextHighlighterContainer = ({
   children,
   terms,
-  colors = ["#FFF176", "#A5D6A7", "#81D4FA", "#FFAB91", "#F8BBD0"],
   caseSensitive = false,
-  wholeWord = true,
   perWordFillSec = 0.9,
-  gapSec = 0.1,
   holdAfterAllSec = 0.4,
-  fadeSec = 0.6,
-  autoLoop = true,
   className = "",
-  pauseWhenOffScreen = true,
   manualPause = false
 }: Props) => {
   const hasTerms = !!terms && terms.length > 0;
@@ -43,16 +36,14 @@ const TextHighlighterContainer = ({
     window.matchMedia?.("(prefers-reduced-motion: reduce)")?.matches;
 
   const shouldRun =
-    !prefersReducedMotion &&
-    (!pauseWhenOffScreen || (inView && pageVisible)) &&
-    !manualPause;
+    !prefersReducedMotion && inView && pageVisible && !manualPause;
 
   const escapeRegex = (s: string): string =>
     s.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
 
   const makeTermRegex = (
     terms: string[],
-    { wholeWord, caseSensitive }: { wholeWord: boolean; caseSensitive: boolean }
+    caseSensitive: boolean
   ): { source: string; flags: string; sortedTerms: string[] } => {
     const nonEmpty = (terms || []).filter(Boolean);
     if (nonEmpty.length === 0)
@@ -60,21 +51,20 @@ const TextHighlighterContainer = ({
     const sortedTerms = [...nonEmpty].sort((a, b) => b.length - a.length);
     const escaped = sortedTerms.map(escapeRegex);
     const WORD = "[\\p{L}\\p{N}_''-]";
-    const wrapped = escaped.map((t) =>
-      wholeWord ? `(?<!${WORD})(${t})(?!${WORD})` : `(${t})`
-    );
+    // Whole words only.
+    const wrapped = escaped.map((t) => `(?<!${WORD})(${t})(?!${WORD})`);
     const source = wrapped.join("|");
     const flags = "gu" + (caseSensitive ? "" : "i");
     return { source, flags, sortedTerms };
   };
 
   const config = useMemo(() => {
-    const cfg = makeTermRegex(terms ?? [], { wholeWord, caseSensitive });
+    const cfg = makeTermRegex(terms ?? [], caseSensitive);
     const sortedTermsNorm = cfg.sortedTerms.map((t) =>
       caseSensitive ? t : t.toLowerCase()
     );
     return { ...cfg, sortedTermsNorm };
-  }, [terms, caseSensitive, wholeWord]);
+  }, [terms, caseSensitive]);
 
   const totalMatches = useMemo(() => {
     if (!shouldRun || !config.source) return 0;
@@ -98,9 +88,9 @@ const TextHighlighterContainer = ({
 
   const lastFinish =
     totalMatches > 0
-      ? (totalMatches - 1) * (perWordFillSec + gapSec) + perWordFillSec
+      ? (totalMatches - 1) * (perWordFillSec + GAP_SEC) + perWordFillSec
       : 0;
-  const loopSec = lastFinish + holdAfterAllSec + fadeSec;
+  const loopSec = lastFinish + holdAfterAllSec + FADE_SEC;
 
   const [cycle, setCycle] = useState(0);
 
@@ -114,10 +104,10 @@ const TextHighlighterContainer = ({
   }, [shouldRun]);
 
   useEffect(() => {
-    if (!autoLoop || !shouldRun || loopSec <= 0) return;
+    if (!shouldRun || loopSec <= 0) return;
     const id = setInterval(() => setCycle((c) => c + 1), loopSec * 1000);
     return () => clearInterval(id);
-  }, [autoLoop, loopSec, shouldRun]);
+  }, [loopSec, shouldRun]);
 
   let order = 0;
   const renderHighlighted = (node: React.ReactNode): React.ReactNode => {
@@ -140,9 +130,9 @@ const TextHighlighterContainer = ({
         const matched = m[0];
         const key = caseSensitive ? matched : matched.toLowerCase();
         const termIndex = config.sortedTermsNorm.findIndex((t) => t === key);
-        const color = colors[(termIndex >= 0 ? termIndex : 0) % colors.length];
+        const color = COLORS[(termIndex >= 0 ? termIndex : 0) % COLORS.length];
 
-        const delaySec = order * (perWordFillSec + gapSec);
+        const delaySec = order * (perWordFillSec + GAP_SEC);
 
         const rng = mulberryHash(order + 7);
         const bodySkewDeg = `${(rng() * 50 - 25).toFixed(2)}deg`;
@@ -156,7 +146,7 @@ const TextHighlighterContainer = ({
             style={
               {
                 "--loopSec": `${loopSec}s`,
-                "--fadeSec": `${fadeSec}s`,
+                "--fadeSec": `${FADE_SEC}s`,
                 "--fillSec": `${perWordFillSec}s`,
                 "--delay": `${delaySec}s`,
                 "--hlColor": color,
@@ -205,7 +195,7 @@ const TextHighlighterContainer = ({
   return (
     <div
       ref={containerRef}
-      className={`hl-root relative leading-normal ${
+      className={`relative leading-normal ${
         shouldRun ? "" : "hl-paused"
       } ${className}`}
     >

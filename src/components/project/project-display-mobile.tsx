@@ -8,7 +8,8 @@ import {
 import TextHighlighterContainer from "../text-highlighter-container";
 import Button from "../common/button";
 import { Dot, GitFork, Link2, Star } from "lucide-react";
-import { formatCount, RepoIcon, useRepoData } from "../repo";
+import { RepoIcon } from "../repo";
+import { formatCount, useRepoData } from "../repo-utils";
 import { prefersReducedMotion } from "@/common/use-media-query";
 import PhotoCarousel from "../photo-carousel";
 

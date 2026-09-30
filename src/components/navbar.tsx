@@ -1,11 +1,6 @@
-import React, { type ReactElement } from "react";
-import { BriefcaseBusiness, ChevronDown, House, User } from "lucide-react";
-
-type NavbarItem = {
-  id: string;
-  title: string;
-  icon: ReactElement;
-};
+import React from "react";
+import { ChevronDown } from "lucide-react";
+import { navbarItems } from "./navbar-items";
 
 type Props = {
   scrollPosition: number;
@@ -13,13 +8,6 @@ type Props = {
   barOpen: boolean;
   setBarOpen: React.Dispatch<React.SetStateAction<boolean>>;
 };
-
-// Each id is also the id of the page section it scrolls to.
-export const navbarItems: NavbarItem[] = [
-  { id: "home", title: "Home", icon: <House /> },
-  { id: "about", title: "About", icon: <User /> },
-  { id: "projects", title: "Projects", icon: <BriefcaseBusiness /> }
-];
 
 const navbarItemWidth = (1 / navbarItems.length) * 100;
 

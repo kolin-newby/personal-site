@@ -1,6 +1,7 @@
 import "./App.css";
 import React, { useState } from "react";
-import Navbar, { navbarItems } from "./components/navbar";
+import Navbar from "./components/navbar";
+import { navbarItems } from "./components/navbar-items";
 import AboutPage from "./pages/about-page";
 import HomePage from "./pages/home-page";
 import { ProjectPage } from "./pages/project-page";

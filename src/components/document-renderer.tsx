@@ -130,7 +130,7 @@ const renderers: Renderers = {
   },
 };
 
-function DocumentNode({ node: _node }: { node: Element | Text }): ReactElement {
+function renderNode(_node: Element | Text): ReactElement {
   if (typeof _node.text === "string") {
     let child = <Fragment>{_node.text}</Fragment>;
     (Object.keys(renderers.inline) as (keyof typeof renderers.inline)[]).forEach(
@@ -146,7 +146,7 @@ function DocumentNode({ node: _node }: { node: Element | Text }): ReactElement {
   }
   const node = _node as Element;
   const children = node.children.map((x, i) =>
-    cloneElement(DocumentNode({ node: x }), { key: i }),
+    cloneElement(renderNode(x), { key: i }),
   );
   switch (node.type as string) {
     case "blockquote": {
@@ -209,5 +209,5 @@ function DocumentNode({ node: _node }: { node: Element | Text }): ReactElement {
 // splice the result directly into another element's children (e.g. for text-scanning
 // wrappers that need to see the actual text nodes, not a nested component).
 export function renderDocumentNodes(document: Element[]): ReactElement[] {
-  return document.map((x, i) => cloneElement(DocumentNode({ node: x }), { key: i }));
+  return document.map((x, i) => cloneElement(renderNode(x), { key: i }));
 }

@@ -27,6 +27,14 @@ type Mark =
 
 type Component<Props> = (props: Props) => ReactNode;
 
+type TextAlign = "center" | "end" | undefined;
+type HeadingLevel = 1 | 2 | 3 | 4 | 5 | 6;
+type RelationshipData = {
+  id: string;
+  label: string | undefined;
+  data: Record<string, unknown> | undefined;
+};
+
 type OnlyChildrenComponent =
   | Component<{ children: ReactNode }>
   | keyof JSX.IntrinsicElements;
@@ -38,13 +46,7 @@ interface Renderers {
     link: Component<{ children: ReactNode; href: string }> | "a";
     relationship: Component<{
       relationship: string;
-      data:
-        | {
-            id: string;
-            label: string | undefined;
-            data: Record<string, any> | undefined;
-          }
-        | null;
+      data: RelationshipData | null;
     }>;
   } & MarkRenderers;
   block: {
@@ -151,7 +153,7 @@ function DocumentNode({ node: _node }: { node: Element | Text }): ReactElement {
       return <renderers.block.blockquote children={children} />;
     }
     case "paragraph": {
-      return <renderers.block.paragraph textAlign={node.textAlign as any} children={children} />;
+      return <renderers.block.paragraph textAlign={node.textAlign as TextAlign} children={children} />;
     }
     case "code": {
       if (
@@ -164,7 +166,7 @@ function DocumentNode({ node: _node }: { node: Element | Text }): ReactElement {
       break;
     }
     case "layout": {
-      return <renderers.block.layout layout={node.layout as any} children={children} />;
+      return <renderers.block.layout layout={node.layout as [number, ...number[]]} children={children} />;
     }
     case "divider": {
       return <renderers.block.divider />;
@@ -172,8 +174,8 @@ function DocumentNode({ node: _node }: { node: Element | Text }): ReactElement {
     case "heading": {
       return (
         <renderers.block.heading
-          textAlign={node.textAlign as any}
-          level={node.level as any}
+          textAlign={node.textAlign as TextAlign}
+          level={node.level as HeadingLevel}
           children={children}
         />
       );
@@ -188,7 +190,7 @@ function DocumentNode({ node: _node }: { node: Element | Text }): ReactElement {
       );
     }
     case "relationship": {
-      const data = node.data as any;
+      const data = node.data as RelationshipData | null | undefined;
       return (
         <renderers.inline.relationship
           relationship={node.relationship as string}

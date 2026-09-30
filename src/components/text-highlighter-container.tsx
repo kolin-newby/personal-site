@@ -16,6 +16,25 @@ const COLORS = ["#FFF176", "#A5D6A7", "#81D4FA", "#FFAB91", "#F8BBD0"];
 const GAP_SEC = 0.1;
 const FADE_SEC = 0.6;
 
+const escapeRegex = (s: string): string =>
+  s.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+
+const makeTermRegex = (
+  terms: string[],
+  caseSensitive: boolean
+): { source: string; flags: string; sortedTerms: string[] } => {
+  const nonEmpty = (terms || []).filter(Boolean);
+  if (nonEmpty.length === 0) return { source: "", flags: "", sortedTerms: [] };
+  const sortedTerms = [...nonEmpty].sort((a, b) => b.length - a.length);
+  const escaped = sortedTerms.map(escapeRegex);
+  const WORD = "[\\p{L}\\p{N}_''-]";
+  // Whole words only.
+  const wrapped = escaped.map((t) => `(?<!${WORD})(${t})(?!${WORD})`);
+  const source = wrapped.join("|");
+  const flags = "gu" + (caseSensitive ? "" : "i");
+  return { source, flags, sortedTerms };
+};
+
 const TextHighlighterContainer = ({
   children,
   terms,
@@ -30,26 +49,6 @@ const TextHighlighterContainer = ({
   const containerRef = useRef<HTMLDivElement>(null);
   const shouldRun =
     useShouldAnimate(containerRef, { threshold: 0.1 }) && !manualPause;
-
-  const escapeRegex = (s: string): string =>
-    s.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
-
-  const makeTermRegex = (
-    terms: string[],
-    caseSensitive: boolean
-  ): { source: string; flags: string; sortedTerms: string[] } => {
-    const nonEmpty = (terms || []).filter(Boolean);
-    if (nonEmpty.length === 0)
-      return { source: "", flags: "", sortedTerms: [] };
-    const sortedTerms = [...nonEmpty].sort((a, b) => b.length - a.length);
-    const escaped = sortedTerms.map(escapeRegex);
-    const WORD = "[\\p{L}\\p{N}_''-]";
-    // Whole words only.
-    const wrapped = escaped.map((t) => `(?<!${WORD})(${t})(?!${WORD})`);
-    const source = wrapped.join("|");
-    const flags = "gu" + (caseSensitive ? "" : "i");
-    return { source, flags, sortedTerms };
-  };
 
   const config = useMemo(() => {
     const cfg = makeTermRegex(terms ?? [], caseSensitive);

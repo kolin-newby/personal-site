@@ -126,7 +126,6 @@ const IdleScrollArea = ({
     if (measureRef.current) ro.observe(measureRef.current);
     if (containerRef.current) ro.observe(containerRef.current);
     return () => ro.disconnect();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [updateLayout, copyCount]);
 
   const applyTransform = useCallback(() => {

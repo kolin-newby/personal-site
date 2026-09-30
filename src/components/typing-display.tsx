@@ -46,7 +46,7 @@ export const TypingDisplay = ({
     const currentWord = typingTerms[wordIndex] ?? "";
 
     // Default plan: schedule a type/delete step
-    let delay = isDeleting ? deletingSpeed : typingSpeed;
+    const delay = isDeleting ? deletingSpeed : typingSpeed;
     let nextTimer = setTimeout(() => {
       setText((prev) =>
         isDeleting ? prev.slice(0, -1) : currentWord.slice(0, prev.length + 1),

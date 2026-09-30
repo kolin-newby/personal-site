@@ -2,6 +2,9 @@ node_modules/
 .idea/
 dist/
 .vscode/
+# npm is the package manager - keep other managers' files out.
 yarn.lock
+.yarn/
+*.tsbuildinfo
 .env
 .env.local

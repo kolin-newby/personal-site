@@ -1,20 +1,28 @@
-import React, { useMemo, useRef, useState } from "react";
+import React, { useRef, useState } from "react";
 import {
   motion,
   useMotionValue,
   useReducedMotion,
-  useSpring,
+  useSpring
 } from "motion/react";
+import { useGradientColor } from "@/common/gradient-color";
 
-type Props = {
-  onClick?: React.MouseEventHandler<HTMLButtonElement> | null;
+type Props = Omit<React.HTMLAttributes<HTMLElement>, "children"> & {
   href?: string | null;
-  buttonIndex?: number | null;
-  buttonText?: string | null;
-  icon?: React.ReactNode | null;
   download?: string | null;
   newTab?: boolean | null;
+  type?: "button" | "submit" | "reset";
+  disabled?: boolean;
+  buttonText?: string | null;
+  icon?: React.ReactNode;
+  // Keeps the background visible and enables drag-to-pull on touch devices.
   touch?: boolean | null;
+  // Palette index for the default gradient; random when omitted.
+  buttonIndex?: number | null;
+  // Turn off the default gradient + shadow to style the background yourself
+  // via `backgroundClassName`.
+  gradient?: boolean;
+  backgroundClassName?: string;
 };
 
 // How far the background is allowed to drift toward the cursor, in px.
@@ -31,30 +39,26 @@ const DRAG_THRESHOLD_PX = 4;
 // the button's (small) hit box.
 const DRAG_BOUNDS_PADDING_PX = 60;
 
-const backgroundColors = [
-  "bg-linear-to-br from-[#FFF176]/60 to-[#A5D6A7]/60",
-  "bg-linear-to-br from-[#81D4FA]/60 to-[#FFAB91]/60",
-  "bg-linear-to-br from-[#F8BBD0]/60 to-[#81D4FA]/60",
-  "bg-linear-to-br from-[#CE93D8]/60 to-[#80DEEA]/60",
-  "bg-linear-to-br from-[#FFE082]/60 to-[#FFAB91]/60",
-  "bg-linear-to-br from-[#A5D6A7]/60 to-[#80DEEA]/60",
-  "bg-linear-to-br from-[#EF9A9A]/60 to-[#F8BBD0]/60",
-  "bg-linear-to-br from-[#9FA8DA]/60 to-[#CE93D8]/60",
-  "bg-linear-to-br from-[#FFCC80]/60 to-[#FFF176]/60",
-  "bg-linear-to-br from-[#80CBC4]/60 to-[#A5D6A7]/60",
-  "bg-linear-to-br from-[#B39DDB]/60 to-[#F8BBD0]/60",
-  "bg-linear-to-br from-[#C5E1A5]/60 to-[#FFE082]/60",
-];
+const clamp = (value: number) => Math.max(-MAX_PULL, Math.min(MAX_PULL, value));
+
+const cx = (...classes: (string | false | null | undefined)[]) =>
+  classes.filter(Boolean).join(" ");
 
 const Button = ({
-  onClick = null,
   href = null,
-  buttonIndex = null,
-  buttonText = null,
-  icon = null,
   download = null,
   newTab = true,
+  type = "button",
+  disabled,
+  buttonText = null,
+  icon = null,
   touch = false,
+  buttonIndex = null,
+  gradient = true,
+  className,
+  backgroundClassName,
+  onClick,
+  ...props
 }: Props) => {
   const prefersReducedMotion = useReducedMotion();
   const [hovered, setHovered] = useState(false);
@@ -62,6 +66,7 @@ const Button = ({
   const y = useMotionValue(0);
   const springX = useSpring(x, { stiffness: 250, damping: 22, mass: 0.3 });
   const springY = useSpring(y, { stiffness: 250, damping: 22, mass: 0.3 });
+  const gradientColor = useGradientColor(buttonIndex);
 
   // Tracks whether the current gesture moved enough to count as a drag, so
   // the resulting click (link nav / onClick) can be suppressed on release.
@@ -78,20 +83,26 @@ const Button = ({
     startY: number;
   } | null>(null);
 
-  const endDrag = (target: HTMLElement, pointerId: number) => {
-    activeDragRef.current = null;
-    if (target.hasPointerCapture(pointerId))
-      target.releasePointerCapture(pointerId);
+  const resetPull = () => {
     x.set(0);
     y.set(0);
   };
 
+  const endDrag = (target: HTMLElement, pointerId: number) => {
+    activeDragRef.current = null;
+    if (target.hasPointerCapture(pointerId))
+      target.releasePointerCapture(pointerId);
+    resetPull();
+  };
+
   const handlePointerDown = (e: React.PointerEvent<HTMLElement>) => {
     if (!touch || prefersReducedMotion || e.pointerType !== "touch") return;
+    // A drag that ended out of bounds never produces a click to clear this.
+    draggedRef.current = false;
     activeDragRef.current = {
       pointerId: e.pointerId,
       startX: e.clientX,
-      startY: e.clientY,
+      startY: e.clientY
     };
     e.currentTarget.setPointerCapture(e.pointerId);
   };
@@ -129,35 +140,43 @@ const Button = ({
     endDrag(e.currentTarget, drag.pointerId);
   };
 
-  const bgColor = useMemo(() => {
-    if (buttonIndex !== null)
-      return backgroundColors[buttonIndex % backgroundColors.length] ?? "";
-
-    const randomIndex = Math.floor(Math.random() * backgroundColors.length);
-    return backgroundColors[randomIndex] ?? "";
-  }, [buttonIndex]);
-
   const handleMouseMove = (e: React.MouseEvent<HTMLElement>) => {
     if (prefersReducedMotion) return;
     const rect = e.currentTarget.getBoundingClientRect();
-    const relX = e.clientX - rect.left - rect.width / 2;
-    const relY = e.clientY - rect.top - rect.height / 2;
-    x.set(Math.max(-MAX_PULL, Math.min(MAX_PULL, relX * PULL_STRENGTH)));
-    y.set(Math.max(-MAX_PULL, Math.min(MAX_PULL, relY * PULL_STRENGTH)));
+    x.set(clamp((e.clientX - rect.left - rect.width / 2) * PULL_STRENGTH));
+    y.set(clamp((e.clientY - rect.top - rect.height / 2) * PULL_STRENGTH));
   };
 
   const handleMouseLeave = () => {
     setHovered(false);
-    x.set(0);
-    y.set(0);
+    resetPull();
   };
 
-  // Hit area is deliberately larger than the visual background below, so the
+  const handleClick = (e: React.MouseEvent<HTMLElement>) => {
+    if (draggedRef.current) {
+      draggedRef.current = false;
+      e.preventDefault();
+      return;
+    }
+    onClick?.(e);
+  };
+
+  const backgroundClasses = cx(
+    gradient && `shadow ${gradientColor}`,
+    backgroundClassName
+  );
+
+  // Hit area is deliberately larger than the visual background, so the
   // background has room to drift toward the cursor without ever reaching the
   // element's true edge.
-  const baseClasses = `relative flex rounded-lg py-2 sm:py-3 sm:mx-1 px-3 sm:px-4 sm:mx-4 items-center justify-center ${touch ? "touch-none" : ""}`;
-
-  const eventHandlers = {
+  const sharedProps = {
+    ...props,
+    className: cx(
+      "relative flex items-center justify-center rounded-lg px-3 py-2 sm:mx-4 sm:px-4 sm:py-3",
+      touch && "touch-none",
+      className
+    ),
+    onClick: handleClick,
     onMouseMove: handleMouseMove,
     onMouseEnter: () => setHovered(true),
     onMouseLeave: handleMouseLeave,
@@ -167,68 +186,41 @@ const Button = ({
     onPointerMove: handlePointerMove,
     onPointerUp: handlePointerUp,
     onPointerCancel: handlePointerUp,
+    children: (
+      <>
+        {backgroundClasses && (
+          <motion.span
+            aria-hidden
+            className={cx(
+              "pointer-events-none absolute inset-1 rounded-xl",
+              backgroundClasses
+            )}
+            style={{ x: springX, y: springY }}
+            initial={false}
+            animate={{ opacity: touch || hovered ? 1 : 0 }}
+            transition={{ duration: 0.2 }}
+          />
+        )}
+        <span className="relative z-10 flex items-center gap-2">
+          {icon && <span className="flex shrink-0 items-center">{icon}</span>}
+          {buttonText && <span>{buttonText}</span>}
+        </span>
+      </>
+    )
   };
-
-  const background = (
-    <motion.span
-      aria-hidden
-      className={`pointer-events-none absolute inset-1 rounded-xl shadow ${bgColor}`}
-      style={{
-        x: springX,
-        y: springY,
-      }}
-      initial={false}
-      animate={{ opacity: touch || hovered ? 1 : 0 }}
-      transition={{ duration: 0.2 }}
-    />
-  );
-
-  const content = (
-    <span className="relative z-10 flex items-center gap-2">
-      {icon !== null && (
-        <span className="flex shrink-0 items-center">{icon}</span>
-      )}
-      {buttonText && <span>{buttonText}</span>}
-    </span>
-  );
 
   if (href !== null)
     return (
       <a
+        {...sharedProps}
         href={href}
         target={newTab ? "_blank" : undefined}
         rel={newTab ? "noreferrer" : undefined}
         download={download ?? undefined}
-        className={baseClasses}
-        onClick={(e) => {
-          if (!draggedRef.current) return;
-          e.preventDefault();
-          draggedRef.current = false;
-        }}
-        {...eventHandlers}
-      >
-        {background}
-        {content}
-      </a>
+      />
     );
 
-  return (
-    <button
-      type="button"
-      onClick={(e) => {
-        if (draggedRef.current) {
-          draggedRef.current = false;
-          return;
-        }
-        onClick?.(e);
-      }}
-      className={baseClasses}
-      {...eventHandlers}
-    >
-      {background}
-      {content}
-    </button>
-  );
+  return <button {...sharedProps} type={type} disabled={disabled} />;
 };
 
 export default Button;

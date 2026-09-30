@@ -100,9 +100,10 @@ const AboutPage = ({ className = "", touch, data }: Props) => {
 
               return (
                 <Button
+                  type="button"
                   key={`social-links-${url}`}
                   buttonText={label}
-                  aria-label={label}
+                  aria-label={label || undefined}
                   touch={touch}
                   href={
                     isDownload && downloadFile?.file?.url

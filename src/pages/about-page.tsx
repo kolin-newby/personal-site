@@ -187,6 +187,7 @@ const AboutPage = ({ touch, data }: Props) => {
           className={"flex w-full grow"}
           photos={data?.gallery?.photos}
           tagline={data?.gallery?.tagline}
+          sizes="(min-width: 1024px) 50vw, 100vw"
           activePhotoIndex={activePhotoIndex}
           setActivePhotoIndex={setActivePhotoIndex}
         />

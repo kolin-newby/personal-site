@@ -264,6 +264,7 @@ export const ProjectCard = ({
                 className="flex w-full"
                 fitExpanded
                 expandedBgClassName="bg-black/80"
+                sizes="(min-width: 1024px) 34rem, 100vw"
                 photos={project.gallery}
                 activePhotoIndex={activePhotoIndex}
                 setActivePhotoIndex={setActivePhotoIndex}

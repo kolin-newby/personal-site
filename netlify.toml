@@ -2,7 +2,20 @@
   command = "npm run build"
   publish = "dist"
 
-# Origin of the API that scripts/prerender.js fetches the site data from at
-# build time. Not a secret - the browser calls the same API.
 [build.environment]
+  # Origin of the API that scripts/prerender.js fetches the site data from
+  # at build time. Not a secret - the browser calls the same API.
   API_PROXY_TARGET = "https://keystone.russby.org"
+  # Routes CMS images through Netlify's image CDN (src/common/image-url.ts).
+  VITE_IMAGE_CDN = "true"
+
+# CMS images the image CDN may fetch and resize.
+[images]
+  remote_images = ["https://images\\.kolinnewby\\.dev/.*"]
+
+# Vite puts a content hash in every file name under /assets, so a changed
+# file always gets a new URL and these can be cached for good.
+[[headers]]
+  for = "/assets/*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"

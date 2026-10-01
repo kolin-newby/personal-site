@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import Arrow from "./common/arrow";
 import { Camera, ChevronLeft, ChevronRight } from "lucide-react";
+import { responsiveImage } from "@/common/image-url";
 
 // Matches both the site gallery's photos and a project's gallery.
 export type CarouselPhoto = {
@@ -19,6 +20,8 @@ type Props = {
   // Background class for the open photo, e.g. "bg-black/80", which is what
   // fills the bars left by fitExpanded.
   expandedBgClassName?: string;
+  // The <img> sizes attribute: about how wide an open photo gets.
+  sizes?: string;
   activePhotoIndex: number | null;
   setActivePhotoIndex: React.Dispatch<React.SetStateAction<number | null>>;
 };
@@ -29,6 +32,7 @@ const PhotoCarousel = ({
   tagline,
   fitExpanded = false,
   expandedBgClassName = "",
+  sizes = "100vw",
   activePhotoIndex,
   setActivePhotoIndex
 }: Props) => {
@@ -84,19 +88,26 @@ const PhotoCarousel = ({
                     : activePhotoIndex === null
                       ? "z-0 basis-24 flex-col shadow hover:basis-1/2"
                       : "basis-0"
-                } ${
-                  fitExpanded && activePhotoIndex === index
-                    ? "bg-contain"
-                    : "bg-cover"
-                } h-full transform items-end justify-end rounded-lg bg-center bg-no-repeat transition-all duration-700`}
-                style={{
-                  backgroundImage: `url('${image.image?.url}')`
-                }}
+                } h-full transform items-end justify-end rounded-lg transition-all duration-700`}
                 onClick={() => {
                   if (activePhotoIndex !== index) setActivePhotoIndex(index);
                   else setActivePhotoIndex(null);
                 }}
               >
+                {image.image?.url && (
+                  <img
+                    {...responsiveImage(image.image.url)}
+                    sizes={sizes}
+                    alt={image.altText ?? ""}
+                    loading="lazy"
+                    decoding="async"
+                    className={`absolute inset-0 h-full w-full ${
+                      fitExpanded && activePhotoIndex === index
+                        ? "object-contain"
+                        : "object-cover"
+                    }`}
+                  />
+                )}
                 {index > 0 && (
                   <button
                     type="button"

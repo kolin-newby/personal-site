@@ -1,10 +1,15 @@
 import { GraphQLClient } from "graphql-request";
 
-const endpoint = new URL(
-  import.meta.env.VITE_API_URL,
-  window.location.origin,
-).toString();
+export const createClient = (endpoint: string) =>
+  new GraphQLClient(endpoint, {
+    credentials: "omit",
+  });
 
-export const client = new GraphQLClient(endpoint, {
-  credentials: "omit",
-});
+let browserClient: GraphQLClient | undefined;
+
+// Created on first use rather than at load, so this module can also be
+// imported while prerendering, where there's no window.
+export const getClient = () =>
+  (browserClient ??= createClient(
+    new URL(import.meta.env.VITE_API_URL, window.location.origin).toString(),
+  ));

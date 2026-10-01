@@ -6,14 +6,13 @@ import AboutPage from "./pages/about-page";
 import HomePage from "./pages/home-page";
 import { ProjectPage } from "./pages/project-page";
 import { useGetSiteData } from "@/hooks/useGetSiteData";
+import { useHasTouch } from "@/common/use-media-query";
 
 const App = () => {
   const [scrollPosition, setScrollPosition] = useState(0);
   const [navBarOpen, setNavBarOpen] = useState(false);
 
-  const [hasTouch] = useState(
-    () => "ontouchstart" in window || navigator.maxTouchPoints > 0
-  );
+  const hasTouch = useHasTouch();
 
   const {
     data: siteData,

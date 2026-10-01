@@ -1,4 +1,5 @@
 import { useMemo } from "react";
+import { useHydrated } from "./use-hydrated";
 
 // Full class strings (not built dynamically) so Tailwind can detect them.
 export const gradientColors = [
@@ -36,6 +37,13 @@ export const getGradientColor = (index?: number | null) => {
 };
 
 // Same as getGradientColor, but stable across re-renders so a random pick
-// doesn't change every time the component updates.
-export const useGradientColor = (index?: number | null) =>
-  useMemo(() => getGradientColor(index), [index]);
+// doesn't change every time the component updates. A random pick waits until
+// hydration is done, using the first color until then, so it can't differ
+// from the prerendered HTML.
+export const useGradientColor = (index?: number | null) => {
+  const hydrated = useHydrated();
+  return useMemo(
+    () => getGradientColor(hydrated ? index : (index ?? 0)),
+    [hydrated, index]
+  );
+};

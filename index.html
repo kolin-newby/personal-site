@@ -33,6 +33,40 @@
       content="Kolin Newby, Software Engineer, Denver, CO"
     />
     <meta name="twitter:card" content="summary_large_image" />
+
+    <!-- Structured data, so search engines tie the site to its owner's other
+         profiles. sameAs mirrors the links in the CMS. -->
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@graph": [
+          {
+            "@type": "WebSite",
+            "@id": "https://kolinnewby.dev/#website",
+            "name": "Kolin Newby",
+            "url": "https://kolinnewby.dev/",
+            "publisher": { "@id": "https://kolinnewby.dev/#person" }
+          },
+          {
+            "@type": "Person",
+            "@id": "https://kolinnewby.dev/#person",
+            "name": "Kolin Newby",
+            "url": "https://kolinnewby.dev/",
+            "jobTitle": "Software Engineer",
+            "address": {
+              "@type": "PostalAddress",
+              "addressLocality": "Denver",
+              "addressRegion": "CO",
+              "addressCountry": "US"
+            },
+            "sameAs": [
+              "https://github.com/kolin-newby",
+              "https://www.linkedin.com/in/knewby/"
+            ]
+          }
+        ]
+      }
+    </script>
   </head>
   <body class="no-prin">
     <noscript>You need to enable JavaScript to run this app.</noscript>

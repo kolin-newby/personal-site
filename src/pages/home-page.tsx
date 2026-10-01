@@ -9,6 +9,8 @@ type Props = {
 
 const HomePage = ({ touch, data }: Props) => {
   const { introduction } = data ?? {};
+  const typingTerms =
+    introduction?.typingTerms?.map((term) => term.name ?? "") ?? [];
 
   return (
     <section
@@ -23,21 +25,20 @@ const HomePage = ({ touch, data }: Props) => {
         particleDensity={20}
       />
       <div className={"pointer-events-none relative h-full w-full"}>
-        <h1
+        <div
           className={
             "pointer-events-none absolute inset-0 flex flex-col text-4xl font-bold sm:text-5xl lg:text-6xl 2xl:text-7xl " +
             "items-center justify-center space-y-1"
           }
         >
-          <span className={"relative flex rounded-2xl px-4 py-3 text-center"}>
+          <h1 className={"relative flex rounded-2xl px-4 py-3 text-center"}>
             {introduction?.heading ?? ""}
-          </span>
-          <TypingDisplay
-            typingTerms={
-              introduction?.typingTerms?.map((term) => term.name ?? "") ?? []
-            }
-          />
-        </h1>
+          </h1>
+          <TypingDisplay typingTerms={typingTerms} />
+          {/* The animation is hidden from screen readers, so this reads its
+              words out instead. */}
+          <p className="sr-only">{typingTerms.join(", ")}</p>
+        </div>
       </div>
     </section>
   );

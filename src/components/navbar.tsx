@@ -44,7 +44,8 @@ const Navbar = ({ scrollPosition, touch, barOpen, setBarOpen }: Props) => {
       : hoveredIndex * navbarItemWidth;
 
   return (
-    <div
+    <nav
+      aria-label="Sections"
       className="group/bar sticky top-0 z-50 -mb-(--nav-h) flex h-(--nav-h) w-full"
       onPointerLeave={(e) => {
         if (e.pointerType === "mouse") endPreview();
@@ -68,6 +69,8 @@ const Navbar = ({ scrollPosition, touch, barOpen, setBarOpen }: Props) => {
           {touch && (
             <button
               type="button"
+              aria-label={barOpen ? "Close navigation" : "Open navigation"}
+              aria-expanded={barOpen}
               className={`pointer-events-auto flex w-full transform rounded-sm transition-all duration-500 ${
                 barOpen
                   ? "translate-y-full bg-black/80 text-white backdrop-blur-md"
@@ -88,9 +91,11 @@ const Navbar = ({ scrollPosition, touch, barOpen, setBarOpen }: Props) => {
         </div>
       </div>
       {navbarItems.map((item, index) => (
-        <button
+        // Real links, so crawlers see the sections and they can be opened or
+        // copied; clicks are taken over to scroll smoothly instead of jumping.
+        <a
           key={`nav-item-${index}-${item.id}`}
-          type="button"
+          href={`#${item.id}`}
           style={{ width: `${navbarItemWidth}%` }}
           className={`relative flex h-full -translate-y-full transform cursor-pointer items-center justify-center gap-1.5 bg-transparent pt-3 text-sm whitespace-nowrap transition-transform duration-500 group-has-focus-visible/bar:translate-y-0 md:gap-2 md:text-base ${
             touch
@@ -106,7 +111,10 @@ const Navbar = ({ scrollPosition, touch, barOpen, setBarOpen }: Props) => {
             if (e.currentTarget.matches(":focus-visible")) previewItem(index);
           }}
           onBlur={endPreview}
-          onClick={() => {
+          onClick={(e) => {
+            // Leave new-tab/window clicks to the browser.
+            if (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
+            e.preventDefault();
             document
               .getElementById(item.id)
               ?.scrollIntoView({ behavior: "smooth" });
@@ -115,9 +123,9 @@ const Navbar = ({ scrollPosition, touch, barOpen, setBarOpen }: Props) => {
         >
           {item.icon}
           <span className={"flex"}>{item.title}</span>
-        </button>
+        </a>
       ))}
-    </div>
+    </nav>
   );
 };
 

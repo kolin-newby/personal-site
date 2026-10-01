@@ -62,6 +62,8 @@ const IconRow = ({
           <CustomSvg
             source={icon.svg?.file?.url ?? ""}
             key={`skill-${index}-${icon.label}`}
+            role="img"
+            aria-label={icon.label ?? undefined}
             className="mx-10 size-10 opacity-50 transition-opacity hover:opacity-100 md:size-14 lg:size-16"
           />
         ))}
@@ -85,8 +87,12 @@ const AboutPage = ({ touch, data }: Props) => {
   return (
     <section
       id={"about"}
+      aria-labelledby="about-heading"
       className="relative flex min-h-dvh w-full snap-start flex-col items-center pt-(--nav-h) lg:flex-row"
     >
+      <h2 id="about-heading" className="sr-only">
+        About
+      </h2>
       <div
         className={
           "flex w-full flex-col items-center lg:justify-center lg:space-y-0"

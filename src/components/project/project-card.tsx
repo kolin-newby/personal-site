@@ -136,12 +136,14 @@ export const ProjectCard = ({
         {onCounterClick ? (
           // The ::before stretches the tap target over the whole strip above
           // the content, which is all that shows of a stacked mobile card.
+          // The visible counter stays part of the name, so voice control users
+          // can say what they see.
           <button
             type="button"
-            aria-label={`Scroll to ${project.title}`}
             onClick={onCounterClick}
             className={`${counterClassName} before:absolute before:inset-x-0 before:-inset-y-1.5`}
           >
+            <span className="sr-only">Scroll to {project.title}, </span>
             {counterText}
           </button>
         ) : (
@@ -151,10 +153,10 @@ export const ProjectCard = ({
       <div className="inset-card flex min-h-0 grow flex-col rounded-2xl px-3 py-1">
         <div className="mb-3 flex shrink-0 flex-row items-center gap-4">
           <RepoIcon type={project.repository?.type} className="inline" />
-          <h2 className="flex flex-col font-bold">
+          <h3 className="flex flex-col font-bold">
             <span>{project.title}</span>
             <span className="opacity-60">{project.projectContext}</span>
-          </h2>
+          </h3>
         </div>
         {/* Scrollable once expanded, in case the freed space still isn't
             enough to fit it all. */}

@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "vite",
     "dev:prod": "test -n \"$API_PROXY_TARGET\" || { echo 'Set API_PROXY_TARGET to the prod API origin'; exit 1; }; vite",
-    "build": "vite build",
+    "build": "vite build && vite build --ssr src/entry-server.tsx --outDir dist-server && node scripts/prerender.js",
     "lint": "eslint .",
     "preview": "vite preview",
     "codegen": "graphql-codegen --config codegen.ts"

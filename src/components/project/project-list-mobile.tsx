@@ -6,7 +6,7 @@ type Props = {
   touch: boolean;
 };
 
-// Static list for small screens - no drifting or drag-and-drop.
+// Small-screen list - cards stick and stack as you scroll.
 export const ProjectListMobile = ({ projectList, touch }: Props) => {
   return (
     <ul className={`w-full`}>

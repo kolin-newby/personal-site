@@ -1,7 +1,5 @@
 node_modules/
 .idea/
-dist/
-dist-server/
 # React Router's build output and generated route types.
 build/
 .react-router/

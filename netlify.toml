@@ -1,12 +1,13 @@
 [build]
   command = "npm run build"
-  publish = "dist"
+  publish = "build/client"
 
 [build.environment]
   # graphql 17 runs during the prerender and supports Node 22, 24 and 26+.
   NODE_VERSION = "24"
-  # Origin of the API that scripts/prerender.js fetches the site data from
-  # at build time. Not a secret - the browser calls the same API.
+  # Origin of the API that the root loader (src/site-data.server.ts) fetches
+  # the site data from at build time. Not a secret - the browser calls the
+  # same API.
   API_PROXY_TARGET = "https://keystone.russby.org"
   # Routes CMS images through Netlify's image CDN (src/common/image-url.ts).
   VITE_IMAGE_CDN = "true"

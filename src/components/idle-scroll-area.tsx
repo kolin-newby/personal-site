@@ -39,7 +39,8 @@ const IdleScrollArea = ({
   const containerRef = useRef<HTMLDivElement>(null);
   const rafRef = useRef<number>(0);
   const lastTsRef = useRef<number>(0);
-  const lastUserInteractionRef = useRef<number>(Date.now());
+  // Set on mount below; Date.now() can't run during render.
+  const lastUserInteractionRef = useRef<number>(0);
   const dirRef = useRef<number>(startDirection === "backward" ? -1 : 1);
   const [isHovering, setIsHovering] = useState(false);
 
@@ -81,6 +82,11 @@ const IdleScrollArea = ({
   const markInteraction = useCallback(() => {
     lastUserInteractionRef.current = Date.now();
   }, []);
+
+  // Start the idle countdown from mount, as if the user had just interacted.
+  useEffect(() => {
+    markInteraction();
+  }, [markInteraction]);
 
   const onEnter = useCallback(() => {
     setIsHovering(true);
@@ -136,8 +142,13 @@ const IdleScrollArea = ({
       axis === "x" ? `translate3d(${px}px,0,0)` : `translate3d(0,${px}px,0)`;
   }, [axis]);
 
-  const animate = useCallback(
-    (ts: number) => {
+  useEffect(() => {
+    if (!shouldRun) {
+      lastTsRef.current = 0;
+      return;
+    }
+
+    const frame = (ts: number) => {
       if (!shouldRunRef.current) return;
 
       if (!lastTsRef.current) {
@@ -158,23 +169,15 @@ const IdleScrollArea = ({
         applyTransform();
       }
 
-      rafRef.current = requestAnimationFrame(animate);
-    },
-    [isIdle, getRampFactor, applyTransform],
-  );
+      rafRef.current = requestAnimationFrame(frame);
+    };
 
-  useEffect(() => {
-    if (!shouldRun) {
-      lastTsRef.current = 0;
-      return;
-    }
-
-    rafRef.current = requestAnimationFrame(animate);
+    rafRef.current = requestAnimationFrame(frame);
     return () => {
       cancelAnimationFrame(rafRef.current);
       rafRef.current = 0;
     };
-  }, [shouldRun, animate]);
+  }, [shouldRun, isIdle, getRampFactor, applyTransform]);
 
   useEffect(() => {
     const el = containerRef.current;

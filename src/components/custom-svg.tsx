@@ -16,16 +16,16 @@ type ParsedSvg = {
 const cache = new Map<string, ParsedSvg>();
 
 export const CustomSvg = ({ source, size, style, ...rest }: CustomSvgProps) => {
-  const [parsed, setParsed] = useState<ParsedSvg | null>(
-    () => cache.get(source) ?? null,
-  );
+  // Keyed by source, so a stale result is never shown after `source` changes.
+  const [loaded, setLoaded] = useState<{
+    source: string;
+    svg: ParsedSvg;
+  } | null>(null);
+  const parsed =
+    loaded?.source === source ? loaded.svg : (cache.get(source) ?? null);
 
   useEffect(() => {
-    const cached = cache.get(source);
-    if (cached) {
-      setParsed(cached);
-      return;
-    }
+    if (cache.has(source)) return;
 
     let abort = false;
     (async () => {
@@ -37,7 +37,7 @@ export const CustomSvg = ({ source, size, style, ...rest }: CustomSvgProps) => {
         if (!result) throw new Error("Response did not contain a valid <svg>");
         if (!abort) {
           cache.set(source, result);
-          setParsed(result);
+          setLoaded({ source, svg: result });
         }
       } catch (e) {
         if (!abort) console.error(`Error loading SVG from ${source}:`, e);

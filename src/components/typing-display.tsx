@@ -29,51 +29,39 @@ export const TypingDisplay = ({
   const [wordIndex, setWordIndex] = useState(0);
 
   const containerRef = useRef<HTMLSpanElement>(null);
-  const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   const prefersReducedMotion = usePrefersReducedMotion();
+  // Also false under reduced motion, which pauses the timers below.
   const shouldRun = useShouldAnimate(containerRef);
 
+  // One timer per step: type a letter, pause on a finished word, or delete a
+  // letter. The step that deletes the last letter also moves to the next word.
   useEffect(() => {
-    // Always clear the previous timer before scheduling a new one
-    if (timeoutRef.current) {
-      clearTimeout(timeoutRef.current);
-      timeoutRef.current = null;
-    }
-
     if (!shouldRun) return;
 
     const currentWord = typingTerms[wordIndex] ?? "";
+    let timer: ReturnType<typeof setTimeout>;
 
-    // Default plan: schedule a type/delete step
-    const delay = isDeleting ? deletingSpeed : typingSpeed;
-    let nextTimer = setTimeout(() => {
-      setText((prev) =>
-        isDeleting ? prev.slice(0, -1) : currentWord.slice(0, prev.length + 1),
+    if (isDeleting) {
+      timer = setTimeout(() => {
+        if (text.length <= 1) {
+          setText("");
+          setIsDeleting(false);
+          setWordIndex((prev) => (prev + 1) % typingTerms.length);
+        } else {
+          setText(text.slice(0, -1));
+        }
+      }, deletingSpeed);
+    } else if (text === currentWord) {
+      timer = setTimeout(() => setIsDeleting(true), pauseTime);
+    } else {
+      timer = setTimeout(
+        () => setText(currentWord.slice(0, text.length + 1)),
+        typingSpeed,
       );
-    }, delay);
-
-    // Transition overrides (use current `text`, like your original logic)
-    if (!isDeleting && text === currentWord) {
-      // reached end of word → pause, then flip to deleting
-      clearTimeout(nextTimer);
-      nextTimer = setTimeout(() => setIsDeleting(true), pauseTime);
-    } else if (isDeleting && text === "") {
-      // finished deleting → advance word immediately (no timer needed here)
-      clearTimeout(nextTimer);
-      setIsDeleting(false);
-      setWordIndex((prev) => (prev + 1) % typingTerms.length);
-      return; // nothing else to schedule this tick
     }
 
-    timeoutRef.current = nextTimer;
-
-    return () => {
-      if (timeoutRef.current) {
-        clearTimeout(timeoutRef.current);
-        timeoutRef.current = null;
-      }
-    };
+    return () => clearTimeout(timer);
   }, [
     text,
     isDeleting,
@@ -85,19 +73,8 @@ export const TypingDisplay = ({
     shouldRun, // re-evaluate when visibility changes
   ]);
 
-  // Be polite to users who prefer reduced motion
-  useEffect(() => {
-    if (prefersReducedMotion) {
-      setText(typingTerms[0] ?? "");
-      setIsDeleting(false);
-      setWordIndex(0);
-      if (timeoutRef.current) {
-        clearTimeout(timeoutRef.current);
-        timeoutRef.current = null;
-      }
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [prefersReducedMotion]);
+  // Be polite to users who prefer reduced motion: show the first term, still.
+  const displayText = prefersReducedMotion ? (typingTerms[0] ?? "") : text;
 
   return (
     <span
@@ -105,7 +82,7 @@ export const TypingDisplay = ({
       className="pl-2 text-center"
       aria-hidden="true"
     >
-      {text}
+      {displayText}
       <span className="cursor">|</span>
     </span>
   );

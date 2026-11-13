@@ -1,4 +1,4 @@
-import React, { useRef, useEffect, useCallback } from "react";
+import React, { useRef, useEffect } from "react";
 import { useShouldAnimate } from "../common/use-should-animate";
 
 const getRandom = (min: number, max: number): number =>
@@ -231,27 +231,28 @@ const ParticleField = ({
     }
   };
 
-  const animate = useCallback(() => {
-    const canvas = canvasRef.current;
-    const ctx = ctxRef.current;
-    if (!canvas || !ctx) return;
-
-    const { w: width, h: height } = sizeRef.current;
-
-    ctx.clearRect(0, 0, width, height);
-    handleParticles(ctx, width, height);
-
-    rafRef.current = requestAnimationFrame(animate);
-  }, []);
-
   useEffect(() => {
-    if (shouldRun) {
-      if (!rafRef.current) rafRef.current = requestAnimationFrame(animate);
-    } else if (rafRef.current) {
-      cancelAnimationFrame(rafRef.current);
+    if (!shouldRun) return;
+
+    const frame = () => {
+      const canvas = canvasRef.current;
+      const ctx = ctxRef.current;
+      if (!canvas || !ctx) return;
+
+      const { w: width, h: height } = sizeRef.current;
+
+      ctx.clearRect(0, 0, width, height);
+      handleParticles(ctx, width, height);
+
+      rafRef.current = requestAnimationFrame(frame);
+    };
+
+    rafRef.current = requestAnimationFrame(frame);
+    return () => {
+      if (rafRef.current) cancelAnimationFrame(rafRef.current);
       rafRef.current = null;
-    }
-  }, [shouldRun, animate]);
+    };
+  }, [shouldRun]);
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -293,13 +294,11 @@ const ParticleField = ({
     window.addEventListener("pointerleave", handleMouseOut);
 
     return () => {
-      if (rafRef.current) cancelAnimationFrame(rafRef.current);
-      rafRef.current = null;
       window.removeEventListener("resize", handleResize);
       ro?.disconnect();
       window.removeEventListener("pointerleave", handleMouseOut);
     };
-  }, [animate]);
+  }, []);
 
   useEffect(() => {
     const canvas = canvasRef.current;

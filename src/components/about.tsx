@@ -182,7 +182,7 @@ export const About = ({ touch, data }: Props) => {
           </div>
         </div>
       </div>
-      <div className="flex w-full grow lg:min-h-[600px] lg:max-w-1/2 lg:min-w-50">
+      <div className="flex w-full grow lg:min-h-150 lg:max-w-1/2 lg:min-w-50">
         <PhotoCarousel
           className={"flex w-full grow"}
           photos={data?.gallery?.photos}

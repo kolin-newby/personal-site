@@ -17,5 +17,5 @@ export const navbarItems: NavbarItem[] = [
     title: "Portfolio",
     icon: <BriefcaseBusiness />
   },
-  { id: "content", path: "content", title: "Content", icon: <Newspaper /> }
+  { id: "content", path: "/content", title: "Content", icon: <Newspaper /> }
 ];

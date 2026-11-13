@@ -7,6 +7,8 @@
     "paths": {
       "@/*": ["./src/*"]
     },
+    // Lets route modules import their generated "./+types/<route>" types.
+    "rootDirs": [".", "./.react-router/types"],
 
     // Environment Settings
     // See also https://aka.ms/tsconfig/module
@@ -43,5 +45,5 @@
     "checkJs": false,
     "noEmit": true,
   },
-  "include": ["src"]
+  "include": ["src", ".react-router/types/**/*"]
 }

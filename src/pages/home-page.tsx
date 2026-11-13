@@ -1,20 +1,24 @@
 import { TypingDisplay } from "@/components/typing-display";
 import ParticleField from "@/components/particle-field";
-import type { GetSiteDataQuery } from "@/generated/graphql";
 import { About } from "@/components/about";
+import { PageMeta } from "@/components/page-meta";
+import { useGetSiteData } from "@/hooks/useGetSiteData";
+import { useHasTouch } from "@/common/use-media-query";
 
-type Props = {
-  touch?: boolean;
-  data?: GetSiteDataQuery | undefined;
-};
-
-const HomePage = ({ touch, data }: Props) => {
+const HomePage = () => {
+  const touch = useHasTouch();
+  const { data } = useGetSiteData();
   const { introduction } = data ?? {};
   const typingTerms =
     introduction?.typingTerms?.map((term) => term.name ?? "") ?? [];
 
   return (
     <>
+      <PageMeta
+        title="Kolin Newby | Software Engineer"
+        description="Kolin Newby is a full-stack software engineer in Denver building performant, reliable, user-focused web applications with React, TypeScript, Go and SQL."
+        path="/"
+      />
       <section
         className="relative h-dvh w-full snap-start overflow-hidden"
         id="home"
@@ -43,7 +47,7 @@ const HomePage = ({ touch, data }: Props) => {
           </div>
         </div>
       </section>
-      <About touch={touch ?? false} data={data} />
+      <About touch={touch} data={data} />
     </>
   );
 };

@@ -1,9 +1,9 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useState } from "react";
 import { ChevronDown } from "lucide-react";
 import { navbarItems } from "./navbar-items";
+import { NavLink, useLocation } from "react-router";
 
 type Props = {
-  scrollPosition: number;
   touch: boolean;
   barOpen: boolean;
   setBarOpen: React.Dispatch<React.SetStateAction<boolean>>;
@@ -12,40 +12,24 @@ type Props = {
 const navbarItemWidth = (1 / navbarItems.length) * 100;
 const indicatorTransitionMs = 300;
 
-const Navbar = ({ scrollPosition, touch, barOpen, setBarOpen }: Props) => {
+const Navbar = ({ touch, barOpen, setBarOpen }: Props) => {
+  // The item being hovered or keyboard-focused. The indicator previews it,
+  // then glides back to the current page's item when it's cleared.
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
-  // Keeps the transition on briefly after hover ends so the indicator glides
-  // back to the active item, then drops it so scroll tracking stays immediate.
-  const [snappingBack, setSnappingBack] = useState(false);
-  const snapBackTimeout = useRef<number | undefined>(undefined);
 
-  useEffect(() => () => window.clearTimeout(snapBackTimeout.current), []);
+  const { pathname } = useLocation();
+  // A host can serve /portfolio as /portfolio/, so trailing slashes are
+  // ignored when matching.
+  const currentPath = pathname.replace(/\/+$/, "") || "/";
+  const active = navbarItems.findIndex((i) => i.path === currentPath);
+  const indicatorLeft = (hoveredIndex ?? active) * navbarItemWidth;
 
-  const previewItem = (index: number) => {
-    window.clearTimeout(snapBackTimeout.current);
-    setSnappingBack(false);
-    setHoveredIndex(index);
-  };
-
-  const endPreview = () => {
-    if (hoveredIndex === null) return;
-    setHoveredIndex(null);
-    setSnappingBack(true);
-    window.clearTimeout(snapBackTimeout.current);
-    snapBackTimeout.current = window.setTimeout(
-      () => setSnappingBack(false),
-      indicatorTransitionMs
-    );
-  };
-
-  const indicatorLeft =
-    hoveredIndex === null
-      ? (scrollPosition / 100) * (100 - navbarItemWidth)
-      : hoveredIndex * navbarItemWidth;
+  const previewItem = (index: number) => setHoveredIndex(index);
+  const endPreview = () => setHoveredIndex(null);
 
   return (
     <nav
-      aria-label="Sections"
+      aria-label="Main"
       className="group/bar sticky top-0 z-50 -mb-(--nav-h) flex h-(--nav-h) w-full"
       onPointerLeave={(e) => {
         if (e.pointerType === "mouse") endPreview();
@@ -57,9 +41,7 @@ const Navbar = ({ scrollPosition, touch, barOpen, setBarOpen }: Props) => {
           left: `${indicatorLeft}%`,
           transitionDuration: `${indicatorTransitionMs}ms`
         }}
-        className={`absolute top-0 z-10 h-3 rounded-sm bg-black/80 ease-out ${
-          hoveredIndex !== null || snappingBack ? "transition-[left]" : ""
-        }`}
+        className="absolute top-0 z-10 h-3 rounded-sm bg-black/80 transition-[left] ease-out"
       >
         <div
           className={
@@ -91,11 +73,11 @@ const Navbar = ({ scrollPosition, touch, barOpen, setBarOpen }: Props) => {
         </div>
       </div>
       {navbarItems.map((item, index) => (
-        // Real links, so crawlers see the sections and they can be opened or
-        // copied; clicks are taken over to scroll smoothly instead of jumping.
-        <a
+        // Real links, so crawlers find every page and each one can be opened
+        // in a new tab or copied.
+        <NavLink
           key={`nav-item-${index}-${item.id}`}
-          href={`#${item.id}`}
+          to={item.path}
           style={{ width: `${navbarItemWidth}%` }}
           className={`relative flex h-full -translate-y-full transform cursor-pointer items-center justify-center gap-1.5 bg-transparent pt-3 text-sm whitespace-nowrap transition-transform duration-500 group-has-focus-visible/bar:translate-y-0 md:gap-2 md:text-base ${
             touch
@@ -112,18 +94,15 @@ const Navbar = ({ scrollPosition, touch, barOpen, setBarOpen }: Props) => {
           }}
           onBlur={endPreview}
           onClick={(e) => {
-            // Leave new-tab/window clicks to the browser.
+            // A new-tab/window click doesn't leave this page, so keep the
+            // bar as it is.
             if (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
-            e.preventDefault();
-            document
-              .getElementById(item.id)
-              ?.scrollIntoView({ behavior: "smooth" });
             setBarOpen(false);
           }}
         >
           {item.icon}
           <span className={"flex"}>{item.title}</span>
-        </a>
+        </NavLink>
       ))}
     </nav>
   );

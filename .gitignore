@@ -1,7 +1,8 @@
 node_modules/
 .idea/
-dist/
-dist-server/
+# React Router's build output and generated route types.
+build/
+.react-router/
 .vscode/
 # npm is the package manager - keep other managers' files out.
 yarn.lock

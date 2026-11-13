@@ -1,13 +1,24 @@
 [build]
   command = "npm run build"
-  publish = "dist"
+  publish = "build/client"
 
 [build.environment]
-  # Origin of the API that scripts/prerender.js fetches the site data from
-  # at build time. Not a secret - the browser calls the same API.
+  # graphql 17 runs during the prerender and supports Node 22, 24 and 26+.
+  NODE_VERSION = "24"
+  # Origin of the API that the root loader (src/site-data.server.ts) fetches
+  # the site data from at build time. Not a secret - the browser calls the
+  # same API.
   API_PROXY_TARGET = "https://keystone.russby.org"
   # Routes CMS images through Netlify's image CDN (src/common/image-url.ts).
   VITE_IMAGE_CDN = "true"
+
+# The browser calls the API at VITE_API_URL (/api/graphql) on the site's own
+# origin, so Netlify forwards it to Keystone. Same origin, so no CORS needed.
+[[redirects]]
+  from = "/api/*"
+  to = "https://keystone.russby.org/api/:splat"
+  status = 200
+  force = true
 
 # CMS images the image CDN may fetch and resize.
 [images]

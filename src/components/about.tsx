@@ -72,7 +72,7 @@ const IconRow = ({
   </div>
 );
 
-const AboutPage = ({ touch, data }: Props) => {
+export const About = ({ touch, data }: Props) => {
   const { bio, iconDisplay, personalLinkList } = data ?? {};
 
   const [activePhotoIndex, setActivePhotoIndex] = useState<number | null>(null);
@@ -182,7 +182,7 @@ const AboutPage = ({ touch, data }: Props) => {
           </div>
         </div>
       </div>
-      <div className="flex w-full grow lg:min-h-[600px] lg:max-w-1/2 lg:min-w-50">
+      <div className="flex w-full grow lg:min-h-150 lg:max-w-1/2 lg:min-w-50">
         <PhotoCarousel
           className={"flex w-full grow"}
           photos={data?.gallery?.photos}
@@ -195,5 +195,3 @@ const AboutPage = ({ touch, data }: Props) => {
     </section>
   );
 };
-
-export default AboutPage;

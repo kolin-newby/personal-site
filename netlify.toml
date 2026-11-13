@@ -3,6 +3,8 @@
   publish = "dist"
 
 [build.environment]
+  # graphql 17 runs during the prerender and supports Node 22, 24 and 26+.
+  NODE_VERSION = "24"
   # Origin of the API that scripts/prerender.js fetches the site data from
   # at build time. Not a secret - the browser calls the same API.
   API_PROXY_TARGET = "https://keystone.russby.org"

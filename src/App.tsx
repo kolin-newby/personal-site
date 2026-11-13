@@ -2,9 +2,8 @@ import "./App.css";
 import React, { useState } from "react";
 import Navbar from "./components/navbar";
 import { navbarItems } from "./components/navbar-items";
-import AboutPage from "./pages/about-page";
 import HomePage from "./pages/home-page";
-import { ProjectPage } from "./pages/project-page";
+import { ProjectPage } from "./pages/portfolio-page";
 import { useGetSiteData } from "@/hooks/useGetSiteData";
 import { useHasTouch } from "@/common/use-media-query";
 
@@ -63,7 +62,6 @@ const App = () => {
       />
       <div className="w-full">
         <HomePage touch={hasTouch} data={siteData} />
-        <AboutPage touch={hasTouch} data={siteData} />
         <ProjectPage touch={hasTouch} data={siteData} />
       </div>
     </div>

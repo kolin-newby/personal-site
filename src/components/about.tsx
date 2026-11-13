@@ -72,7 +72,7 @@ const IconRow = ({
   </div>
 );
 
-const AboutPage = ({ touch, data }: Props) => {
+export const About = ({ touch, data }: Props) => {
   const { bio, iconDisplay, personalLinkList } = data ?? {};
 
   const [activePhotoIndex, setActivePhotoIndex] = useState<number | null>(null);
@@ -195,5 +195,3 @@ const AboutPage = ({ touch, data }: Props) => {
     </section>
   );
 };
-
-export default AboutPage;

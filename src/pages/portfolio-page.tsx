@@ -9,7 +9,7 @@ type Props = {
   data?: GetSiteDataQuery | undefined;
 };
 
-export const ProjectPage = ({ touch, data }: Props) => {
+const PortfolioPage = ({ touch, data }: Props) => {
   // A row of cards on desktop (lg and up), a stacking list below.
   const isDesktop = useIsLg();
 
@@ -35,3 +35,5 @@ export const ProjectPage = ({ touch, data }: Props) => {
     </section>
   );
 };
+
+export default PortfolioPage;
